@@ -1,37 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 1. figma 사이트
 
-## Getting Started
+https://www.figma.com/design/MRvkM4Txq4F6tRwmzU7TXQ/%EC%97%AC%ED%96%89%EC%9D%BC%EC%A0%95%EA%B3%B5%EC%9C%A0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0-1&p=f&t=cr65FIelGT8FePM6-0
 
-First, run the development server:
+## 2. api 명세서
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[https://www.notion.so/travel-web-project-16222e480c4080d08c72eaa6458ff9ef?pvs=4](https://www.notion.so/travel-web-project-16222e480c4080d08c72eaa6458ff9ef?pvs=21)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 3. 선택 스택
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![nextjsicon.svg](https://prod-files-secure.s3.us-west-2.amazonaws.com/ba5b9793-da59-4620-84f6-2e8500be2ae2/1994ec4c-8f4e-4b78-a47f-5d22dfdf252e/nextjsicon.svg)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![typescripticon.svg](https://prod-files-secure.s3.us-west-2.amazonaws.com/ba5b9793-da59-4620-84f6-2e8500be2ae2/2a28a470-91db-4d57-b311-00b84ae7cde4/typescripticon.svg)
 
-## Learn More
+![tailwindicon.svg](https://prod-files-secure.s3.us-west-2.amazonaws.com/ba5b9793-da59-4620-84f6-2e8500be2ae2/67d5ddc9-d228-4ad0-94ab-bde521cb40b6/tailwindicon.svg)
 
-To learn more about Next.js, take a look at the following resources:
+## 4. 배분
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+공통컴포넌트 : 버튼 , 모달 , 드롭박스 , 아이콘 (은석)
+큰 공통컴포넌트 : 카드 , 프로필 , 일정 컴포넌트 , 헤더 (은재)
+메인페이지 : 검색 , 슬라이더 , 필터 , 인피니티스크 (은재)
+마이페이지 (은재)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 프로필수정 , 찜한 일정 , 내가쓴 댓글
+- 페이지네이션 , 탭바 ,
+  상세페이지 (은재)
+- 지도api , 탭스크롤 ,일정 direction api , 좋아요 , 댓글 , 공유하기(링크만) , 페이지네이션
+  계획페이지 (은석)
+- 기본입력정보 (모달 -5단계) , 이미지 , 장소검색 , 지도 api ,장소검색)
+  로그인 (은석)
+- naver, google , kakao 로 로그인 토큰은 일단 캐시로
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Trip-plan-frontend
+## 5. 브랜치 명명 ES 이름 약자
