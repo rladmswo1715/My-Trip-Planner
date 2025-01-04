@@ -21,14 +21,12 @@ export default {
       },
 
       spacing: {
-        // 버튼 패딩 추가
         'btn-sm-y': '1.8rem',
         'btn-md-y': '1.4rem',
         'btn-lg-y': '2rem',
       },
 
       fontSize: {
-        // 버튼 폰트 크기 추가
         'btn-sm': '1.8rem',
         'btn-md': '1.4rem',
         'btn-lg': '2rem',
