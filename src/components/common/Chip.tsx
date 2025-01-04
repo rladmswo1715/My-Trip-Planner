@@ -1,12 +1,12 @@
 import React, { JSX } from 'react';
 
-type ButtonProps = {
+type ChipProps = {
   children: JSX.Element | string;
   Icon: JSX.Element;
   state: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Chip: React.FC<ButtonProps> = ({
+const Chip: React.FC<ChipProps> = ({
   Icon,
   children,
   state = true,
@@ -29,8 +29,8 @@ const Chip: React.FC<ButtonProps> = ({
       {...rest}
       className={`chip ${rest.className} ${getChipColor()}`}
     >
-      <div className="flex gap-[1rem]">
-        <span className="text-inherit">{children}</span>
+      <div className="flex gap-[1rem] items-center">
+        <span className="text-inherit text-center">{children}</span>
         {Icon}
       </div>
     </button>
