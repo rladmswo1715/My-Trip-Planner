@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { IMAGES, ICONS } from '@/constants/importImages';
 import Chip from '@/components/common/Chip';
 import Tag from '@/components/common/Tag';
+import Icons from '@/components/common/Icons';
 
 export default function Home() {
   return (
@@ -18,30 +19,22 @@ export default function Home() {
         alt={ICONS.iconCategoryBuilding.alt}
       />
       <div className="flex flex-col">
-        <Chip
-          state
-          Icon={
-            <Image
-              src={ICONS.iconUptriangle.src}
-              alt={ICONS.iconUptriangle.alt}
-            />
-          }
-        >
-          asd
-        </Chip>
+        <Chip state>asd</Chip>
+        <Chip state={false}>asd</Chip>
 
-        <Tag close={false} color="blue">
+        <Tag close={true} color="blue">
           tag
         </Tag>
         <Tag close={true} color="blackWhite">
           tag
         </Tag>
-        <Tag close={false} color="black">
+        <Tag close={true} color="black">
           tag
         </Tag>
-        <Tag close={false} color="blueWhite">
+        <Tag close={true} color="blueWhite">
           tag
         </Tag>
+        <Icons.Close color="red" size={24} />
       </div>
     </div>
   );
