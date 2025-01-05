@@ -4,9 +4,15 @@ import Icons from './Icons';
 type ChipProps = {
   children: JSX.Element | string;
   state: boolean;
+  dropdown?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Chip: React.FC<ChipProps> = ({ children, state = true, ...rest }) => {
+const Chip: React.FC<ChipProps> = ({
+  dropdown = false,
+  children,
+  state = true,
+  ...rest
+}) => {
   const getChipColor = () => {
     switch (state) {
       case false:
@@ -22,9 +28,15 @@ const Chip: React.FC<ChipProps> = ({ children, state = true, ...rest }) => {
     <button
       aria-pressed={state}
       {...rest}
-      className={`chip ${rest.className} ${getChipColor()}`}
+      className={`${dropdown ? 'chip-dropdown' : 'chip'} ${
+        rest.className
+      } ${getChipColor()}`}
     >
-      <div className="flex gap-[1rem] items-center">
+      <div
+        className={`flex items-center  ${
+          dropdown ? 'justify-between' : 'gap-[1rem]'
+        }`}
+      >
         <span className="text-inherit text-center">{children}</span>
         {state ? <Icons.UpTriangle /> : <Icons.DownTriangle />}
       </div>
