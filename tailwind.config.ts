@@ -13,6 +13,7 @@ export default {
         foreground: 'var(--foreground)',
         'var-primary-500': '#1C68FF',
         'var-primary-600': '#1653CC',
+        'var-primary-50': '#F0F5FF',
         'var-enable': '#DEDEDE',
         'var-enable-400': '#B3B3B3',
       },

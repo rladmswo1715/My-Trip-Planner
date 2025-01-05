@@ -32,6 +32,19 @@
     font-size: 62.5%;
   }
 
+  /* 화면별 작업환경 */
+  @media (max-width: 1440px) {
+    html {
+      font-size: 50%; /* QHD 이하일 때 */
+    }
+  }
+
+  /* @media (max-width: 1280px) {
+    html {
+      font-size: 50%;
+    }
+  } */
+
   body {
     color: var(--foreground);
     background: var(--background);
@@ -62,7 +75,16 @@
     line-height: 2.34rem;
     font-size: 1.8rem;
     user-select: none;
-    width: fit-content;
+    width: 100%;
+  }
+
+  .chip-dropdown {
+    @apply bg-background text-background rounded-[0.8rem] cursor-pointer;
+    padding: 1.9rem 1.6rem 1.9rem 2.4rem;
+    line-height: 2.6rem;
+    font-size: 2rem;
+    user-select: none;
+    width: 100%;
   }
 
   .chip-open {
@@ -82,9 +104,21 @@
     width: fit-content;
   }
   .modal {
-    @apply overflow-y-auto max-w-7xl w-[59.6rem] bg-white p-[2.8rem] rounded-xl;
+    @apply overflow-y-auto min-h-[80rem] max-w-7xl w-[59.6rem] max-h-[80rem] h-[80rem] bg-white p-[2.8rem] rounded-[1.8rem];
   }
   .modal-background {
     @apply fixed top-0 flex flex-col justify-center items-center w-screen h-full z-50 bg-neutral-900/70 transition-transform;
+  }
+
+  .dropdown {
+    @apply relative w-full;
+  }
+  .dropdown ul {
+    @apply w-full bg-background rounded-b-[1.2rem] overflow-auto max-h-[26.4rem];
+  }
+  .dropdown ul li {
+    @apply cursor-pointer bg-background py-[2rem] px-[2.4rem] text-[2rem] leading-[2.6rem] font-normal;
+
+    cursor: pointer;
   }
 }
