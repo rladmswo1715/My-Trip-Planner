@@ -17,7 +17,7 @@ import IconShare from '@/assets/icon/ic_share.svg';
 import IconSiren from '@/assets/icon/ic_siren.svg';
 import IconUpArrow from '@/assets/icon/ic_up-arrow.svg';
 import IconUptriangle from '@/assets/icon/ic_up-triangle.svg';
-import IconClose from '@/assets/icon/close.svg';
+// import IconClose from '@/assets/icon/close.svg';
 
 type ImageType = {
   src: string;
@@ -42,8 +42,8 @@ type Icons =
   | 'iconShare'
   | 'iconSiren'
   | 'iconUpArrow'
-  | 'iconUptriangle'
-  | 'iconClose';
+  | 'iconUptriangle';
+// | 'iconClose';
 
 type Images = 'defaultProfile';
 type ExportAssetsType<T extends string> = {
@@ -58,10 +58,10 @@ export const IMAGES: ExportAssetsType<Images> = {
 };
 
 export const ICONS: ExportAssetsType<Icons> = {
-  iconClose: {
-    src: IconClose,
-    alt: '닫기',
-  },
+  // iconClose: {
+  //   src: IconClose,
+  //   alt: '닫기',
+  // },
   iconCalendar: {
     src: IconCalendar,
     alt: '달력 아이콘',
