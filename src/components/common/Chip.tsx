@@ -1,17 +1,12 @@
 import React, { JSX } from 'react';
+import Icons from './Icons';
 
 type ChipProps = {
   children: JSX.Element | string;
-  Icon: JSX.Element;
   state: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Chip: React.FC<ChipProps> = ({
-  Icon,
-  children,
-  state = true,
-  ...rest
-}) => {
+const Chip: React.FC<ChipProps> = ({ children, state = true, ...rest }) => {
   const getChipColor = () => {
     switch (state) {
       case false:
@@ -31,7 +26,7 @@ const Chip: React.FC<ChipProps> = ({
     >
       <div className="flex gap-[1rem] items-center">
         <span className="text-inherit text-center">{children}</span>
-        {Icon}
+        {state ? <Icons.UpTriangle /> : <Icons.DownTriangle />}
       </div>
     </button>
   );

@@ -1,6 +1,5 @@
-import { ICONS } from '@/constants/importImages';
-import Image from 'next/image';
 import React, { JSX } from 'react';
+import Icons from './Icons';
 
 type TagProps = {
   children: JSX.Element | string;
@@ -30,6 +29,7 @@ const Tag: React.FC<TagProps> = ({
         return 'bg-gray-200 text-black';
     }
   };
+
   return (
     <div
       {...rest}
@@ -42,7 +42,8 @@ const Tag: React.FC<TagProps> = ({
 
         {close && (
           <div onClick={onClick} className="cursor-pointer">
-            <Image src={ICONS.iconClose.src} alt={ICONS.iconClose.alt} />
+            <Icons.Close size={16} />
+            {/* <Image src={ICONS.iconClose.src} alt={ICONS.iconClose.alt} /> */}
           </div>
         )}
       </div>
