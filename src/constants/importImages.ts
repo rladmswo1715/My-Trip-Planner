@@ -23,18 +23,38 @@ type ImageType = {
   alt: string;
 };
 
-export type ExportAssetsType = {
-  [key: string]: ImageType;
-};
+export type ExportIconsType = Record<
+  | 'iconCalendar'
+  | 'iconCategoryBuilding'
+  | 'iconCategoryMap'
+  | 'iconCategoryRestaurant'
+  | 'iconCategoryTraffic'
+  | 'iconCopy'
+  | 'iconDownArrow'
+  | 'iconDownTriangle'
+  | 'iconLeftArrow'
+  | 'iconLike'
+  | 'iconLogoWhite'
+  | 'iconPeople'
+  | 'iconRightArrow'
+  | 'iconSearch'
+  | 'iconShare'
+  | 'iconSiren'
+  | 'iconUpArrow'
+  | 'iconUptriangle',
+  ImageType
+>;
 
-export const IMAGES: ExportAssetsType = {
+export type ExportImagesType = Record<'defaultProfile', ImageType>;
+
+export const IMAGES: ExportImagesType = {
   defaultProfile: {
     src: DefaultProfile,
     alt: '프로필',
   },
 };
 
-export const ICONS: ExportAssetsType = {
+export const ICONS: ExportIconsType = {
   iconCalendar: {
     src: IconCalendar,
     alt: '달력 아이콘',
