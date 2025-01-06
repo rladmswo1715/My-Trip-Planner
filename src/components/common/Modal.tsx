@@ -2,6 +2,7 @@
 
 import useOutsideClick from '@/lib/hooks/useOutsideClick';
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 interface Props {
   children: React.ReactNode;
@@ -31,35 +32,22 @@ const Modal = ({ children, onClose }: Props) => {
     };
   }, []);
 
-  // 스크롤 원상복구 혹은 내부 스크롤이 안될때 주석제거
-  // useEffect(() => {
-  //   const modalElement = ref.current;
-  //   const previouslyFocusedElement = document.activeElement as HTMLElement;
-  //   ref.current?.focus();
-
-  //   if (modalElement) {
-  //     modalElement.classList.add('modal-entering');
-  //     scrollY.current = window.scrollY;
-  //     setTimeout(() => {
-  //       modalElement.classList.remove('modal-entering');
-  //       modalElement.classList.add('modal-opened');
-  //     }, 50);
-  //   }
-  //   document.body.classList.add('modal-open');
-  //   return () => {
-  //     previouslyFocusedElement.focus();
-  //     document.body.classList.remove('modal-open');
-  //     window.scrollTo(0, scrollY.current);
-  //   };
-  // }, []);
-
-  return (
+  const modalContent = (
     <section className="modal-background">
       <div className="modal" ref={ref} tabIndex={-1}>
         {children}
       </div>
     </section>
   );
+  const portalRoot = document.getElementById('modal-portal');
+  return portalRoot ? createPortal(modalContent, portalRoot) : null;
+  // return (
+  //   <section className="modal-background">
+  //     <div className="modal" ref={ref} tabIndex={-1}>
+  //       {children}
+  //     </div>
+  //   </section>
+  // );
 };
 
 export default Modal;
