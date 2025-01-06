@@ -17,6 +17,7 @@ export default {
         'var-primary-50': '#F0F5FF',
         'var-enable': '#DEDEDE',
         'var-enable-400': '#B3B3B3',
+        'var-enable-300': '#F7F7F7',
       },
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],
