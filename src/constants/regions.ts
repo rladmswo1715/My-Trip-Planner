@@ -1,4 +1,4 @@
-const regions = {
+const regions: Record<string, string[]> = {
   서울: [
     '서울 전체',
     '강남/서초',
