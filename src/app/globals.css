@@ -104,7 +104,7 @@
     width: fit-content;
   }
   .modal {
-    @apply overflow-y-auto min-h-[80rem] max-w-7xl w-[59.6rem] max-h-[80rem] h-[80rem] bg-white p-[2.8rem] rounded-[1.8rem];
+    @apply overflow-y-auto min-h-[80rem] max-w-7xl w-[59.6rem] h-[80rem] bg-white p-[2.8rem] rounded-[1.8rem];
   }
   .modal-background {
     @apply fixed top-0 flex flex-col justify-center items-center w-screen h-full z-50 bg-neutral-900/70 transition-transform;
