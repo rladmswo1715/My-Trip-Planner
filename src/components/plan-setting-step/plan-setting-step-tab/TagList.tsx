@@ -7,7 +7,7 @@ const PlanTag = () => {
   const removeDetail = useRegionStore((state) => state.removeDetail);
 
   return (
-    <div className="backdrop-blur-3xl bg-white bg-opacity-5 relative flex flex-wrap gap-2 p-4">
+    <div className="relative flex flex-wrap gap-2 p-4">
       {selectedDetails.map((detail) => (
         <Tag
           key={detail}

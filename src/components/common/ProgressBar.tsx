@@ -12,7 +12,7 @@ const ProgressBar = ({ step }: ProgressBarType) => {
   }, [step]);
 
   return (
-    <div className="w-full h-[1.2rem] bg-var-primary-50">
+    <div className="w-full h-[1.2rem] min-h-[1.2rem] bg-var-primary-50">
       <div
         className={'h-full bg-var-primary-300 transition-all duration-300'}
         style={{ width: stepWidth }}

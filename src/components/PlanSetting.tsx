@@ -34,7 +34,11 @@ const PlanSetting = () => {
     <div className="flex flex-col w-full h-full">
       <ProgressBar step={step} />
       <section className="grow overflow-auto">{renderStep()}</section>
-      <PlanTag />
+      <div className="relative">
+        <div className="absolute bottom-0 w-full bg-opacity-5 backdrop-blur-sm">
+          <PlanTag />
+        </div>
+      </div>
       <Button
         size="lg"
         onClick={nextStep}
