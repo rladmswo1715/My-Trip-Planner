@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   const getButtonStyle = () => {
     switch (size) {
       case 'sm':
-        return 'py-btn-sm-y btn-sm w-[88px]';
+        return 'py-btn-sm-y btn-sm px-[2.8rem]';
       case 'md':
         return 'py-btn-md-y btn-md w-[200px]';
       case 'lg':
@@ -44,7 +44,7 @@ const Button: React.FC<ButtonProps> = ({
         return `bg-var-primary-500 hover:bg-var-primary-600`;
 
       case 'white':
-        return `bg-background text-var-primary-500 border-var-primary-500 dark:bg-foreground dark:text-background border border-1 border-var-primary-500`;
+        return `bg-background text-background border-var-primary-500 dark:bg-foreground dark:text-background border border-1 border-var-primary-500`;
       default:
         break;
     }
@@ -55,7 +55,8 @@ const Button: React.FC<ButtonProps> = ({
       {...rest}
       className={`btn ${getButtonStyle()} ${getButtonColor()} ${
         rest.className
-      }`}
+      } ${disabled && 'cursor-auto'}`}
+      disabled={disabled}
     >
       <span className="text-inherit">{children}</span>
     </button>
