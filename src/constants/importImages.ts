@@ -17,24 +17,51 @@ import IconShare from '@/assets/icon/ic_share.svg';
 import IconSiren from '@/assets/icon/ic_siren.svg';
 import IconUpArrow from '@/assets/icon/ic_up-arrow.svg';
 import IconUptriangle from '@/assets/icon/ic_up-triangle.svg';
+// import IconClose from '@/assets/icon/close.svg';
 
 type ImageType = {
   src: string;
   alt: string;
 };
 
-export type ExportAssetsType = {
-  [key: string]: ImageType;
+type Icons =
+  | 'iconCalendar'
+  | 'iconCategoryBuilding'
+  | 'iconCategoryMap'
+  | 'iconCategoryRestaurant'
+  | 'iconCategoryTraffic'
+  | 'iconCopy'
+  | 'iconDownArrow'
+  | 'iconDownTriangle'
+  | 'iconLeftArrow'
+  | 'iconLike'
+  | 'iconLogoWhite'
+  | 'iconPeople'
+  | 'iconRightArrow'
+  | 'iconSearch'
+  | 'iconShare'
+  | 'iconSiren'
+  | 'iconUpArrow'
+  | 'iconUptriangle';
+// | 'iconClose';
+
+type Images = 'defaultProfile';
+type ExportAssetsType<T extends string> = {
+  [key in T]: ImageType;
 };
 
-export const IMAGES: ExportAssetsType = {
+export const IMAGES: ExportAssetsType<Images> = {
   defaultProfile: {
     src: DefaultProfile,
     alt: '프로필',
   },
 };
 
-export const ICONS: ExportAssetsType = {
+export const ICONS: ExportAssetsType<Icons> = {
+  // iconClose: {
+  //   src: IconClose,
+  //   alt: '닫기',
+  // },
   iconCalendar: {
     src: IconCalendar,
     alt: '달력 아이콘',
