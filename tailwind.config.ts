@@ -21,6 +21,7 @@ export default {
       },
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],
+        jalnan: ['Jalnan', 'sans-serif'],
       },
 
       spacing: {
