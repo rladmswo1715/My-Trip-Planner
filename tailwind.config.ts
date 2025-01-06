@@ -11,13 +11,29 @@ export default {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        'var-primary-300': '#77A4FF',
         'var-primary-500': '#1C68FF',
         'var-primary-600': '#1653CC',
+        'var-primary-50': '#F0F5FF',
         'var-enable': '#DEDEDE',
+        'var-enable-400': '#B3B3B3',
+        'var-enable-300': '#F7F7F7',
       },
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],
         jalnan: ['Jalnan', 'sans-serif'],
+      },
+
+      spacing: {
+        'btn-sm-y': '1.8rem',
+        'btn-md-y': '1.4rem',
+        'btn-lg-y': '2rem',
+      },
+
+      fontSize: {
+        'btn-sm': '1.8rem',
+        'btn-md': '1.4rem',
+        'btn-lg': '2rem',
       },
     },
   },

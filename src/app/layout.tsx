@@ -16,6 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={''}>
         <RootProviders>{children}</RootProviders>
+        <div id="modal-portal" />
       </body>
     </html>
   );
