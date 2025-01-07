@@ -17,6 +17,7 @@ export enum StepTitles {
 const PlanSetting = () => {
   const { step, nextStep } = usePlanStore();
   const { selectedDetails } = useRegionStore();
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -33,7 +34,7 @@ const PlanSetting = () => {
   return (
     <div className="flex flex-col w-full h-full">
       <ProgressBar step={step} />
-      <section className="grow overflow-auto">{renderStep()}</section>
+      <section className="grow">{renderStep()}</section>
       <div className="relative">
         <div className="absolute bottom-0 w-full bg-opacity-5 backdrop-blur-sm">
           <PlanTag />
