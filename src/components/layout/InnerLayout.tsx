@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 interface InnerLayoutProps {
   children: ReactNode;
@@ -7,7 +8,12 @@ interface InnerLayoutProps {
 
 const InnerLayout = ({ children, className = '' }: InnerLayoutProps) => {
   return (
-    <div className={`w-full max-w-[132.8rem] px-[2.4rem] mx-auto ${className}`}>
+    <div
+      className={twMerge(
+        'w-full max-w-[132.8rem] px-[2.4rem] mx-auto',
+        className
+      )}
+    >
       {children}
     </div>
   );
