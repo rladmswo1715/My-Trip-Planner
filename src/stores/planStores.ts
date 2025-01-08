@@ -12,8 +12,43 @@ type RegionStore = {
   setRegion: (region: string) => void;
   toggleDetail: (detail: string) => void;
   removeDetail: (detail: string) => void;
+  addDetail: (detail: string) => void;
   clearDetails: () => void;
 };
+
+type DateStore = {
+  startDay: string | null;
+  endDay: string | null;
+  numberOfPeople: number;
+  setStartDay: (date: string) => void;
+  setEndDay: (date: string) => void;
+  setNumberOfPeople: (count: number) => void;
+  resetPlan: () => void;
+};
+
+export const useDateStore = create<DateStore>((set) => ({
+  startDay: null,
+  endDay: null,
+  numberOfPeople: 0,
+  setStartDay: (date) =>
+    set(() => ({
+      startDay: date,
+    })),
+  setEndDay: (date) =>
+    set(() => ({
+      endDay: date,
+    })),
+  setNumberOfPeople: (count) =>
+    set(() => ({
+      numberOfPeople: Math.max(0, count),
+    })),
+  resetPlan: () =>
+    set(() => ({
+      startDay: null,
+      endDay: null,
+      numberOfPeople: 0,
+    })),
+}));
 
 export const useRegionStore = create<RegionStore>((set) => ({
   selectedRegion: null,
@@ -28,6 +63,10 @@ export const useRegionStore = create<RegionStore>((set) => ({
       selectedDetails: state.selectedDetails.includes(detail)
         ? state.selectedDetails.filter((item) => item !== detail)
         : [...state.selectedDetails, `${state.selectedRegion} > ${detail}`],
+    })),
+  addDetail: (detail) =>
+    set((state) => ({
+      selectedDetails: [...state.selectedDetails, detail],
     })),
   removeDetail: (detail) =>
     set((state) => ({
