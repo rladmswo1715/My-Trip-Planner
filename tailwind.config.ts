@@ -5,6 +5,7 @@ export default {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/swiper/**/*.{js,ts}',
   ],
   theme: {
     extend: {
@@ -22,6 +23,7 @@ export default {
       fontFamily: {
         pretendard: ['Pretendard', 'sans-serif'],
         jalnan: ['Jalnan', 'sans-serif'],
+        nanumSquare: ['NanumSquareOTF', 'sans-serif'],
       },
 
       spacing: {
@@ -34,6 +36,9 @@ export default {
         'btn-sm': '1.8rem',
         'btn-md': '1.4rem',
         'btn-lg': '2rem',
+      },
+      letterSpacing: {
+        '2percent': '0.02em',
       },
     },
   },

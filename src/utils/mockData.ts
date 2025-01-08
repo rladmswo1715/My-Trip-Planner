@@ -1,0 +1,81 @@
+import { TMainCardList } from '@/types/card';
+import testImg from '@/assets/img/test-img.png';
+
+export const mainListMock: Record<string, TMainCardList[]> = {
+  mostViewPlans: [
+    {
+      title: '제주 서쪽 코스',
+      placeCategory: ['애월', '협제', '서귀포'],
+      startDate: '2024-01-01',
+      endDate: '2024-01-04',
+      people: 3,
+      transportation: 'PUBLIC_TRANSPORT',
+      totalCost: 1000000,
+      thumbnail: testImg,
+    },
+    {
+      title: '제주 서쪽 코스2',
+      placeCategory: ['애월', '협제', '서귀포'],
+      startDate: '2024-01-01',
+      endDate: '2024-01-04',
+      people: 3,
+      transportation: 'PUBLIC_TRANSPORT',
+      totalCost: 1000000,
+      thumbnail: testImg,
+    },
+    {
+      title: '제주 서쪽 코스3',
+      placeCategory: ['애월', '협제', '서귀포'],
+      startDate: '2024-01-01',
+      endDate: '2024-01-04',
+      people: 3,
+      transportation: 'PUBLIC_TRANSPORT',
+      totalCost: 1000000,
+      thumbnail: testImg,
+    },
+    {
+      title: '제주 서쪽 코스4',
+      placeCategory: ['애월', '협제', '서귀포'],
+      startDate: '2024-01-01',
+      endDate: '2024-01-04',
+      people: 3,
+      transportation: 'PUBLIC_TRANSPORT',
+      totalCost: 1000000,
+      thumbnail: testImg,
+    },
+    {
+      title: '제주 서쪽 코스5',
+      placeCategory: ['애월', '협제', '서귀포'],
+      startDate: '2024-01-01',
+      endDate: '2024-01-04',
+      people: 3,
+      transportation: 'PUBLIC_TRANSPORT',
+      totalCost: 1000000,
+      thumbnail: testImg,
+    },
+  ],
+  mostRecentPlans: [
+    {
+      title: '경기 남부 코스',
+      placeCategory: ['수원', '용인', '화성'],
+      startDate: '2024-01-01',
+      endDate: '2024-01-04',
+      people: 5,
+      transportation: 'CAR',
+      totalCost: 1000000,
+      thumbnail: testImg,
+    },
+  ],
+  HongdaeHotPlans: [
+    {
+      title: '홍대 투어',
+      placeCategory: ['홍대'],
+      startDate: '2024-01-01',
+      endDate: '2024-01-04',
+      people: 5,
+      transportation: 'CAR',
+      totalCost: 1000000,
+      thumbnail: testImg,
+    },
+  ],
+};

@@ -16,6 +16,13 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'NanumSquareOTF';
+  font-style: normal;
+  src: url('../assets/fonts/NanumSquareOTF_acR.otf') format('opentype');
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -131,5 +138,17 @@
   .blur {
     -webkit-backdrop-filter: blur(50px);
     backdrop-filter: blur(50px);
+  }
+}
+
+@layer utilities {
+  .swiper.swiper-initialized.swiper-horizontal {
+    @apply relative max-w-[128rem] w-full rounded-[0.6rem];
+  }
+  .swiper-wrapper {
+    @apply max-w-[128rem] mx-auto;
+  }
+  .swiper-slide {
+    @apply max-w-[30.5rem];
   }
 }
