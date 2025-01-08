@@ -4,7 +4,11 @@ import ProgressBar from './common/ProgressBar';
 import RegionSelectStep from './plan-setting-step/RegionSelectStep';
 import DateSelectStep from './plan-setting-step/DateSelectStep';
 import TransportSelectStep from './plan-setting-step/TransportSelectStep';
-import { usePlanStore, useRegionStore } from '@/stores/planStores';
+import {
+  useDateStore,
+  usePlanStore,
+  useRegionStore,
+} from '@/stores/planStores';
 import Button from './common/Button';
 import PlanTag from './plan-setting-step/plan-setting-step-tab/TagList';
 
@@ -17,34 +21,46 @@ export enum StepTitles {
 const PlanSetting = () => {
   const { step, nextStep } = usePlanStore();
   const { selectedDetails } = useRegionStore();
+  const { endDay, startDay, numberOfPeople } = useDateStore();
 
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <RegionSelectStep title={StepTitles.REGION} />;
+        return {
+          render: <RegionSelectStep title={StepTitles.REGION} />,
+          button: selectedDetails.length === 0,
+        };
       case 2:
-        return <DateSelectStep title={StepTitles.DATE} />;
+        return {
+          render: <DateSelectStep title={StepTitles.DATE} />,
+          button: !startDay || !endDay || numberOfPeople <= 0,
+        };
       case 3:
-        return <TransportSelectStep title={StepTitles.TRANSPORT} />;
+        return {
+          render: <TransportSelectStep title={StepTitles.TRANSPORT} />,
+          button: selectedDetails.length === 0,
+        };
       default:
-        return null;
+        return {};
     }
   };
 
   return (
     <div className="flex flex-col w-full h-full">
       <ProgressBar step={step} />
-      <section className="grow">{renderStep()}</section>
-      <div className="relative">
-        <div className="absolute bottom-0 w-full bg-opacity-5 backdrop-blur-sm">
-          <PlanTag />
+      <section className="grow">{renderStep().render}</section>
+      {step === 1 && (
+        <div className="relative">
+          <div className="absolute bottom-0 w-full bg-opacity-5 backdrop-blur-sm">
+            <PlanTag />
+          </div>
         </div>
-      </div>
+      )}
       <Button
         size="lg"
         onClick={nextStep}
         btnColor="blue"
-        disabled={step === 1 && selectedDetails.length === 0}
+        disabled={renderStep().button}
       >
         다음
       </Button>
