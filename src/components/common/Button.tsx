@@ -29,7 +29,7 @@ const Button: React.FC<ButtonProps> = ({
       case 'md':
         return 'py-btn-md-y btn-md w-[200px]';
       case 'lg':
-        return 'py-btn-lg-y btn-lg w-[540px]';
+        return 'py-btn-lg-y btn-lg';
       default:
         return '';
     }

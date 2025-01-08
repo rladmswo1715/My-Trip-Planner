@@ -143,4 +143,9 @@
   .btn-tab {
     @apply leading-[3rem] text-[2rem] items-center font-semibold w-[10rem];
   }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
