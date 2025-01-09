@@ -40,6 +40,9 @@ export default {
       letterSpacing: {
         '2percent': '0.02em',
       },
+      boxShadow: {
+        container: '0 2px 16px rgba(0, 0, 0, 0.05)',
+      },
     },
   },
   plugins: [],
