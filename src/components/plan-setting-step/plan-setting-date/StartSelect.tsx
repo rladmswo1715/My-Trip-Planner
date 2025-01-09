@@ -1,5 +1,5 @@
 import Chip from '@/components/common/Chip';
-import { useDateStore } from '@/stores/planStores';
+import { usePlanStore } from '@/stores/planStores';
 import React from 'react';
 
 type StartSelectProps = {
@@ -8,8 +8,10 @@ type StartSelectProps = {
 };
 
 const StartSelect = ({}: StartSelectProps) => {
-  const setSelectStartDay = useDateStore((state) => state.setStartDay);
-  const { startDay } = useDateStore();
+  const { setStartDay: setSelectStartDay, startDay } = usePlanStore(
+    (state) => state.date
+  );
+
   return (
     <div className="grow flex flex-col gap-[1.2rem]">
       <span className="leading-[2.6rem] text-[2rem]">가는 날</span>

@@ -1,5 +1,5 @@
 import Chip from '@/components/common/Chip';
-import { useDateStore } from '@/stores/planStores';
+import { usePlanStore } from '@/stores/planStores';
 import React from 'react';
 
 type EndSelectProps = {
@@ -8,8 +8,10 @@ type EndSelectProps = {
 };
 
 const EndSelect = ({}: EndSelectProps) => {
-  const setSelectEndDay = useDateStore((state) => state.setEndDay);
-  const { endDay } = useDateStore();
+  const { setEndDay: setSelectEndDay, endDay } = usePlanStore(
+    (state) => state.date
+  );
+
   return (
     <div className="grow flex flex-col gap-[1.2rem]">
       <span className="leading-[2.6rem] text-[2rem]">오는 날</span>

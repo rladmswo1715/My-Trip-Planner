@@ -3,8 +3,8 @@ import { useSearchPlaces } from '@/lib/hooks/queries/useSearchLocationQuery';
 import { useQuery } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import Search from './Search';
-import { useRegionStore } from '@/stores/planStores';
 import { formatAddressName } from '@/utils/placeFormat';
+import { usePlanStore } from '@/stores/planStores';
 
 const DetailSearchLocation = () => {
   const [, setSelectedItem] = useState<PlaceDocument | null>(null);
@@ -13,7 +13,7 @@ const DetailSearchLocation = () => {
     ...useSearchPlaces(searchTerm, searchTerm.length >= 2),
   });
   // const { data } = useQuery(useSearchPlaces(searchTerm, searchTerm.length > 2));
-  const setSelectDetail = useRegionStore((state) => state.addDetail);
+  const { setRegion: setSelectDetail } = usePlanStore((state) => state.region);
 
   const handleSelect = (item: PlaceDocument) => {
     setSelectedItem(item);

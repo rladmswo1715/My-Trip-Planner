@@ -4,13 +4,10 @@ import ProgressBar from './common/ProgressBar';
 import RegionSelectStep from './plan-setting-step/RegionSelectStep';
 import DateSelectStep from './plan-setting-step/DateSelectStep';
 import TransportSelectStep from './plan-setting-step/TransportSelectStep';
-import {
-  useDateStore,
-  usePlanStore,
-  useRegionStore,
-} from '@/stores/planStores';
+
 import Button from './common/Button';
 import PlanTag from './plan-setting-step/plan-setting-step-tab/TagList';
+import { usePlanStore } from '@/stores/planStores';
 
 export enum StepTitles {
   REGION = '어디로 떠나고 싶으신가요?',
@@ -19,9 +16,9 @@ export enum StepTitles {
 }
 
 const PlanSetting = () => {
-  const { step, nextStep } = usePlanStore();
-  const { selectedDetails } = useRegionStore();
-  const { endDay, startDay, numberOfPeople } = useDateStore();
+  const { step, nextStep, region, date, transport } = usePlanStore();
+  const { selectedDetails } = region;
+  const { endDay, startDay, numberOfPeople } = date;
 
   const renderStep = () => {
     switch (step) {
@@ -38,7 +35,7 @@ const PlanSetting = () => {
       case 3:
         return {
           render: <TransportSelectStep title={StepTitles.TRANSPORT} />,
-          button: selectedDetails.length === 0,
+          button: transport.selectedTransport === null,
         };
       default:
         return {};

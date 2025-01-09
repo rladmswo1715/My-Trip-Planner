@@ -16,7 +16,7 @@ type ButtonProps = {
  */
 const Button: React.FC<ButtonProps> = ({
   size = 'md',
-  btnColor = 'blue',
+  btnColor,
   // hover = false,
   disabled = false,
   children,

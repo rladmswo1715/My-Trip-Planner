@@ -3,7 +3,7 @@ import StartSelect from './plan-setting-date/StartSelect';
 import EndSelect from './plan-setting-date/EndSelect';
 import PeopleSelect from './plan-setting-date/PeopleSelect';
 import useOutsideClick from '@/lib/hooks/useOutsideClick';
-import { useDateStore } from '@/stores/planStores';
+import { usePlanStore } from '@/stores/planStores';
 
 type StepType = {
   title: string;
@@ -14,8 +14,9 @@ const DateSelectStep = ({ title }: StepType) => {
     'start' | 'end' | 'numberOfPeople' | null
   >(null);
   const [isEditing, setIsEditing] = useState(false);
-  const { numberOfPeople: people } = useDateStore();
-  const setPeople = useDateStore((state) => state.setNumberOfPeople);
+  const { setNumberOfPeople: setPeople, numberOfPeople: people } = usePlanStore(
+    (state) => state.date
+  );
   const peopleRef = useRef(null);
 
   const handleSearchChange = useCallback(
