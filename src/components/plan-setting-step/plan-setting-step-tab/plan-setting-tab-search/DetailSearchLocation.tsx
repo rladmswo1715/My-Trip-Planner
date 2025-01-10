@@ -13,13 +13,12 @@ const DetailSearchLocation = () => {
     ...useSearchPlaces(searchTerm, searchTerm.length >= 2),
   });
   // const { data } = useQuery(useSearchPlaces(searchTerm, searchTerm.length > 2));
-  const { setRegion: setSelectDetail } = usePlanStore((state) => state.region);
+  const { setSelectDetails } = usePlanStore((state) => state.region);
 
   const handleSelect = (item: PlaceDocument) => {
     setSelectedItem(item);
     setSearchTerm(item.address.address_name);
-    setSelectDetail(formatAddressName(item));
-    console.log('Selected Item:', item);
+    setSelectDetails(formatAddressName(item));
   };
 
   const handleSearchChange = useCallback((term: string) => {
@@ -33,7 +32,7 @@ const DetailSearchLocation = () => {
         onSelect={handleSelect}
         searchTerm={searchTerm}
         onSearchChange={handleSearchChange}
-      ></Search>
+      />
     </div>
   );
 };

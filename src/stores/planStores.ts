@@ -12,6 +12,7 @@ type PlanStore = {
     toggleDetail: (detail: string) => void;
     removeDetail: (detail: string) => void;
     clearDetails: () => void;
+    setSelectDetails: (detail: string) => void;
   };
   date: {
     startDay: string | null;
@@ -53,13 +54,23 @@ export const usePlanStore = create<PlanStore>((set) => ({
               : region,
         },
       })),
+    setSelectDetails: (detail) =>
+      set((state) => ({
+        region: {
+          ...state.region,
+          selectedDetails: [...state.region.selectedDetails, detail],
+        },
+      })),
     toggleDetail: (detail) =>
       set((state) => ({
         region: {
           ...state.region,
           selectedDetails: state.region.selectedDetails.includes(detail)
             ? state.region.selectedDetails.filter((item) => item !== detail)
-            : [...state.region.selectedDetails, detail],
+            : [
+                ...state.region.selectedDetails,
+                state.region.selectedRegion + ' > ' + detail,
+              ],
         },
       })),
     removeDetail: (detail) =>
@@ -128,6 +139,7 @@ export const usePlanStore = create<PlanStore>((set) => ({
         toggleDetail: state.region.toggleDetail,
         removeDetail: state.region.removeDetail,
         clearDetails: state.region.clearDetails,
+        setSelectDetails: state.region.setSelectDetails,
       },
       date: {
         startDay: null,
