@@ -29,7 +29,7 @@ const Header = () => {
 
   return (
     <header className="w-full bg-var-primary-500">
-      <div className="flex justify-between max-w-[128rem] w-full mx-auto items-center py-[3.2rem]">
+      <div className="flex justify-between max-w-[132.8rem] w-full mx-auto items-center py-[3.2rem] px-[2.4rem]">
         <div className="flex items-center gap-[6rem]">
           <Link href="/">
             <LogoWithText />
