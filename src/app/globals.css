@@ -44,6 +44,7 @@
 
   html {
     font-size: 62.5%;
+    scroll-behavior: smooth;
   }
 
   /* 화면별 작업환경 */
@@ -135,10 +136,10 @@
     @apply relative w-full overflow-visible;
   }
   .dropdown ul {
-    @apply w-full bg-background rounded-b-[1.2rem] overflow-auto max-h-[26.4rem];
+    @apply w-full bg-background rounded-b-[1.2rem] overflow-auto;
   }
   .dropdown ul li {
-    @apply cursor-pointer bg-background py-[2rem] px-[2.4rem] text-[2rem] leading-[2.6rem] font-normal;
+    @apply cursor-pointer bg-background truncate text-[2rem] leading-[2.6rem] font-normal;
 
     cursor: pointer;
   }
