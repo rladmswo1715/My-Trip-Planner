@@ -41,7 +41,7 @@ const Dropdown = ({ list, title, onSelect }: DropdownProps) => {
       </Chip>
       <div className="relative">
         {isOpen && (
-          <ul className="absolute left-0 shadow-lg z-50 overflow-visible">
+          <ul className="absolute left-0 shadow-lg z-50 overflow-visible max-h-[26.4rem]">
             {list.map((e) => (
               <li
                 key={e}
