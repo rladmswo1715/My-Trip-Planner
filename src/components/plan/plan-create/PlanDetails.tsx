@@ -5,7 +5,7 @@ import { calculateTripDuration } from '@/utils/dateUtils';
 import Image from 'next/image';
 import thumnail from '@/assets/img/def-thumnail.png';
 const PlanDetails = () => {
-  const { planData, setPlanData } = usePlanContext();
+  const { planData } = usePlanContext();
   const { startDate, endDate, people, title, subtitle } = planData;
 
   const duration = calculateTripDuration({ endDate, startDate });
@@ -47,7 +47,7 @@ const PlanDetails = () => {
           </div>
           {/* 부제목라인 */}
           <span className="leading-[2.6rem] text-[2rem] text-var-enable-text">
-            {subtitle}
+            {subtitle || '--'}
           </span>
         </div>
         {/* 여행정보라인 */}

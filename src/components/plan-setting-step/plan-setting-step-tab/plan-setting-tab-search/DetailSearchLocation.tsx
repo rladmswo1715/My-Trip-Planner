@@ -5,6 +5,7 @@ import React, { useCallback, useState } from 'react';
 import Search from './Search';
 import { formatAddressName } from '@/utils/placeFormat';
 import { usePlanStore } from '@/stores/planStores';
+import SearchItems from './SearchItems';
 
 const DetailSearchLocation = () => {
   const [, setSelectedItem] = useState<PlaceDocument | null>(null);
@@ -25,15 +26,20 @@ const DetailSearchLocation = () => {
     setSearchTerm(term);
   }, []);
   return (
-    <div>
-      <Search
-        title={'지역명 또는 장소를 입력해주세요'}
-        list={data?.documents as PlaceDocument[]}
-        onSelect={handleSelect}
-        searchTerm={searchTerm}
-        onSearchChange={handleSearchChange}
-      />
-    </div>
+    <Search<PlaceDocument>
+      title="지역명 또는 장소를 입력해주세요"
+      list={data?.documents as PlaceDocument[]}
+      onSelect={handleSelect}
+      searchTerm={searchTerm}
+      onSearchChange={handleSearchChange}
+      renderItem={(item, handleSelect) => (
+        <SearchItems
+          handleSelect={handleSelect}
+          items={item}
+          key={item.address_name}
+        />
+      )}
+    />
   );
 };
 

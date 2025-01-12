@@ -4,13 +4,13 @@ type SinglePostPropsType = {
   queryKey: [string, string];
 };
 
-const fetchPlaces = async ({
+const fetchPlacesKeyword = async ({
   queryKey,
-}: SinglePostPropsType): Promise<PlaceAPIType<PlaceDocument>> => {
+}: SinglePostPropsType): Promise<PlaceAPIType<KeyWordDocument>> => {
   const [, query] = queryKey;
 
   const response = await fetch(
-    `https://dapi.kakao.com/v2/local/search/address?query=${encodeURIComponent(
+    `https://dapi.kakao.com/v2/local/search/keyword?query=${encodeURIComponent(
       query
     )}`,
 
@@ -28,17 +28,17 @@ const fetchPlaces = async ({
   return data;
 };
 
-export const useSearchPlaces = (query: string, enabled?: boolean) => {
+export const useSearchPlacesKeyword = (query: string, enabled?: boolean) => {
   // console.log(enabled);
-  const queryKey: [_1: string, _2: string] = ['searchPlaces', query];
+  const queryKey: [_1: string, _2: string] = ['searchPlacesKeyWord', query];
   const queryFn:
     | QueryFunction<
-        PlaceAPIType<PlaceDocument>,
+        PlaceAPIType<KeyWordDocument>,
         [_1: string, _2: string],
         never
       >
     | undefined = async ({ queryKey }) => {
-    return fetchPlaces({ queryKey });
+    return fetchPlacesKeyword({ queryKey });
   };
 
   return {
