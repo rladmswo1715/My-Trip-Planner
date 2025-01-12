@@ -26,3 +26,31 @@ export const calculateTripDuration = ({
     Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
   return { nights: duration - 1, days: duration };
 };
+
+export const generateDays = ({
+  startDay,
+  endDay,
+}: {
+  startDay: string;
+  endDay: string;
+}): PlanDayType[] => {
+  const result: PlanDayType[] = [];
+  const currentDate = new Date(startDay!);
+  const endDate = new Date(endDay!);
+
+  let dayIndex = 1;
+
+  while (currentDate <= endDate) {
+    const formattedDate = currentDate.toISOString().split('T')[0];
+    result.push({
+      day: dayIndex,
+      cost: 0,
+      date: formattedDate,
+      detail: [],
+    });
+    currentDate.setDate(currentDate.getDate() + 1);
+    dayIndex++;
+  }
+
+  return result;
+};

@@ -10,12 +10,8 @@ import { usePlanStore } from '@/stores/planStores';
 import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
-import { calculateTripDuration } from '@/utils/dateUtils';
-export enum StepTitles {
-  REGION = '어디로 떠나고 싶으신가요?',
-  DATE = '여행 정보를 입력해주세요',
-  TRANSPORT = '어떤 교통수단을 이용하시나요?',
-}
+import { calculateTripDuration, generateDays } from '@/utils/dateUtils';
+import { STEP_TITLE } from '@/types/enum';
 
 const PlanSetting = () => {
   const { step, nextStep, region, date, transport, resetAll, resetStep } =
@@ -32,6 +28,7 @@ const PlanSetting = () => {
   }, []);
 
   const lastBtnSetting = () => {
+    if (!startDay || !endDay) return;
     const planId = uuidv4();
     const regions = region.selectedDetails.toString();
     const day = calculateTripDuration({
@@ -39,6 +36,7 @@ const PlanSetting = () => {
       startDate: startDay!,
     });
     const title = `${day?.nights}박 ${day?.days}일 여행`;
+    const days = generateDays({ startDay, endDay });
 
     const initialPlanData = {
       title,
@@ -47,32 +45,32 @@ const PlanSetting = () => {
       endDate: endDay,
       category: [],
       people: numberOfPeople,
-      days: [],
+      days,
     };
     localStorage.setItem(
       'planData',
       JSON.stringify({ ...initialPlanData, planId })
     );
-    router.push(`/plan/${planId}/create?setup=ture`);
+    router.push(`/plan/${planId}/create`);
   };
 
   const renderStep = () => {
     switch (step) {
       case 1:
         return {
-          render: <RegionSelectStep title={StepTitles.REGION} />,
+          render: <RegionSelectStep title={STEP_TITLE.REGION} />,
           button: selectedDetails.length === 0,
           onClick: nextStep,
         };
       case 2:
         return {
-          render: <DateSelectStep title={StepTitles.DATE} />,
+          render: <DateSelectStep title={STEP_TITLE.DATE} />,
           button: !startDay || !endDay || numberOfPeople <= 0,
           onClick: nextStep,
         };
       case 3:
         return {
-          render: <TransportSelectStep title={StepTitles.TRANSPORT} />,
+          render: <TransportSelectStep title={STEP_TITLE.TRANSPORT} />,
           button: transport.selectedTransport === null,
           onClick: lastBtnSetting,
         };

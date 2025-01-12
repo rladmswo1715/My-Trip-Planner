@@ -1,10 +1,10 @@
+import InnerLayout from '@/components/layout/InnerLayout';
+import PlanDayCreates from '@/components/plan/plan-create/PlanDayCreates';
 import PlanDetails from '@/components/plan/plan-create/PlanDetails';
 import { PlanProvider } from '@/providers/contexts/PlanContext';
 
 import { redirect } from 'next/navigation';
 import React from 'react';
-
-export const fetchCache = 'force-no-store';
 
 const PlanPage = async ({
   params,
@@ -19,11 +19,20 @@ const PlanPage = async ({
 
   return (
     <PlanProvider>
-      <section className="relative w-full min-h-screen bg-var-enable-bg flex justify-center p-[4rem]">
-        <div className="flex w-[127.9rem] h-[39.8rem] rounded-[2rem] p-[4rem] bg-white">
-          <PlanDetails />
-        </div>
-      </section>
+      <div className="bg-var-enable-bg">
+        <InnerLayout className="min-h-screen">
+          <section className="relative w-full bg-var-enable-bg flex justify-center py-[2rem]">
+            <div className="flex w-[127.9rem] h-[39.8rem] rounded-[2rem] p-[4rem] bg-white">
+              <PlanDetails />
+            </div>
+          </section>
+          <section className="relative w-full bg-var-enable-bg flex justify-center">
+            <div className="flex w-[127.9rem] rounded-[2rem] p-[4rem] bg-white">
+              <PlanDayCreates />
+            </div>
+          </section>
+        </InnerLayout>
+      </div>
     </PlanProvider>
   );
 };

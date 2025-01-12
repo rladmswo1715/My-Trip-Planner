@@ -41,7 +41,7 @@ const Chip: React.FC<ChipProps> = ({
           dropdown ? 'justify-between' : 'gap-[1rem] justify-between'
         }`}
       >
-        <span className="text-inherit text-center">{children}</span>
+        {children}
         {Icon ? Icon : state ? <Icons.UpTriangle /> : <Icons.DownTriangle />}
       </div>
     </button>
