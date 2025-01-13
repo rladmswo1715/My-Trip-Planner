@@ -5,21 +5,25 @@ type ChipProps = {
   children: JSX.Element | string;
   state: boolean;
   dropdown?: boolean;
+  search?: boolean;
+  Icon?: JSX.Element;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Chip: React.FC<ChipProps> = ({
   dropdown = false,
   children,
   state = true,
+  search = false,
+  Icon,
   ...rest
 }) => {
   const getChipColor = () => {
     switch (state) {
       case false:
-        return 'chip-close';
+        return search ? 'search-close' : 'chip-close';
 
       case true:
-        return 'chip-open';
+        return search ? 'search-open' : 'chip-open';
       default:
         break;
     }
@@ -34,11 +38,11 @@ const Chip: React.FC<ChipProps> = ({
     >
       <div
         className={`flex items-center  ${
-          dropdown ? 'justify-between' : 'gap-[1rem]'
+          dropdown ? 'justify-between' : 'gap-[1rem] justify-between'
         }`}
       >
-        <span className="text-inherit text-center">{children}</span>
-        {state ? <Icons.UpTriangle /> : <Icons.DownTriangle />}
+        {children}
+        {Icon ? Icon : state ? <Icons.UpTriangle /> : <Icons.DownTriangle />}
       </div>
     </button>
   );

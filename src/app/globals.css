@@ -44,6 +44,7 @@
 
   html {
     font-size: 62.5%;
+    scroll-behavior: smooth;
   }
 
   /* 화면별 작업환경 */
@@ -104,8 +105,15 @@
   .chip-open {
     @apply border border-var-primary-500 text-var-primary-500;
   }
+  .search-open {
+    @apply border border-var-primary-500 text-black;
+  }
   .chip-close {
     @apply border border-black border-opacity-30 text-opacity-50 text-black;
+  }
+
+  .search-close {
+    @apply bg-var-enable-300 text-var-enable-text border border-var-enable-300;
   }
 
   .tag {
@@ -118,26 +126,35 @@
     width: fit-content;
   }
   .modal {
-    @apply min-h-[80rem] max-w-7xl w-[59.6rem] h-[80rem] max-h-[80] bg-white p-[2.8rem] rounded-[1.8rem];
+    @apply relative min-h-[80rem] max-w-7xl w-[59.6rem] h-[80rem] max-h-[80] bg-white p-[2.8rem] rounded-[1.8rem];
   }
   .modal-background {
     @apply fixed top-0 flex flex-col justify-center items-center w-screen h-full z-50 bg-neutral-900/70 transition-transform;
   }
 
   .dropdown {
-    @apply relative w-full;
+    @apply relative w-full overflow-visible;
   }
   .dropdown ul {
-    @apply w-full bg-background rounded-b-[1.2rem] overflow-auto max-h-[26.4rem];
+    @apply w-full bg-background rounded-b-[1.2rem] overflow-auto;
   }
   .dropdown ul li {
-    @apply cursor-pointer bg-background py-[2rem] px-[2.4rem] text-[2rem] leading-[2.6rem] font-normal;
+    @apply cursor-pointer bg-background truncate text-[2rem] leading-[2.6rem] font-normal;
 
     cursor: pointer;
   }
   .blur {
     -webkit-backdrop-filter: blur(50px);
     backdrop-filter: blur(50px);
+  }
+
+  .btn-tab {
+    @apply leading-[3rem] text-[2rem] items-center font-semibold w-[10rem];
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 

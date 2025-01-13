@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import RootProviders from '@/providers/RootProviders';
 import Header from '@/components/ui/Header';
+import RootProviders from '@/providers/RootProviders';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,7 +19,13 @@ export default function RootLayout({
       <body className={''}>
         <Header />
         <RootProviders>{children}</RootProviders>
+
         <div id="modal-portal" />
+        <Script
+          defer
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false`}
+          strategy="beforeInteractive"
+        />
       </body>
     </html>
   );

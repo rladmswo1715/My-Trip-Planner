@@ -1,9 +1,8 @@
 import { ICONS } from '@/constants/importImages';
-import { TDetailedSchedule } from '@/types/schedule';
 import Image from 'next/image';
 
 interface DetailedScheduleProps {
-  placesData: TDetailedSchedule[];
+  placesData: PlanDetailType[];
 }
 
 const DetailedSchedule = ({ placesData }: DetailedScheduleProps) => {
@@ -25,7 +24,7 @@ const DetailedSchedule = ({ placesData }: DetailedScheduleProps) => {
           className="relative flex gap-[2.4rem] items-start"
         >
           <Image
-            src={switchCategoryIcon(item.planCategory)}
+            src={switchCategoryIcon(item.categoryName)}
             width={40}
             height={40}
             alt="카테고리"
@@ -33,7 +32,7 @@ const DetailedSchedule = ({ placesData }: DetailedScheduleProps) => {
           />
           <div className="flex flex-col gap-[0.4rem]">
             <h3 className="text-[2rem] text-black font-semibold leading-[3rem]">
-              {item.placeName}
+              {item.place}
             </h3>
             <p className="text-[1.6rem] text-black/50 leading-[2.08]">
               {item.streetAddress}

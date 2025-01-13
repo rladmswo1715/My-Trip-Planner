@@ -1,11 +1,10 @@
 import Button from '@/components/common/Button';
 import { regions } from '@/constants/regions';
-import { useRegionStore } from '@/stores/planStores';
+import { usePlanStore } from '@/stores/planStores';
 import React from 'react';
 
 const RegionSelector = () => {
-  const selectedRegion = useRegionStore((state) => state.selectedRegion);
-  const setRegion = useRegionStore((state) => state.setRegion);
+  const { selectedRegion, setRegion } = usePlanStore((state) => state.region);
 
   return (
     <div className="flex flex-wrap gap-[1.2rem]">

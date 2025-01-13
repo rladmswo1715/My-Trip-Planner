@@ -1,12 +1,13 @@
 import Button from '@/components/common/Button';
 import { regions } from '@/constants/regions';
-import { useRegionStore } from '@/stores/planStores';
+import { usePlanStore } from '@/stores/planStores';
 import React from 'react';
 
 const DetailedSelector = () => {
-  const selectedRegion = useRegionStore((state) => state.selectedRegion);
-  const selectedDetails = useRegionStore((state) => state.selectedDetails);
-  const toggleDetail = useRegionStore((state) => state.toggleDetail);
+  const { selectedRegion, selectedDetails, toggleDetail } = usePlanStore(
+    (state) => state.region
+  );
+
   if (!selectedRegion || !regions[selectedRegion]) return null;
   return (
     <div className="flex flex-col my-[4rem] relative gap-[2rem]">

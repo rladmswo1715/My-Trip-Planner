@@ -4,46 +4,97 @@ import ProgressBar from './common/ProgressBar';
 import RegionSelectStep from './plan-setting-step/RegionSelectStep';
 import DateSelectStep from './plan-setting-step/DateSelectStep';
 import TransportSelectStep from './plan-setting-step/TransportSelectStep';
-import { usePlanStore, useRegionStore } from '@/stores/planStores';
 import Button from './common/Button';
 import PlanTag from './plan-setting-step/plan-setting-step-tab/TagList';
-
-export enum StepTitles {
-  REGION = '어디로 떠나고 싶으신가요?',
-  DATE = '여행 정보를 입력해주세요',
-  TRANSPORT = '어떤 교통수단을 이용하시나요?',
-}
+import { usePlanStore } from '@/stores/planStores';
+import { useRouter } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
+import { useEffect } from 'react';
+import { calculateTripDuration, generateDays } from '@/utils/dateUtils';
+import { STEP_TITLE } from '@/types/enum';
 
 const PlanSetting = () => {
-  const { step, nextStep } = usePlanStore();
-  const { selectedDetails } = useRegionStore();
+  const { step, nextStep, region, date, transport, resetAll, resetStep } =
+    usePlanStore();
+  const { selectedDetails } = region;
+  const { endDay, startDay, numberOfPeople } = date;
+  const router = useRouter();
+
+  useEffect(() => {
+    return () => {
+      resetAll();
+      resetStep();
+    };
+  }, []);
+
+  const lastBtnSetting = () => {
+    if (!startDay || !endDay) return;
+    const planId = uuidv4();
+    const regions = region.selectedDetails.toString();
+    const day = calculateTripDuration({
+      endDate: endDay!,
+      startDate: startDay!,
+    });
+    const title = `${day?.nights}박 ${day?.days}일 여행`;
+    const days = generateDays({ startDay, endDay });
+
+    const initialPlanData = {
+      title,
+      subtitle: regions,
+      startDate: startDay,
+      endDate: endDay,
+      category: [],
+      people: numberOfPeople,
+      days,
+    };
+    localStorage.setItem(
+      'planData',
+      JSON.stringify({ ...initialPlanData, planId })
+    );
+    router.push(`/plan/${planId}/create`);
+  };
+
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <RegionSelectStep title={StepTitles.REGION} />;
+        return {
+          render: <RegionSelectStep title={STEP_TITLE.REGION} />,
+          button: selectedDetails.length === 0,
+          onClick: nextStep,
+        };
       case 2:
-        return <DateSelectStep title={StepTitles.DATE} />;
+        return {
+          render: <DateSelectStep title={STEP_TITLE.DATE} />,
+          button: !startDay || !endDay || numberOfPeople <= 0,
+          onClick: nextStep,
+        };
       case 3:
-        return <TransportSelectStep title={StepTitles.TRANSPORT} />;
+        return {
+          render: <TransportSelectStep title={STEP_TITLE.TRANSPORT} />,
+          button: transport.selectedTransport === null,
+          onClick: lastBtnSetting,
+        };
       default:
-        return null;
+        return {};
     }
   };
 
   return (
     <div className="flex flex-col w-full h-full">
       <ProgressBar step={step} />
-      <section className="grow overflow-auto">{renderStep()}</section>
-      <div className="relative">
-        <div className="absolute bottom-0 w-full bg-opacity-5 backdrop-blur-sm">
-          <PlanTag />
+      <section className="grow">{renderStep().render}</section>
+      {step === 1 && (
+        <div className="relative">
+          <div className="absolute bottom-0 w-full bg-opacity-5 backdrop-blur-sm">
+            <PlanTag />
+          </div>
         </div>
-      </div>
+      )}
       <Button
         size="lg"
-        onClick={nextStep}
+        onClick={renderStep().onClick}
         btnColor="blue"
-        disabled={step === 1 && selectedDetails.length === 0}
+        disabled={renderStep().button}
       >
         다음
       </Button>

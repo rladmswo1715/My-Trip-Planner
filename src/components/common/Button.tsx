@@ -16,7 +16,7 @@ type ButtonProps = {
  */
 const Button: React.FC<ButtonProps> = ({
   size = 'md',
-  btnColor = 'blue',
+  btnColor,
   // hover = false,
   disabled = false,
   children,
@@ -29,9 +29,9 @@ const Button: React.FC<ButtonProps> = ({
       case 'md':
         return 'py-btn-md-y btn-md w-[200px]';
       case 'lg':
-        return 'py-btn-lg-y btn-lg w-[540px]';
+        return 'py-btn-lg-y btn-lg';
       default:
-        return 'bg-gray-200 text-black';
+        return '';
     }
   };
 
@@ -46,7 +46,7 @@ const Button: React.FC<ButtonProps> = ({
       case 'white':
         return `bg-background text-background border-var-primary-500 dark:bg-foreground dark:text-background border border-1 border-var-primary-500`;
       default:
-        break;
+        return ``;
     }
   };
 
