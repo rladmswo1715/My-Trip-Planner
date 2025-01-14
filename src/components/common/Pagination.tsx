@@ -1,13 +1,17 @@
 import { ICONS } from '@/constants/importImages';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface PaginationProps {
+  pageType: 'my' | 'dibs';
   currentPage: number;
   totalPages: number;
   onPageChange?: (page: number) => void;
 }
 
-const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
+const Pagination = ({ pageType, currentPage, totalPages }: PaginationProps) => {
+  const urlPath = pageType === 'my' ? '/my/my-planners' : '/my/dibs-planners';
+  const router = useRouter();
   const maxPage = 5;
 
   const groupStart = Math.floor((currentPage - 1) / maxPage) * maxPage + 1;
@@ -18,10 +22,23 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
     (_, idx) => groupStart + idx
   );
 
+  const handlePageChange = (page: number) => {
+    router.push(`${urlPath}?currentPage=${page}`);
+  };
+
+  const changePrevPageHandler = () => {
+    const page = currentPage - 1;
+    router.push(`${urlPath}?currentPage=${page}`);
+  };
+  const changeNextPageHandler = () => {
+    const page = currentPage + 1;
+    router.push(`${urlPath}?currentPage=${page}`);
+  };
+
   return (
     <div className="flex items-center justify-center gap-[4rem]">
-      {groupStart !== 1 && (
-        <button>
+      {currentPage > 1 && (
+        <button onClick={changePrevPageHandler}>
           <Image src={ICONS.iconLeftArrow.src} alt={ICONS.iconLeftArrow.alt} />
         </button>
       )}
@@ -32,13 +49,14 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
           className={`text-[1.8rem] font-extrabold ${
             page === currentPage ? 'text-[#DDDDDD]' : 'text-black'
           }`}
+          onClick={() => handlePageChange(page)}
         >
           {page}
         </button>
       ))}
 
-      {groupEnd !== totalPages && (
-        <button>
+      {currentPage < totalPages && (
+        <button onClick={changeNextPageHandler}>
           <Image
             src={ICONS.iconRightArrow.src}
             alt={ICONS.iconRightArrow.alt}
