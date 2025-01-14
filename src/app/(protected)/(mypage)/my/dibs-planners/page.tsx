@@ -1,5 +1,7 @@
+import DibsPlannerListSection from '@/components/pages/my/dibs-planners/ListSection';
+
 const DibsPlanners = () => {
-  return <div></div>;
+  return <DibsPlannerListSection />;
 };
 
 export default DibsPlanners;
