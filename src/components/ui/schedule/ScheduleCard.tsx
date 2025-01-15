@@ -1,7 +1,6 @@
 import DetailedSchedule from './DetailedSchedule';
 import { formatDate } from '@/utils/dateUtils';
 import { personalCostCalc } from '@/utils/costUtils';
-import KakaoMap from '@/components/maps/KakaoMap';
 
 interface ScheduleCardProps {
   day: number;
@@ -17,13 +16,10 @@ const ScheduleCard = ({
   date,
 }: ScheduleCardProps) => {
   return (
-    <div>
+    <div id={`Day${day}`}>
       <div className="flex flex-col gap-[1.6rem] text-[2rem] text-black leading-[3rem]">
         <div className="flex gap-[0.8rem] items-center">
-          <h2
-            className="text-[2.4rem] font-semibold leading-[2.864rem]"
-            id={`Day${day}`}
-          >
+          <h2 className="text-[2.4rem] font-semibold leading-[2.864rem]">
             Day {day}
           </h2>
 
@@ -40,12 +36,13 @@ const ScheduleCard = ({
         )}
       </div>
 
-      {scheduleData?.detail && scheduleData?.detail.length > 0 && (
+      {scheduleData?.detail && scheduleData?.detail.length > 0 ? (
         <div className="relative flex justify-between gap-[8rem] mt-[3.6rem] min-h-[35.2rem]">
           <DetailedSchedule placesData={scheduleData.detail} />
-          <div className="flex-grow w-full z-50">
-            <KakaoMap detail={scheduleData.detail} />
-          </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-center min-h-[35.2rem] text-var-enable-text text-[2rem]">
+          스케쥴을 추가해주세요
         </div>
       )}
     </div>
