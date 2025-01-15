@@ -49,14 +49,8 @@ const DateSelectStep = ({ title }: StepType) => {
 
         <div className="w-full mt-[2.8rem]">
           <div className="flex justify-between gap-[2rem]">
-            <StartSelect
-              handleOpenState={() => handleOpenState('start')}
-              state={openState === 'start'}
-            />
-            <EndSelect
-              handleOpenState={() => handleOpenState('end')}
-              state={openState === 'end'}
-            />
+            <StartSelect />
+            <EndSelect />
           </div>
         </div>
         <div className="w-full mt-[2.8rem]">

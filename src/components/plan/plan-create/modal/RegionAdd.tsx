@@ -41,7 +41,7 @@ const RegionComponent = ({ day }: { day: number }) => {
               streetAddress: item.address_name,
               latitude: parseFloat(item.y),
               longitude: parseFloat(item.x),
-              categoryName: item.category_name,
+              categoryName: item.category_group_code,
             })),
           ],
         };
@@ -79,9 +79,9 @@ const RegionComponent = ({ day }: { day: number }) => {
       <div className="relative">
         <div className="absolute bottom-0 w-full bg-opacity-5 backdrop-blur-sm">
           <div className="relative flex flex-wrap gap-2 p-4">
-            {selectItems.map((detail) => (
+            {selectItems.map((detail, index) => (
               <Tag
-                key={detail.address_name}
+                key={detail.id + index}
                 close
                 color="blueWhite"
                 onClick={() => handleRemoveTag(detail.id)}
