@@ -1,5 +1,3 @@
-'use client';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperCore } from 'swiper/types';
 import PlannerCard from '@/components/ui/card/PlannerCard';
@@ -30,6 +28,12 @@ const SlideContainer = ({ children, slideItems }: SlideContainerProps) => {
     }
   };
 
+  const noSlideItemRender = (
+    <div className="flex justify-center items-center min-h-[10rem] text-[2rem] font-semibold">
+      추천하는 슬라이드가 없어요..
+    </div>
+  );
+
   return (
     <div className="flex flex-col gap-[2rem]">
       <div className="w-full max-w-[128rem] mx-auto ">
@@ -39,26 +43,30 @@ const SlideContainer = ({ children, slideItems }: SlideContainerProps) => {
       </div>
 
       <div className="relative">
-        <Swiper
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
-          spaceBetween={20}
-          slidesPerView={4}
-          loop={true}
-          navigation
-        >
-          {slideItems.map((item) => {
-            return (
-              <SwiperSlide key={item.title}>
-                <PlannerCard cardType="main" cardInfo={item} />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-        {slideItemsLength > 4 && (
+        {slideItemsLength > 0 ? (
           <>
-            <SlideCustomButton direction="left" onClick={handlePrev} />
-            <SlideCustomButton direction="right" onClick={handleNext} />
+            <Swiper
+              onSwiper={(swiper) => (swiperRef.current = swiper)}
+              spaceBetween={20}
+              slidesPerView={4}
+              loop={true}
+              navigation
+            >
+              {slideItems.map((item) => (
+                <SwiperSlide key={item.title}>
+                  <PlannerCard cardType="main" cardInfo={item} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {slideItemsLength > 4 && (
+              <>
+                <SlideCustomButton direction="left" onClick={handlePrev} />
+                <SlideCustomButton direction="right" onClick={handleNext} />
+              </>
+            )}
           </>
+        ) : (
+          noSlideItemRender
         )}
       </div>
     </div>

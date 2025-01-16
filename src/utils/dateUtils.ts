@@ -12,6 +12,8 @@ export const formatDate = (pageType: string, date: Date) => {
   } else if (pageType === 'comment') {
     const year = dateObj.getFullYear();
     return `${year}.${month}.${day}`;
+  } else if (pageType === 'main') {
+    return `${month}.${day}`;
   }
 };
 /**

@@ -3,8 +3,8 @@ import { StaticImageData } from 'next/image';
 export type TMainCardList = {
   title: string;
   placeCategory: string[];
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   people: number;
   transportation: 'PUBLIC_TRANSPORT' | 'CAR';
   totalCost: number;

@@ -2,6 +2,54 @@ import { http, HttpResponse } from 'msw';
 import testImg from '@/assets/img/test-img.png';
 
 export const handlers = [
+  http.get('/home', () => {
+    const mostViewPlans = Array.from({ length: 10 }, (_, index) => {
+      const id = index + 1;
+      return {
+        title: `인기 슬라이드${id}`,
+        placeCategory: ['애월', '협제', '서귀포'],
+        startDate: new Date(2024, 1, 2).toISOString().split('T')[0],
+        endDate: new Date(2024, 2, 4).toISOString().split('T')[0],
+        people: 3,
+        transportation: 'PUBLIC_TRANSPORT',
+        totalCost: 1000000,
+        thumbnail: testImg,
+      };
+    });
+    const mostRecentPlans = Array.from({ length: 10 }, (_, index) => {
+      const id = index + 1;
+      return {
+        title: `최근 슬라이드${id}`,
+        placeCategory: ['수원', '용인', '화성'],
+        startDate: new Date(2025, 0, 1).toISOString().split('T')[0],
+        endDate: new Date(2025, 0, 4).toISOString().split('T')[0],
+        people: 3,
+        transportation: 'PUBLIC_TRANSPORT',
+        totalCost: 1000000,
+        thumbnail: testImg,
+      };
+    });
+    const HongdaeHotPlans = Array.from({ length: 3 }, (_, index) => {
+      const id = index + 1;
+      return {
+        title: `홍대 슬라이드${id}`,
+        placeCategory: ['홍대'],
+        startDate: new Date(2024, 0, 1).toISOString().split('T')[0],
+        endDate: new Date(2024, 0, 4).toISOString().split('T')[0],
+        people: 3,
+        transportation: 'CAR',
+        totalCost: 1000000,
+        thumbnail: testImg,
+      };
+    });
+
+    return HttpResponse.json({
+      mostViewPlans,
+      mostRecentPlans,
+      HongdaeHotPlans,
+    });
+  }),
+
   http.get('/users/myplan', ({ request }) => {
     const url = new URL(request.url);
 
