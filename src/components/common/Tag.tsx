@@ -42,7 +42,7 @@ const Tag: React.FC<TagProps> = ({
 
         {close && (
           <div onClick={onClick} className="cursor-pointer">
-            <Icons.Close size={16} />
+            <Icons.Close.CloseIcon size={16} />
             {/* <Image src={ICONS.iconClose.src} alt={ICONS.iconClose.alt} /> */}
           </div>
         )}

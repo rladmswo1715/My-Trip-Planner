@@ -2,6 +2,29 @@ import React, { SVGProps } from 'react';
 
 type IconProps = { size: number; color?: string } & SVGProps<SVGSVGElement>;
 
+const CloseIconBg = ({
+  size = 28,
+  // color = 'currentColor',
+  ...props
+}: IconProps) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect width="28" height="28" rx="14" fill="#A4C3FF" />
+      <path
+        d="M10.2666 18.6663L9.33325 17.733L13.0666 13.9997L9.33325 10.2663L10.2666 9.33301L13.9999 13.0663L17.7333 9.33301L18.6666 10.2663L14.9333 13.9997L18.6666 17.733L17.7333 18.6663L13.9999 14.933L10.2666 18.6663Z"
+        fill="#F0F5FF"
+      />
+    </svg>
+  );
+};
+
 const CloseIcon = ({ size, color = 'currentColor', ...props }: IconProps) => {
   return (
     <svg
@@ -17,4 +40,4 @@ const CloseIcon = ({ size, color = 'currentColor', ...props }: IconProps) => {
   );
 };
 
-export default CloseIcon;
+export { CloseIconBg, CloseIcon };
