@@ -34,7 +34,7 @@ export const switchCategoryIcon = (category: string) => {
       return <Icons.Map className="z-10" />;
 
     default:
-      return <Icons.Map className="z-10" />;
+      return <Icons.Defalut size={40} className="z-10" />;
   }
 };
 
@@ -42,7 +42,8 @@ const DetailedSchedule = ({ placesData, day }: DetailedScheduleProps) => {
   // 카테고리 코드, 아이콘 나오면 수정
 
   return (
-    <div className="flex flex-col gap-[4rem] w-[31.5%] max-w-[37.8rem] min-w-[44rem]">
+    <div className="flex flex-col gap-[3.2rem] w-[31.5%] max-w-[37.8rem] min-w-[44rem]">
+      {/* 상세보기는 바꿔주어야함 */}
       {/* {placesData.map((item, index) => (
         <div
           key={item.order}

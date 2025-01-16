@@ -17,6 +17,7 @@ import { switchCategoryIcon } from './DetailedSchedule';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { usePlanContext } from '@/providers/contexts/PlanContext';
+import Icons from '@/components/common/Icons';
 
 export const SortableItem = ({
   id,
@@ -77,6 +78,25 @@ const PlacesList = ({
       });
     }
   };
+
+  const removePlanDays = (items: PlanDetailType) => {
+    setPlanData((prevPlanData) => {
+      const updatedDays = prevPlanData.days.map((dayItem) => {
+        if (dayItem.day === day) {
+          return {
+            ...dayItem,
+            detail: dayItem.detail.filter((item) => item.order !== items.order),
+          };
+        }
+        return dayItem;
+      });
+
+      return {
+        ...prevPlanData,
+        days: updatedDays,
+      };
+    });
+  };
   return (
     <DndContext
       sensors={sensors}
@@ -89,7 +109,7 @@ const PlacesList = ({
       >
         {placesData.map((item, index) => (
           <SortableItem key={item.order} id={item.order}>
-            <div className="p-[0.8rem] hover:bg-var-primary-50 transition-all">
+            <div className=" p-[1.2rem] hover:bg-var-primary-50 transition-all group cursor-default">
               <div className="relative flex gap-[2.4rem] items-start ">
                 {switchCategoryIcon(item.categoryName)}
                 <div className="flex flex-col gap-[0.4rem]">
@@ -99,6 +119,15 @@ const PlacesList = ({
                   <p className="text-[1.6rem] text-black/50 leading-[2.08]">
                     {item.streetAddress}
                   </p>
+                </div>
+                <div
+                  className="absolute right-[1.2rem] top-[1.2rem] hidden group-hover:block z-50 cursor-pointer"
+                  onMouseDown={(e) => {
+                    e.stopPropagation();
+                    removePlanDays(item);
+                  }}
+                >
+                  <Icons.Close.CloseIconBg size={28} />
                 </div>
                 {index !== placesData.length - 1 && (
                   <div className="absolute left-[1.95rem] top-[2rem] h-[calc(100%+4rem)] border-l-[1px] border-dashed border-black"></div>

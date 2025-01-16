@@ -108,7 +108,7 @@ const KakaoMap = ({
     details.forEach((detail) => {
       addMarker(detail.latitude, detail.longitude, detail.place);
     });
-    map.setBounds(bounds, 200, 200, 200, 200);
+    map.setBounds(bounds, 100, 100, 100, 100);
 
     if (!customOverlayRef.current) {
       customOverlayRef.current = new kakao.maps.CustomOverlay({
