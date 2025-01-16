@@ -4,10 +4,14 @@ import { usePlanContext } from '@/providers/contexts/PlanContext';
 import { calculateTripDuration } from '@/utils/dateUtils';
 import Image from 'next/image';
 import thumnail from '@/assets/img/def-thumnail.png';
+import useImagePreview from '@/lib/hooks/useFileUpload';
+import Icons from '@/components/common/Icons';
 const PlanDetails = () => {
-  const { planData } = usePlanContext();
+  const { planData, image } = usePlanContext();
   const { startDate, endDate, people, title, subtitle } = planData;
-
+  const { handleImageChange, previewImage, resetImage } = useImagePreview({
+    setImage: image.setImage,
+  });
   const duration = calculateTripDuration({ endDate, startDate });
   const detailinfo = [
     {
@@ -73,9 +77,43 @@ const PlanDetails = () => {
         </div>
       </div>
 
-      <div className="flex w-[48rem] h-[27.6rem] rounded-[1.6rem] bg-var-enable-bg items-center justify-center hover:bg-black/50 transition-all cursor-pointer self-end">
-        <div></div>
-        <Image src={thumnail} alt="thumnail" />
+      <div className="flex w-[48rem] h-[27.6rem] rounded-[1.6rem] bg-var-enable-bg items-center justify-center group hover:bg-black/50 transition-all self-end overflow-hidden">
+        {previewImage ? (
+          <div className="relative w-full h-full overflow-hidden">
+            <Image
+              src={previewImage}
+              alt="adsf"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex w-full h-full justify-center items-center">
+                <Icons.Close.CloseIcon
+                  size={42}
+                  color={'white'}
+                  className="cursor-pointer"
+                  onClick={() => resetImage()}
+                ></Icons.Close.CloseIcon>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            <Image
+              src={thumnail}
+              alt="thumnail"
+              className="cursor-pointer"
+              onClick={() => document.getElementById('fileInput')?.click()}
+            />
+          </>
+        )}
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleImageChange}
+        />
       </div>
     </div>
   );
