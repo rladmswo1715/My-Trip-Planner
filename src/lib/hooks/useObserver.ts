@@ -26,7 +26,7 @@ const useIntersectionObserver = ({
       },
       {
         root: null,
-        rootMargin: '-40% 0px -40% 0px',
+        rootMargin: '-35% 0px -40% 0px',
         threshold: 0.5,
       }
     );

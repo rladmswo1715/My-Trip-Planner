@@ -12,7 +12,6 @@ const PlanDayCreates = () => {
   const { planData } = usePlanContext();
   const router = useRouter();
   const tabHandler = (day: number) => {
-    setDayTab(day);
     router.replace(`#Day-${day}`);
     document
       .getElementById(`Day-${day}`)

@@ -15,9 +15,7 @@ const KakaoMap = ({
   const markersRef = useRef<kakao.maps.Marker[]>([]);
   const polylinesRef = useRef<kakao.maps.Polyline | null>(null);
   const customOverlayRef = useRef<kakao.maps.CustomOverlay | null>(null);
-  const { data, isLoading, isError, error } = useQuery(
-    useDirections(details, day)
-  );
+  const { data, isLoading, isError } = useQuery(useDirections(details, day));
 
   useEffect(() => {
     const initializeMap = () => {
@@ -31,6 +29,7 @@ const KakaoMap = ({
           level: 7,
           draggable: false,
           scrollwheel: false,
+          disableDoubleClickZoom: false,
         };
 
         if (container) {
@@ -78,7 +77,6 @@ const KakaoMap = ({
   useEffect(() => {
     if (!mapRef.current || isLoading || isError || !details.length) {
       resetMap(); // 초기화 함수 호출
-      console.log('asdasdasd', isLoading, isError, error);
       return;
     }
 
@@ -110,7 +108,7 @@ const KakaoMap = ({
     details.forEach((detail) => {
       addMarker(detail.latitude, detail.longitude, detail.place);
     });
-    map.setBounds(bounds);
+    map.setBounds(bounds, 200, 200, 200, 200);
 
     if (!customOverlayRef.current) {
       customOverlayRef.current = new kakao.maps.CustomOverlay({

@@ -38,7 +38,7 @@ const ScheduleCard = ({
 
       {scheduleData?.detail && scheduleData?.detail.length > 0 ? (
         <div className="relative flex justify-between gap-[8rem] mt-[3.6rem] min-h-[35.2rem]">
-          <DetailedSchedule placesData={scheduleData.detail} />
+          <DetailedSchedule placesData={scheduleData.detail} day={day} />
         </div>
       ) : (
         <div className="flex items-center justify-center min-h-[35.2rem] text-var-enable-text text-[2rem]">
