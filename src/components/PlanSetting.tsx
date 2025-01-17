@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 import { calculateTripDuration, generateDays } from '@/utils/dateUtils';
 import { STEP_TITLE } from '@/types/enum';
 
-const PlanSetting = () => {
+const PlanSetting = ({ onClose }: { onClose: () => void }) => {
   const {
     step,
     nextStep,
@@ -59,6 +59,7 @@ const PlanSetting = () => {
       'planData',
       JSON.stringify({ ...initialPlanData, planId })
     );
+    onClose();
     router.push(`/plan/${planId}/create`);
   };
 
@@ -100,7 +101,7 @@ const PlanSetting = () => {
       )}
       <div className="flex w-full gap-[2rem]">
         {step === 1 ? (
-          <Button size="lg" onClick={prevStep} btnColor="blue" className="grow">
+          <Button size="lg" onClick={onClose} btnColor="blue" className="grow">
             취소
           </Button>
         ) : (

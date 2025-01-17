@@ -28,7 +28,7 @@ const Page = () => {
       </Button>
       {aaa && (
         <Modal onClose={() => setaaa(!aaa)}>
-          <PlanSetting />
+          <PlanSetting onClose={() => setaaa(false)} />
         </Modal>
       )}
     </div>
