@@ -1,11 +1,20 @@
 export const formatDate = (pageType: string, date: Date) => {
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const weekday = new Intl.DateTimeFormat('ko-KR', { weekday: 'short' }).format(
-    date
-  );
+  const dateObj = typeof date === 'string' ? new Date(date) : date;
 
-  return `${month}.${day}(${weekday})`;
+  const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+  const day = dateObj.getDate().toString().padStart(2, '0');
+
+  if (pageType === 'schedule') {
+    const weekday = new Intl.DateTimeFormat('ko-KR', {
+      weekday: 'short',
+    }).format(dateObj);
+    return `${month}.${day}(${weekday})`;
+  } else if (pageType === 'comment') {
+    const year = dateObj.getFullYear();
+    return `${year}.${month}.${day}`;
+  } else if (pageType === 'main') {
+    return `${month}.${day}`;
+  }
 };
 /**
  *

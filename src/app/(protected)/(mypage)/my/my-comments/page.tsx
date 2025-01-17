@@ -1,5 +1,7 @@
+import MyCommentListSection from '@/components/pages/my/my-comments/ListSection';
+
 const MyComments = () => {
-  return <div></div>;
+  return <MyCommentListSection />;
 };
 
 export default MyComments;
