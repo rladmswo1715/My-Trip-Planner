@@ -1,4 +1,5 @@
 import { TMainCardList } from '@/types/card';
+import { formatDate } from '@/utils/dateUtils';
 
 interface PlannerListCardContentProps {
   cardInfo: TMainCardList;
@@ -10,10 +11,22 @@ const transportationMap: Record<string, string> = {
 };
 
 const PlannerListCardContent = ({ cardInfo }: PlannerListCardContentProps) => {
-  const { title, placeCategory, people, transportation, totalCost } = cardInfo;
+  const {
+    title,
+    placeCategory,
+    people,
+    transportation,
+    totalCost,
+    startDate,
+    endDate,
+  } = cardInfo;
 
   const formattedPlaceCategory = placeCategory.join('·');
   const formattedTransportation = transportationMap[transportation] || '';
+  const formattedDate = {
+    startDate: formatDate('main', startDate),
+    endDate: formatDate('main', endDate),
+  };
   const personalCost = Math.round(totalCost / people / 10) * 10; // 1의자리 반올림
 
   return (
@@ -29,8 +42,9 @@ const PlannerListCardContent = ({ cardInfo }: PlannerListCardContentProps) => {
 
       <div className="w-full">
         <p className="text-[1.4rem] leading-[1.82rem] flex justify-between items-center ">
-          {/* 날짜는 상세날짜 받아오는지에 따라 수정 필요 */}
-          <span>12.23-12.26</span>
+          <span>
+            {formattedDate.startDate}-{formattedDate.endDate}
+          </span>
           <span>
             {people}인·{formattedTransportation}
           </span>
