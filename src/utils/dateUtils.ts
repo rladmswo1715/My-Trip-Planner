@@ -63,3 +63,6 @@ export const generateDays = ({
 
   return result;
 };
+export const formatDatePicker = (date: Date): string => {
+  return date.toISOString().split('T')[0];
+};

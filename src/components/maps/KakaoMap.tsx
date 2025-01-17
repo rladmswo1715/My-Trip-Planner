@@ -1,136 +1,161 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useDirections } from '@/lib/hooks/queries/useDirectionQuery';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 
-const KakaoMap = ({ detail: details }: { detail: PlanDetailType[] }) => {
-  const [duration, setDuration] = useState<number | null>(null);
+const KakaoMap = ({
+  detail: details,
+  day,
+}: {
+  detail: PlanDetailType[] | [];
+  day: number;
+}) => {
+  const mapRef = useRef<kakao.maps.Map | null>(null);
+  const markersRef = useRef<kakao.maps.Marker[]>([]);
+  const polylinesRef = useRef<kakao.maps.Polyline | null>(null);
+  const customOverlayRef = useRef<kakao.maps.CustomOverlay | null>(null);
+  const { data, isLoading, isError } = useQuery(useDirections(details, day));
+
   useEffect(() => {
     const initializeMap = () => {
-      kakao.maps.load(() => {
+      if (!mapRef.current) {
         const container = document.getElementById('map');
-
-        if (details.length < 2) {
-          console.error('출발지와 목적지는 최소 2개 이상의 위치가 필요합니다.');
-          return;
-        }
-
-        const options = {
+        const options: kakao.maps.MapOptions = {
           center: new kakao.maps.LatLng(
-            details[0].latitude,
-            details[0].longitude
+            details[0]?.latitude || 37.5665,
+            details[0]?.longitude || 126.978
           ),
           level: 7,
+          draggable: false,
+          scrollwheel: false,
+          disableDoubleClickZoom: false,
         };
 
         if (container) {
-          const map = new kakao.maps.Map(container, options);
-
-          const addMarker = (lat: number, lng: number, title: string) => {
-            const marker = new kakao.maps.Marker({
-              position: new kakao.maps.LatLng(lat, lng),
-              title: title,
-            });
-            marker.setMap(map);
-          };
-
-          const drawRoute = async () => {
-            try {
-              const API_KEY = process.env.NEXT_PUBLIC_KAKAO_API_KEY;
-              const origin = `${details[0].longitude},${details[0].latitude}`;
-              const destination = `${details[details.length - 1].longitude},${
-                details[details.length - 1].latitude
-              }`;
-              const waypoints = details
-                .slice(1, details.length - 1)
-                .map((detail) => `${detail.longitude},${detail.latitude}`)
-                .join('|');
-
-              const response = await fetch(
-                `https://apis-navi.kakaomobility.com/v1/directions?origin=${origin}&destination=${destination}&waypoints=${waypoints}&priority=RECOMMEND`,
-                {
-                  headers: {
-                    Authorization: `KakaoAK ${API_KEY}`,
-                  },
-                }
-              );
-
-              const data = await response.json();
-
-              if (data.routes && data.routes[0]) {
-                setDuration(data.routes[0].summary.duration);
-                const path = data.routes[0].sections.flatMap((section: any) =>
-                  section.roads.flatMap((road: any) =>
-                    road.vertexes.reduce(
-                      (acc: any[], _, index: number, array: number[]) => {
-                        if (index % 2 === 0) {
-                          acc.push(
-                            new kakao.maps.LatLng(
-                              array[index + 1],
-                              array[index]
-                            )
-                          );
-                        }
-                        return acc;
-                      },
-                      []
-                    )
-                  )
-                );
-
-                const polyline = new kakao.maps.Polyline({
-                  path: path,
-                  strokeWeight: 5,
-                  strokeColor: '#FF0000',
-                  strokeOpacity: 0.8,
-                  strokeStyle: 'solid',
-                });
-
-                polyline.setMap(map);
-              }
-            } catch (error) {
-              console.error('오류 발생:', error);
-            }
-          };
-
-          details.forEach((detail, index) => {
-            addMarker(detail.latitude, detail.longitude, detail.place);
-
-            if (index === 0) console.log('출발지:', detail.place);
-            else if (index === details.length - 1)
-              console.log('목적지:', detail.place);
-            else console.log('경유지:', detail.place);
-          });
-
-          drawRoute();
+          mapRef.current = new kakao.maps.Map(container, options);
         }
-      });
+      }
     };
-    if (window.kakao && window.kakao.maps) {
-      initializeMap();
-    }
-  }, [details]);
 
-  const formatDuration = (seconds: number) => {
+    if (window.kakao && window.kakao.maps) {
+      console.log('맵');
+      kakao.maps.load(initializeMap);
+    }
+  }, []);
+
+  const formatDuration = (seconds: number | undefined) => {
+    if (!seconds) {
+      return '시간 측정 불가';
+    }
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}분 ${remainingSeconds}초`;
   };
-  return (
-    <div>
-      {/* {duration !== null && (
-        <div style={{ marginTop: '10px', fontSize: '16px' }}>
-          총 소요 시간: {formatDuration(duration)}
-        </div>
-      )} */}
-      <div
-        id="map"
-        style={{
-          width: '100%',
-          height: '500px',
-        }}
-      ></div>
-    </div>
-  );
+  const content = `<div class ="label"><span class="left"></span><span class="center">${formatDuration(
+    data?.routes[0].summary.duration
+  )}</span><span class="right"></span></div>`;
+  const resetMap = () => {
+    if (mapRef.current) {
+      // 모든 마커 제거
+      markersRef.current.forEach((marker) => marker.setMap(null));
+      markersRef.current = [];
+
+      // 폴리라인 제거
+      if (polylinesRef.current) {
+        polylinesRef.current.setMap(null);
+        polylinesRef.current = null;
+      }
+
+      // 커스텀 오버레이 제거
+      if (customOverlayRef.current) {
+        customOverlayRef.current.setMap(null);
+        customOverlayRef.current = null;
+      }
+    }
+  };
+  useEffect(() => {
+    if (!mapRef.current || isLoading || isError || !details.length) {
+      resetMap(); // 초기화 함수 호출
+      return;
+    }
+
+    const map = mapRef.current;
+
+    markersRef.current.forEach((marker) => marker.setMap(null));
+    markersRef.current = [];
+    if (polylinesRef.current) {
+      polylinesRef.current.setMap(null);
+      polylinesRef.current = null;
+    }
+    const bounds = new kakao.maps.LatLngBounds();
+
+    const addMarker = (lat: number, lng: number, title: string) => {
+      const marker = new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(lat, lng),
+        title: title,
+      });
+      marker.setMap(map);
+      markersRef.current.push(marker);
+      bounds.extend(marker.getPosition());
+    };
+
+    const position = new kakao.maps.LatLng(
+      details[details.length - 1].latitude,
+      details[details.length - 1].longitude
+    );
+
+    details.forEach((detail) => {
+      addMarker(detail.latitude, detail.longitude, detail.place);
+    });
+    map.setBounds(bounds, 100, 100, 100, 100);
+
+    if (!customOverlayRef.current) {
+      customOverlayRef.current = new kakao.maps.CustomOverlay({
+        position,
+        content,
+      });
+      customOverlayRef.current.setMap(mapRef.current);
+    } else {
+      customOverlayRef.current.setPosition(position);
+      customOverlayRef.current.setContent(content);
+    }
+    // 경로 그리기 함수
+    const drawRoute = async () => {
+      if (data?.routes && data.routes[0]) {
+        const path = data.routes[0].sections.flatMap((section) =>
+          section.roads.flatMap((road) =>
+            road.vertexes.reduce(
+              (acc: kakao.maps.LatLng[], _, index: number, array: number[]) => {
+                if (index % 2 === 0) {
+                  acc.push(
+                    new kakao.maps.LatLng(array[index + 1], array[index])
+                  );
+                }
+                return acc;
+              },
+              []
+            )
+          )
+        );
+
+        const polyline = new kakao.maps.Polyline({
+          path: path,
+          strokeWeight: 10,
+          strokeColor: '#1653CC',
+          strokeOpacity: 0.8,
+          strokeStyle: 'solid',
+        });
+
+        polyline.setMap(map);
+        polylinesRef.current = polyline;
+      }
+    };
+
+    drawRoute();
+  }, [details, data, content, isLoading, isError]);
+
+  return <div id="map" className="w-full h-[50rem] z-30"></div>;
 };
 
 export default KakaoMap;

@@ -1,14 +1,14 @@
 import Modal from '@/components/common/Modal';
 import React from 'react';
 
-const CostComponent = () => {
-  return <></>;
+const CostComponent = ({ day }: { day: number }) => {
+  return <>{day}</>;
 };
 
-const CostAdd = ({ onClose }: { onClose: () => void }) => {
+const CostAdd = ({ onClose, day }: { onClose: () => void; day: number }) => {
   return (
     <Modal onClose={onClose}>
-      <CostComponent />
+      <CostComponent day={day} />
     </Modal>
   );
 };

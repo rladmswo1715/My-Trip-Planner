@@ -13,9 +13,17 @@ import { useEffect } from 'react';
 import { calculateTripDuration, generateDays } from '@/utils/dateUtils';
 import { STEP_TITLE } from '@/types/enum';
 
-const PlanSetting = () => {
-  const { step, nextStep, region, date, transport, resetAll, resetStep } =
-    usePlanStore();
+const PlanSetting = ({ onClose }: { onClose: () => void }) => {
+  const {
+    step,
+    nextStep,
+    region,
+    date,
+    transport,
+    resetAll,
+    resetStep,
+    prevStep,
+  } = usePlanStore();
   const { selectedDetails } = region;
   const { endDay, startDay, numberOfPeople } = date;
   const router = useRouter();
@@ -51,6 +59,7 @@ const PlanSetting = () => {
       'planData',
       JSON.stringify({ ...initialPlanData, planId })
     );
+    onClose();
     router.push(`/plan/${planId}/create`);
   };
 
@@ -90,14 +99,26 @@ const PlanSetting = () => {
           </div>
         </div>
       )}
-      <Button
-        size="lg"
-        onClick={renderStep().onClick}
-        btnColor="blue"
-        disabled={renderStep().button}
-      >
-        다음
-      </Button>
+      <div className="flex w-full gap-[2rem]">
+        {step === 1 ? (
+          <Button size="lg" onClick={onClose} btnColor="blue" className="grow">
+            취소
+          </Button>
+        ) : (
+          <Button size="lg" onClick={prevStep} btnColor="blue" className="grow">
+            이전
+          </Button>
+        )}
+        <Button
+          size="lg"
+          className="grow"
+          onClick={renderStep().onClick}
+          btnColor="blue"
+          disabled={renderStep().button}
+        >
+          다음
+        </Button>
+      </div>
     </div>
   );
 };
