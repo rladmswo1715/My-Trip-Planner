@@ -1,6 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import { ICONS } from '@/constants/importImages';
-import Chip from '../common/Chip';
+import SearchFilterContainer from './SearchFilterContainer';
 
 const SearchForm = () => {
   return (
@@ -18,17 +20,7 @@ const SearchForm = () => {
             <Image src={ICONS.iconSearch.src} alt={ICONS.iconSearch.alt} fill />
           </button>
         </div>
-        <div className="flex gap-[1.6rem] justify-start">
-          <div>
-            <Chip state={false}>지역</Chip>
-          </div>
-          <div>
-            <Chip state={false}>날짜 및 인원</Chip>
-          </div>
-          <div>
-            <Chip state={false}>교통수단</Chip>
-          </div>
-        </div>
+        <SearchFilterContainer />
       </form>
     </div>
   );

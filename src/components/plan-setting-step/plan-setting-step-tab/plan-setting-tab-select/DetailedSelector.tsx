@@ -1,12 +1,20 @@
 import Button from '@/components/common/Button';
 import { regions } from '@/constants/regions';
+import { useFilterStore } from '@/stores/filterStores';
 import { usePlanStore } from '@/stores/planStores';
 import React from 'react';
 
-const DetailedSelector = () => {
-  const { selectedRegion, selectedDetails, toggleDetail } = usePlanStore(
-    (state) => state.region
-  );
+interface DetailedSelectorProps {
+  isFilterType?: boolean;
+}
+
+const DetailedSelector = ({ isFilterType = false }: DetailedSelectorProps) => {
+  const planStore = usePlanStore((state) => state.region);
+  const filterStore = useFilterStore((state) => state.region);
+
+  const { selectedRegion, selectedDetails, toggleDetail } = isFilterType
+    ? filterStore
+    : planStore;
 
   if (!selectedRegion || !regions[selectedRegion]) return null;
   return (
