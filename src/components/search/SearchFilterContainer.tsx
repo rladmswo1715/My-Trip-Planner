@@ -39,6 +39,24 @@ const SearchFilterContainer = () => {
     else return '지역';
   };
 
+  const formattedDateFilter = () => {
+    const selectedDate = confirmedFilter.selectedDate;
+    const selectedPeople = confirmedFilter.selectedPeople;
+    let renderText: string;
+
+    if (selectedDate && selectedPeople > 0) {
+      renderText = `${selectedDate} / ${selectedPeople}명`;
+    } else if (selectedDate) {
+      renderText = selectedDate;
+    } else if (selectedPeople > 0) {
+      renderText = `${selectedPeople}명`;
+    } else {
+      renderText = '기간 / 인원';
+    }
+
+    return renderText;
+  };
+
   const formattedTransportFilter = () => {
     const transport = confirmedFilter.selectedTransport;
     let renderText: string;
@@ -63,10 +81,9 @@ const SearchFilterContainer = () => {
       onClick: () => filterButtonClickHandler('region'),
     },
     {
-      renderText: confirmedFilter.selectedDate
-        ? confirmedFilter.selectedDate
-        : '기간',
-      state: !!confirmedFilter.selectedDate,
+      renderText: formattedDateFilter(),
+      state:
+        !!confirmedFilter.selectedDate || confirmedFilter.selectedPeople > 0,
       onClick: () => filterButtonClickHandler('date'),
     },
     {

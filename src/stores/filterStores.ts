@@ -13,7 +13,9 @@ type FilterStore = {
   };
   date: {
     selectedDate: string | null;
+    numberOfPeople: number;
     setDate: (date: string) => void;
+    setNumberOfPeople: (count: number) => void;
   };
   transport: {
     selectedTransport: 'public' | 'car' | null;
@@ -22,6 +24,7 @@ type FilterStore = {
   confirmedFilter: {
     selectedDetails: string[];
     selectedDate: string | null;
+    selectedPeople: number;
     selectedTransport: 'public' | 'car' | null;
   };
   saveFilter: (filterCategory: string) => void;
@@ -83,11 +86,19 @@ export const useFilterStore = create<FilterStore>((set) => ({
 
   date: {
     selectedDate: null,
+    numberOfPeople: 0,
     setDate: (date) =>
       set((state) => ({
         date: {
           ...state.date,
           selectedDate: date,
+        },
+      })),
+    setNumberOfPeople: (count) =>
+      set((state) => ({
+        date: {
+          ...state.date,
+          numberOfPeople: Math.max(0, count),
         },
       })),
   },
@@ -105,6 +116,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
   confirmedFilter: {
     selectedDetails: [],
     selectedDate: null,
+    selectedPeople: 0,
     selectedTransport: null,
   },
 
@@ -122,6 +134,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
           confirmedFilter: {
             ...state.confirmedFilter,
             selectedDate: state.date.selectedDate,
+            selectedPeople: state.date.numberOfPeople,
           },
         };
       } else if (filterCategory === 'transport') {
@@ -152,7 +165,9 @@ export const useFilterStore = create<FilterStore>((set) => ({
       } else if (filterCategory === 'date') {
         newState.date = {
           selectedDate: null,
+          numberOfPeople: 0,
           setDate: state.date.setDate,
+          setNumberOfPeople: state.date.setNumberOfPeople,
         };
       } else if (filterCategory === 'transport') {
         newState.transport = {
