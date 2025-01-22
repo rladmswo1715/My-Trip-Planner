@@ -7,7 +7,7 @@ export type TMainCardList = {
   startDate: Date;
   endDate: Date;
   people: number;
-  transportation: 'PUBLIC_TRANSPORT' | 'CAR';
+  transportation: 'PUBLIC' | 'CAR';
   totalCost: number;
   thumbnail: string | StaticImageData;
 };
