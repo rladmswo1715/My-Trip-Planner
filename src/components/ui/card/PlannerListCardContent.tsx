@@ -6,7 +6,7 @@ interface PlannerListCardContentProps {
 }
 
 const transportationMap: Record<string, string> = {
-  PUBLIC_TRANSPORT: '대중교통',
+  PUBLIC: '대중교통',
   CAR: '자차',
 };
 
