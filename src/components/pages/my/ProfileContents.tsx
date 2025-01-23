@@ -9,17 +9,16 @@ interface ProfileContentsProps {
 
 const ProfileContents = ({ isEdit, editButtonClick }: ProfileContentsProps) => {
   return (
-    <div className="flex flex-col gap-[2.8rem]">
+    <>
       {isEdit ? (
-        <ProfileEditContents />
+        <ProfileEditContents cancelClick={editButtonClick} />
       ) : (
-        <>
+        <div className="flex flex-col gap-[2.8rem]">
           <div className="flex items-center gap-[2rem]">
             <ProfileImage imageUrl={''} size="l" />
-            <p className="flex flex-col gap-[0.8rem] text-[1.8rem] leading-[2.148rem]">
-              <span className="text-black font-medium">홍길동</span>
-              <span className="text-black/50">gildong123@gmail.com</span>
-            </p>
+            <span className="text-[1.8rem] leading-[2.148rem] text-black font-medium">
+              홍길동
+            </span>
           </div>
           <div className="flex items-center gap-[1.2rem]">
             <Button
@@ -34,9 +33,9 @@ const ProfileContents = ({ isEdit, editButtonClick }: ProfileContentsProps) => {
               로그아웃
             </Button>
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
