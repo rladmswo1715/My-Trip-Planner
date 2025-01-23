@@ -10,9 +10,9 @@ import SearchItems from './SearchItems';
 const DetailSearchLocation = () => {
   const [, setSelectedItem] = useState<PlaceDocument | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const { data } = useQuery({
-    ...useSearchPlaces(searchTerm, searchTerm.length >= 2),
-  });
+  const { data } = useQuery(
+    useSearchPlaces(searchTerm, searchTerm.length >= 2)
+  );
   // const { data } = useQuery(useSearchPlaces(searchTerm, searchTerm.length > 2));
   const { setSelectDetails } = usePlanStore((state) => state.region);
 
