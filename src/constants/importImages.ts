@@ -18,6 +18,8 @@ import IconSiren from '@/assets/icon/ic_siren.svg';
 import IconUpArrow from '@/assets/icon/ic_up-arrow.svg';
 import IconUptriangle from '@/assets/icon/ic_up-triangle.svg';
 import IconPlus from '@/assets/icon/ic_plus.svg';
+import IconEdit from '@/assets/icon/ic_edit.svg';
+import IconDelete from '@/assets/icon/ic_delete.svg';
 // import IconClose from '@/assets/icon/close.svg';
 
 type ImageType = {
@@ -44,7 +46,9 @@ type Icons =
   | 'iconSiren'
   | 'iconUpArrow'
   | 'iconUptriangle'
-  | 'iconPlus';
+  | 'iconPlus'
+  | 'iconEdit'
+  | 'iconDelete';
 // | 'iconClose';
 
 type Images = 'defaultProfile';
@@ -139,5 +143,13 @@ export const ICONS: ExportAssetsType<Icons> = {
   iconPlus: {
     src: IconPlus,
     alt: '추가 아이콘',
+  },
+  iconEdit: {
+    src: IconEdit,
+    alt: '수정 아이콘',
+  },
+  iconDelete: {
+    src: IconDelete,
+    alt: '삭제 아이콘',
   },
 };
