@@ -27,7 +27,9 @@ const DetailedSelector = ({ isFilterType = false }: DetailedSelectorProps) => {
             size="sm"
             btnColor="white"
             className={`border-none ${
-              selectedDetails.includes(e)
+              selectedDetails.some(
+                (item) => item.parent === selectedRegion && item.child === e
+              )
                 ? 'bg-blue-500 text-background'
                 : 'bg-var-enable-300 text-var-enable-400'
             }`}

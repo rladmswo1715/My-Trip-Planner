@@ -1,22 +1,18 @@
 import React from 'react';
-import QueryProviders from './QueryProviders';
 import { MSWProvider } from '@/components/MSWComponent';
-import server from '@/mocks/http';
+// import server from '@/mocks/http';
+import QueryProviders from './QueryProviders';
 
-if (process.env.NEXT_RUNTIME === 'nodejs') {
-  server.listen();
-}
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// if (process.env.NEXT_RUNTIME === 'nodejs') {
+//   server.listen();
+// }
 
 const RootProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <MSWProvider>
-        <QueryProviders>
-        {children}
-        <ReactQueryDevtools />
+      <QueryProviders>
+        <MSWProvider>{children}</MSWProvider>
       </QueryProviders>
-      </MSWProvider>
     </>
   );
 };
