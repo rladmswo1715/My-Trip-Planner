@@ -11,7 +11,7 @@ const PlanSettingRouter = () => {
   const router = useRouter();
   const { data: users, isError } = useQuery(useGetProfile());
   const confirmOpenModal = () => {
-    if (!users || isError) {
+    if (!users?.data || isError) {
       return router.push('/login');
     }
     const data = localStorage.getItem('planData');
