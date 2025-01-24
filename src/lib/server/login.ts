@@ -1,9 +1,31 @@
-export const socialLogin = async (social: 'kakao' | 'naver' | 'google') => {
-  'use server';
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_IP}/users/signin/${social}`,
-    { method: 'POST', credentials: 'include' }
-  );
+import { NextResponse } from 'next/server';
 
-  if (!response.ok) throw new Error('로그인 요청 실패');
+export const refreshTokenGetToken = async ({
+  refreshToken,
+  socialId,
+  accessToken,
+}: {
+  accessToken: string;
+  refreshToken: string;
+  socialId: string;
+}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/token/reissue/${socialId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Authorization_refresh: `Bearer ${refreshToken}`,
+        },
+      }
+    );
+
+    if (!res.ok) {
+      return NextResponse.json({ error: '재발급실패' }, { status: 403 });
+    }
+
+    return res;
+  } catch {
+    return NextResponse.json({ error: '서버에러' }, { status: 500 });
+  }
 };

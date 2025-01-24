@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Header from '@/components/ui/Header';
+
 import RootProviders from '@/providers/RootProviders';
 import Script from 'next/script';
 
@@ -11,16 +11,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={''}>
-        <Header />
-        <RootProviders>{children}</RootProviders>
+        <RootProviders>
+          {children}
+          {modal}
+          <div id="modal-portal" />
+        </RootProviders>
 
-        <div id="modal-portal" />
         <Script
           defer
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&autoload=false`}

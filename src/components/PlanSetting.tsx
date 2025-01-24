@@ -38,7 +38,9 @@ const PlanSetting = ({ onClose }: { onClose: () => void }) => {
   const lastBtnSetting = () => {
     if (!startDay || !endDay) return;
     const planId = uuidv4();
-    const regions = region.selectedDetails.toString();
+    const subtitle = region.selectedDetails
+      .map((item) => item.child)
+      .join(' - ');
     const day = calculateTripDuration({
       endDate: endDay!,
       startDate: startDay!,
@@ -48,10 +50,10 @@ const PlanSetting = ({ onClose }: { onClose: () => void }) => {
 
     const initialPlanData = {
       title,
-      subtitle: regions,
+      subtitle,
       startDate: startDay,
       endDate: endDay,
-      category: [],
+      category: region.selectedDetails,
       people: numberOfPeople,
       days,
     };
@@ -101,7 +103,12 @@ const PlanSetting = ({ onClose }: { onClose: () => void }) => {
       )}
       <div className="flex w-full gap-[2rem]">
         {step === 1 ? (
-          <Button size="lg" onClick={onClose} btnColor="blue" className="grow">
+          <Button
+            size="lg"
+            onClick={onClose}
+            btnColor="white"
+            className="grow text-var-primary-500"
+          >
             취소
           </Button>
         ) : (
