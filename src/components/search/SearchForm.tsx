@@ -37,7 +37,8 @@ const SearchForm = () => {
     };
 
     paramRegion?.forEach((region) => {
-      const [mainRegion, subRegion] = region.split(' > ');
+      const mainRegion = region.parent;
+      const subRegion = region.child;
 
       if (subRegion.includes('전체')) {
         appendParam('categoryNames', `${mainRegion}-0`);
