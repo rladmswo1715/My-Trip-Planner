@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button';
 import useImagePreview from '@/lib/hooks/useFileUpload';
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { patchEditProfile } from '@/apis/mypage';
 import EditProfileImage from './EditProfileImage';
@@ -22,6 +22,7 @@ const ProfileEditContents = ({
   currentNickname,
   currentImage,
 }: ProfileEditContentsProps) => {
+  const queryClient = useQueryClient();
   const [image, setImage] = useState<File | null>(null);
   const [nickname, setNickname] = useState<string>(currentNickname);
   const { previewImage, handleImageChange, resetImage } = useImagePreview({
@@ -34,7 +35,10 @@ const ProfileEditContents = ({
     mutationFn: (profileFormData: FormData) =>
       patchEditProfile(profileFormData, accessToken),
     onSuccess: () => {
-      alert('성공');
+      queryClient.invalidateQueries({
+        queryKey: ['profiles'],
+      });
+      cancelClick();
     },
     onError: ({ message }) => {
       console.log('Error ::', message);
