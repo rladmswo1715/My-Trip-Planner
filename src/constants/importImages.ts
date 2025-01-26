@@ -20,6 +20,7 @@ import IconUptriangle from '@/assets/icon/ic_up-triangle.svg';
 import IconPlus from '@/assets/icon/ic_plus.svg';
 import IconEdit from '@/assets/icon/ic_edit.svg';
 import IconDelete from '@/assets/icon/ic_delete.svg';
+import IconEye from '@/assets/icon/ic_eye.svg';
 // import IconClose from '@/assets/icon/close.svg';
 
 type ImageType = {
@@ -48,7 +49,8 @@ type Icons =
   | 'iconUptriangle'
   | 'iconPlus'
   | 'iconEdit'
-  | 'iconDelete';
+  | 'iconDelete'
+  | 'iconEye';
 // | 'iconClose';
 
 type Images = 'defaultProfile';
@@ -151,5 +153,9 @@ export const ICONS: ExportAssetsType<Icons> = {
   iconDelete: {
     src: IconDelete,
     alt: '삭제 아이콘',
+  },
+  iconEye: {
+    src: IconEye,
+    alt: '조회수 아이콘',
   },
 };
