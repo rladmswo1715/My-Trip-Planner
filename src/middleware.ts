@@ -1,8 +1,15 @@
 import { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
+  // const cookies = req
+  // const cookieStore = await cookies();
+  // // if (
+  // //   request.nextUrl.pathname.startsWith('/oauth') &&
+  // //   !!cookieStore.get('accessToken')
+  // // ) {
+  // //   return NextResponse.redirect(new URL('/', request.url));
+  // // }
   if (pathname === '/plan/create') {
     // if (searchParams.get('setup') === 'true') {
     //   const url = request.nextUrl.clone();
@@ -14,6 +21,6 @@ export function middleware(request: NextRequest) {
   }
 }
 
-export const config = {
-  matcher: ['/plan/create'], // 특정 경로에만 적용
-};
+// export const config = {
+//   matcher: ['/'], // 특정 경로에만 적용
+// };

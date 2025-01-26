@@ -1,13 +1,18 @@
 import { create } from 'zustand';
 
+type RegionType = {
+  parent: string;
+  child: string;
+};
+
 type FilterStore = {
   filterCategory: string | null;
   region: {
     selectedRegion: string | null;
-    selectedDetails: string[];
+    selectedDetails: RegionType[];
     setRegion: (region: string) => void;
     toggleDetail: (detail: string) => void;
-    removeDetail: (detail: string) => void;
+    removeDetail: (detail: RegionType) => void;
     clearDetails: () => void;
     setSelectDetails: (detail: string) => void;
   };
@@ -22,7 +27,7 @@ type FilterStore = {
     setTransport: (transport: 'public' | 'car') => void;
   };
   confirmedFilter: {
-    selectedDetails: string[];
+    selectedDetails: RegionType[];
     selectedDate: string | null;
     selectedPeople: number;
     selectedTransport: 'public' | 'car' | null;
@@ -40,37 +45,50 @@ export const useFilterStore = create<FilterStore>((set) => ({
       set((state) => ({
         region: {
           ...state.region,
-          selectedRegion:
-            state.region.selectedRegion === region
-              ? state.region.selectedRegion
-              : region,
+          selectedRegion: region,
         },
       })),
     setSelectDetails: (detail) =>
       set((state) => ({
         region: {
           ...state.region,
-          selectedDetails: [...state.region.selectedDetails, detail],
+          selectedDetails: [
+            ...state.region.selectedDetails,
+            { parent: state.region.selectedRegion ?? '', child: detail },
+          ],
         },
       })),
     toggleDetail: (detail) =>
-      set((state) => ({
-        region: {
-          ...state.region,
-          selectedDetails: state.region.selectedDetails.includes(detail)
-            ? state.region.selectedDetails.filter((item) => item !== detail)
-            : [
-                ...state.region.selectedDetails,
-                state.region.selectedRegion + ' > ' + detail,
-              ],
-        },
-      })),
-    removeDetail: (detail) =>
+      set((state) => {
+        const existingIndex = state.region.selectedDetails.findIndex(
+          (item) =>
+            item.parent === state.region.selectedRegion && item.child === detail
+        );
+
+        return {
+          region: {
+            ...state.region,
+            selectedDetails:
+              existingIndex !== -1
+                ? state.region.selectedDetails.filter(
+                    (_, index) => index !== existingIndex
+                  )
+                : [
+                    ...state.region.selectedDetails,
+                    {
+                      parent: state.region.selectedRegion ?? '',
+                      child: detail,
+                    },
+                  ],
+          },
+        };
+      }),
+    removeDetail: ({ parent, child }: RegionType) =>
       set((state) => ({
         region: {
           ...state.region,
           selectedDetails: state.region.selectedDetails.filter(
-            (item) => item !== detail
+            (item) => !(item.parent === parent && item.child === child)
           ),
         },
       })),

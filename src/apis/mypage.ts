@@ -83,3 +83,32 @@ export const getMyComments = async (
     throw error;
   }
 };
+
+export const patchEditProfile = async (
+  profileFormData: FormData,
+  accessToken: string
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/users/profile`,
+      {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: profileFormData,
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw {
+        message: errorData.message || '프로필 수정 실패',
+      };
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+};

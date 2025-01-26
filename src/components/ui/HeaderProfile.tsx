@@ -1,5 +1,9 @@
-import Link from 'next/link';
+'use client';
 import ProfileImage from './ProfileImage';
+import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import useOutsideClick from '@/lib/hooks/useOutsideClick';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface HeaderProfileProps {
   src: string;
@@ -7,11 +11,60 @@ interface HeaderProfileProps {
 }
 
 const HeaderProfile = ({ src, nickname }: HeaderProfileProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const ref = useRef(null);
+  const queryClient = useQueryClient();
+
+  useOutsideClick(ref, () => setIsOpen(false));
+  const logOut = async () => {
+    try {
+      const res = await fetch('/api/token', {
+        method: 'DELETE',
+      });
+      if (!res.ok) {
+        return { status: 401 };
+      }
+      setIsOpen(false);
+      queryClient.invalidateQueries({ queryKey: ['profiles'] });
+      router.refresh();
+    } catch {
+      return;
+    }
+    router.push('/');
+  };
+
+  const goToMypage = () => {
+    setIsOpen(false);
+    router.push('/my/my-planners');
+  };
   return (
-    <Link href="/mypage" className="flex items-center gap-[1.2rem]">
+    <div
+      className="flex items-center gap-[1.2rem] relative cursor-pointer"
+      onClick={() => setIsOpen(true)}
+    >
       <ProfileImage imageUrl={src} size="m" />
       <span className="text-[2rem] font-normal text-white">{nickname}</span>
-    </Link>
+      {isOpen && (
+        <div
+          className="absolute flex flex-col left-0 bottom-0 top-full w-[20rem] h-[10.8rem] min-h-[10.8rem] mt-2 bg-white border rounded-lg shadow-lg z-50"
+          ref={ref}
+        >
+          <button
+            onClick={goToMypage}
+            className="block w-full px-[1.6rem] py-[1.6rem] text-left hover:bg-gray-100 text-[1.6rem] leading-[2rem]"
+          >
+            마이페이지
+          </button>
+          <button
+            onClick={() => logOut()}
+            className="block w-full px-[1.6rem] py-[1.6rem] text-left text-red-500 hover:bg-gray-100 text-[1.6rem] leading-[2rem]"
+          >
+            로그아웃
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 

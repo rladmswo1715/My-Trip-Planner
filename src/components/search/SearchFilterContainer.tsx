@@ -5,6 +5,10 @@ import SearchFilter from './SearchFilter';
 import { useState } from 'react';
 
 type TFilterCategory = 'region' | 'date' | 'transport';
+type TRegionType = {
+  parent: string;
+  child: string;
+};
 
 const SearchFilterContainer = () => {
   const { confirmedFilter } = useFilterStore();
@@ -32,10 +36,13 @@ const SearchFilterContainer = () => {
     }));
   };
 
-  const formattedRegionFilter = (): string => {
+  const formattedRegionFilter = (): string | TRegionType => {
     if (regionLength > 1)
-      return `${confirmedFilter.selectedDetails[0]} 외 ${regionLength - 1}`;
-    else if (regionLength > 0) return confirmedFilter.selectedDetails[0];
+      return `${confirmedFilter.selectedDetails[0].parent} > ${
+        confirmedFilter.selectedDetails[0].child
+      } 외 ${regionLength - 1}`;
+    else if (regionLength > 0)
+      return `${confirmedFilter.selectedDetails[0].parent} > ${confirmedFilter.selectedDetails[0].child}`;
     else return '지역';
   };
 
@@ -98,9 +105,9 @@ const SearchFilterContainer = () => {
       <div className="flex gap-[1.6rem] justify-start">
         {renderItem.map((item) => {
           return (
-            <div key={item.renderText}>
+            <div key={item.renderText.toString()}>
               <Chip state={item.state} type="button" onClick={item.onClick}>
-                {item.renderText}
+                {item.renderText as string}
               </Chip>
             </div>
           );

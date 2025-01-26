@@ -128,6 +128,9 @@
   .modal {
     @apply relative min-h-[80rem] max-w-7xl w-[59.6rem] h-[80rem] max-h-[80] bg-white p-[2.8rem] rounded-[1.8rem];
   }
+  .modal-login {
+    @apply relative min-h-[62.8rem] max-w-7xl w-[48rem] h-[62.8rem] max-h-[80] bg-white pt-[4rem] p-[2.8rem] rounded-[1.8rem];
+  }
   .modal-background {
     @apply fixed top-0 flex flex-col justify-center items-center w-screen h-full z-50 bg-neutral-900/70 transition-transform;
   }
