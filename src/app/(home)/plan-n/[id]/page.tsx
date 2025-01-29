@@ -1,12 +1,12 @@
 import InnerLayout from '@/components/layout/InnerLayout';
-import PlanInfoSection from '@/components/pages/detailedPost/PlanInfoSection';
-import CommentsSection from '@/components/pages/detailedPost/CommentsSection';
+import PlanClient from '@/components/pages/detailedPost/PlanClient';
 
-const Plan = () => {
+const Plan = async ({ params }: { params: Promise<{ id: number }> }) => {
+  const planId = (await params).id;
+
   return (
     <InnerLayout className="max-w-[124.8rem] mt-[4rem] mb-[10rem]">
-      <PlanInfoSection />
-      <CommentsSection />
+      <PlanClient planId={planId} />
     </InnerLayout>
   );
 };
