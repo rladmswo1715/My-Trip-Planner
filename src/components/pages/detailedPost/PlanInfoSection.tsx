@@ -1,5 +1,3 @@
-'use client';
-
 import ProfileImage from '@/components/ui/ProfileImage';
 import Image from 'next/image';
 import { ICONS } from '@/constants/importImages';
@@ -11,22 +9,21 @@ import {
   formatDate,
   formatFromString,
 } from '@/utils/dateUtils';
-import Cookies from 'js-cookie';
 import { personalCostCalc } from '@/utils/costUtils';
 import Visibility from './Visibility';
 import { ETransportation } from '@/types/enum';
 
 interface PlanInfoSectionProps {
   planId: number;
+  accessToken: string;
+  socialId: string;
 }
 
-const getCookieValue = (key: string): string => {
-  return Cookies.get(key) || '';
-};
-
-const PlanInfoSection = ({ planId }: PlanInfoSectionProps) => {
-  const accessToken = getCookieValue('accessToken');
-  const socialId = getCookieValue('socialId');
+const PlanInfoSection = ({
+  planId,
+  accessToken,
+  socialId,
+}: PlanInfoSectionProps) => {
   const { data } = useQuery({
     queryKey: ['plan', planId, 'info'],
     queryFn: () => getPlanInfo(planId, accessToken),
@@ -69,10 +66,11 @@ const PlanInfoSection = ({ planId }: PlanInfoSectionProps) => {
     },
     {
       key: '교통수단',
-      value:
-        (data?.transportation === 'CAR'
+      value: data
+        ? data.transportation === 'CAR'
           ? ETransportation.CAR
-          : ETransportation.PUBLIC) || '',
+          : ETransportation.PUBLIC
+        : '',
     },
     {
       key: '예상비용',
