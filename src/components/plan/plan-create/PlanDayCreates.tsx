@@ -6,10 +6,11 @@ import React, { useState } from 'react';
 import PlanDayDetailCreate from './PlanDayDetailCreate';
 import useIntersectionObserver from '@/lib/hooks/useObserver';
 import Button from '@/components/common/Button';
+import toast from 'react-hot-toast';
 
 const PlanDayCreates = () => {
   const [dayTab, setDayTab] = useState(1);
-  const { planData } = usePlanContext();
+  const { planData, handleSubmit } = usePlanContext();
   const router = useRouter();
   const tabHandler = (day: number) => {
     router.replace(`#Day-${day}`);
@@ -29,6 +30,14 @@ const PlanDayCreates = () => {
     },
   });
 
+  const handleTempSave = () => {
+    try {
+      localStorage.setItem('planData', JSON.stringify(planData));
+      toast.success('임시 저장되었습니다!');
+    } catch {
+      toast.error('임시 저장에 실패했습니다.');
+    }
+  };
   return (
     <div className="flex w-full">
       <div className="flex-col space-y-[4.8rem]">
@@ -64,14 +73,16 @@ const PlanDayCreates = () => {
                 size="md"
                 btnColor="white"
                 className="text-var-primary-500"
+                onClick={handleTempSave}
               >
                 임시저장
               </Button>
               <Button
                 btnColor="white"
                 size="md"
-                disabled
+                // disabled
                 className="text-var-primary-500"
+                onClick={() => handleSubmit()}
               >
                 완료
               </Button>

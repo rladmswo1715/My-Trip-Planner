@@ -14,7 +14,7 @@ const PlanPage = async ({
   const { planid } = await params;
 
   if (!planid) {
-    return redirect('/test');
+    return redirect('/');
   }
 
   return (

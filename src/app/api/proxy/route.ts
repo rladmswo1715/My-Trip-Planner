@@ -35,21 +35,37 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: '토큰없음' }, { status: 401 });
     }
 
-    const { targetUrl, ...body } = await req.json();
+    const form = await req.formData();
+    const planData = form.get('plan');
+    const thumbnail = form.get('thumbnail') as File | null;
 
-    if (!targetUrl) {
-      return NextResponse.json({ error: 'url 잘못' }, { status: 400 });
+    if (!planData) {
+      return NextResponse.json({ error: 'plan 데이터 없음' }, { status: 400 });
     }
 
-    const response = await fetch(targetUrl, {
+    const jsonBlob = new Blob([planData as string], {
+      type: 'application/json',
+    });
+    const formData = new FormData();
+    formData.append('plan', jsonBlob);
+    if (thumbnail) {
+      formData.append('thumbnail', thumbnail);
+    }
+
+    // if (!targetUrl) {
+    //   return NextResponse.json({ error: 'url 잘못' }, { status: 400 });
+    // }
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_IP}/plans`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(body),
+      body: formData,
     });
-
+    if (!response.ok) {
+      throw new Error('실패');
+    }
     const responseBody = await response.json();
     return NextResponse.json(responseBody, { status: response.status });
   } catch {

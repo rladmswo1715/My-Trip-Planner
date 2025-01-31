@@ -4,11 +4,13 @@ import { formatDatePicker } from '@/utils/dateUtils';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import { ko } from 'date-fns/locale';
 const StartSelect = () => {
-  const { setStartDay: setSelectStartDay, startDay } = usePlanStore(
-    (state) => state.date
-  );
+  const {
+    setStartDay: setSelectStartDay,
+    startDay,
+    endDay,
+  } = usePlanStore((state) => state.date);
 
   return (
     <div className="flex-1 flex flex-col gap-[1.2rem] relative">
@@ -16,17 +18,22 @@ const StartSelect = () => {
 
       <div className="relative w-full">
         <DatePicker
+          locale={ko}
           selected={new Date()}
+          minDate={
+            endDay
+              ? new Date(
+                  new Date(endDay).setDate(new Date(endDay).getDate() - 10)
+                )
+              : undefined
+          }
+          maxDate={endDay ? new Date(endDay) : undefined}
           onChange={(date) => {
             if (!date) return;
-            console.log(date);
-            // setStartDate(date!);
+
             setSelectStartDay(formatDatePicker(date));
-            // handleOpenState(null); // 모달 닫기
           }}
-          className="text-[16px]"
-          calendarClassName="custom-datepicker"
-          // monthClassName={() => 'w-full'}
+          calendarClassName="text-[1.6rem] w-full rounded-[2rem]"
           dateFormat="yyyy년 MM월 dd일"
           popperPlacement="bottom-start"
           customInput={
@@ -35,9 +42,18 @@ const StartSelect = () => {
             </Chip>
           }
           popperClassName="w-full"
-          dayClassName={() =>
-            'text-black hover:bg-gray-100 rounded-full p-[1rem] w-[3.6rem] h-[3.6rem]'
-          }
+          weekDayClassName={(date) => {
+            return `${date.getDay() === 0 ? 'text-red' : 'text-white'}`;
+          }}
+          dayClassName={(date) => {
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const dateMonth = date.getMonth();
+
+            return `${
+              currentMonth !== dateMonth ? 'text-gray-400' : 'text-black'
+            } hover:bg-gray-100 rounded-full text-[2rem] py-[1rem]`;
+          }}
           renderCustomHeader={({
             date,
             decreaseMonth,
@@ -45,21 +61,21 @@ const StartSelect = () => {
             prevMonthButtonDisabled,
             nextMonthButtonDisabled,
           }) => (
-            <div className="flex items-center justify-between px-4 py-2 border-b border-gray-300">
+            <div className="flex items-center justify-between px-[0.8rem] py-[1rem] text-white">
               <button
                 onClick={decreaseMonth}
                 disabled={prevMonthButtonDisabled}
-                className="text-gray-600 disabled:text-gray-300"
+                className="text-var-primary-500 disabled:text-gray-300"
               >
                 ◀
               </button>
-              <span className="text-lg font-semibold">
+              <span className="text-[2rem] font-semibold">
                 {date.getFullYear()}년 {date.getMonth() + 1}월
               </span>
               <button
                 onClick={increaseMonth}
                 disabled={nextMonthButtonDisabled}
-                className="text-gray-600 disabled:text-gray-300"
+                className="text-var-primary-500 disabled:text-gray-300"
               >
                 ▶
               </button>

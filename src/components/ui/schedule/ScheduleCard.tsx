@@ -32,7 +32,7 @@ const ScheduleCard = ({
           <p className="flex gap-[1.2rem]">
             <span className="font-semibold">예상비용</span>
             <span className="text-black/70">
-              {scheduleData?.cost.toLocaleString()}원 (1인{' '}
+              {scheduleData.cost.toLocaleString()}원 (1인{' '}
               {personalCostCalc(people, scheduleData?.cost)}원)
             </span>
           </p>

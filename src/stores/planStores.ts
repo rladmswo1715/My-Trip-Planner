@@ -1,10 +1,5 @@
 import { create } from 'zustand';
 
-type RegionType = {
-  parent: string;
-  child: string;
-};
-
 type PlanStore = {
   step: number;
   nextStep: () => void;
@@ -28,8 +23,8 @@ type PlanStore = {
     setEndDay: (date: string) => void;
   };
   transport: {
-    selectedTransport: 'public' | 'car' | null;
-    setTransport: (transport: 'public' | 'car') => void;
+    selectedTransport: 'PUBLIC' | 'CAR' | null;
+    setTransport: (transport: 'PUBLIC' | 'CAR') => void;
   };
   resetAll: () => void;
 };

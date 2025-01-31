@@ -1,6 +1,7 @@
 import Chip from '@/components/common/Chip';
 import Icons from '@/components/common/Icons';
-import React, { Ref } from 'react';
+import React, { Ref, useState } from 'react';
+import { z } from 'zod';
 
 type PeopleSelectProps = {
   state: boolean;
@@ -12,6 +13,11 @@ type PeopleSelectProps = {
   ref: Ref<HTMLDivElement>;
   isFilterType?: boolean;
 };
+const peopleSchema = z
+  .number()
+  .min(1, '인원은 최소 1명 이상이어야 합니다.')
+  .max(12, '인원은 최대 12명입니다.')
+  .int('인원 수는 정수여야 합니다.');
 
 const PeopleSelect = ({
   isEditing,
@@ -23,6 +29,24 @@ const PeopleSelect = ({
   handleOnChangePeople,
   isFilterType = false,
 }: PeopleSelectProps) => {
+  const [error, setError] = useState<string | null>(null);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+
+    if (e.target.value === '') {
+      handleOnChangePeople('0'); // 사용자가 입력을 지울 수 있도록 0으로 설정
+      setError(null);
+      return;
+    }
+    const result = peopleSchema.safeParse(value);
+
+    if (!result.success) {
+      setError(result.error.errors[0].message); // 오류 메시지 설정
+    } else {
+      setError(null); // 오류 초기화
+      handleOnChangePeople(e.target.value); // 유효한 값만 반영
+    }
+  };
   const handleClick = () => {
     if (isFilterType) {
       handleOpenState(null);
@@ -56,13 +80,14 @@ const PeopleSelect = ({
             <input
               type="number"
               value={`${people}`}
-              onChange={(e) => handleOnChangePeople(e.target.value)}
+              onChange={handleChange}
               className="flex w-full h-full grow border-none focus:outline-none bg-transparent"
               autoFocus
             />
           </>
         )}
       </Chip>
+      {error && <span className="text-red-500 text-[1.6rem]">{error}</span>}
     </div>
   );
 };
