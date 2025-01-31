@@ -36,7 +36,7 @@ const HeaderProfile = ({ src, nickname }: HeaderProfileProps) => {
 
   const goToMypage = () => {
     setIsOpen(false);
-    router.push('/my-mypage');
+    router.push('/my/my-planners');
   };
   return (
     <div

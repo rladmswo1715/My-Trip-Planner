@@ -1,10 +1,18 @@
 import Button from '@/components/common/Button';
 import { regions } from '@/constants/regions';
+import { useFilterStore } from '@/stores/filterStores';
 import { usePlanStore } from '@/stores/planStores';
 import React from 'react';
 
-const RegionSelector = () => {
-  const { selectedRegion, setRegion } = usePlanStore((state) => state.region);
+interface RegionSelectorProps {
+  isFilterType?: boolean;
+}
+
+const RegionSelector = ({ isFilterType = false }: RegionSelectorProps) => {
+  const planStore = usePlanStore((state) => state.region);
+  const filterStore = useFilterStore((state) => state.region);
+
+  const { selectedRegion, setRegion } = isFilterType ? filterStore : planStore;
 
   return (
     <div className="flex flex-wrap gap-[1.2rem]">

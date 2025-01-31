@@ -17,6 +17,7 @@ import IconShare from '@/assets/icon/ic_share.svg';
 import IconSiren from '@/assets/icon/ic_siren.svg';
 import IconUpArrow from '@/assets/icon/ic_up-arrow.svg';
 import IconUptriangle from '@/assets/icon/ic_up-triangle.svg';
+import IconPlus from '@/assets/icon/ic_plus.svg';
 // import IconClose from '@/assets/icon/close.svg';
 
 type ImageType = {
@@ -42,7 +43,8 @@ type Icons =
   | 'iconShare'
   | 'iconSiren'
   | 'iconUpArrow'
-  | 'iconUptriangle';
+  | 'iconUptriangle'
+  | 'iconPlus';
 // | 'iconClose';
 
 type Images = 'defaultProfile';
@@ -133,5 +135,9 @@ export const ICONS: ExportAssetsType<Icons> = {
   iconUptriangle: {
     src: IconUptriangle,
     alt: '윗방향 아이콘',
+  },
+  iconPlus: {
+    src: IconPlus,
+    alt: '추가 아이콘',
   },
 };

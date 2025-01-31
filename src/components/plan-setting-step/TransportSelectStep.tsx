@@ -1,18 +1,24 @@
 import React from 'react';
 import Button from '../common/Button';
 import { usePlanStore } from '@/stores/planStores';
+import { useFilterStore } from '@/stores/filterStores';
+import cs from 'classnames';
 
 type StepType = {
   title: string;
+  isFilterType?: boolean;
 };
 
-const TransportSelectStep = ({ title }: StepType) => {
-  const { setTransport, selectedTransport } = usePlanStore(
-    (state) => state.transport
-  );
+const TransportSelectStep = ({ isFilterType = false, title }: StepType) => {
+  const planStore = usePlanStore((state) => state.transport);
+  const filterStore = useFilterStore((state) => state.transport);
+
+  const { setTransport, selectedTransport } = isFilterType
+    ? filterStore
+    : planStore;
 
   return (
-    <div className="mt-[4rem]">
+    <div className={cs({ 'mt-[4rem]': !isFilterType })}>
       <span className="leading-[4.2rem] text-[2.8rem] font-bold">{title}</span>
       <div className="w-full mt-[2.8rem]">
         <div className="flex justify-between gap-[2rem]">
@@ -26,7 +32,7 @@ const TransportSelectStep = ({ title }: StepType) => {
               }`}
               onClick={() => setTransport('PUBLIC')}
             >
-              교통수단
+              대중교통
             </Button>
           </div>
           <div className="grow w-1/2">

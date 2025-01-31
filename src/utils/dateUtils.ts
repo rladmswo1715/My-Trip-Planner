@@ -66,3 +66,12 @@ export const generateDays = ({
 export const formatDatePicker = (date: Date): string => {
   return date.toISOString().split('T')[0];
 };
+
+// A박 B일 에서 B값 추출
+export const getDaysFromDateFilter = (
+  selected: string | null
+): string | null => {
+  if (!selected) return null;
+  const match = selected.match(/\d+일/);
+  return match ? match[0].replace('일', '') : null;
+};
