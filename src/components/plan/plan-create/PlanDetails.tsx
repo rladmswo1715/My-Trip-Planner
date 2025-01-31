@@ -6,12 +6,14 @@ import Image from 'next/image';
 import thumnail from '@/assets/img/def-thumnail.png';
 import useImagePreview from '@/lib/hooks/useFileUpload';
 import Icons from '@/components/common/Icons';
+import PlanDetailsTitleChange from './PlanDetailsTitleChange';
 const PlanDetails = () => {
   const { planData, image } = usePlanContext();
-  const { startDate, endDate, people, title, subtitle } = planData;
+  const { startDate, endDate, people, subtitle } = planData;
   const { handleImageChange, previewImage, resetImage } = useImagePreview({
     setImage: image.setImage,
   });
+
   const duration = calculateTripDuration({ endDate, startDate });
   const detailinfo = [
     {
@@ -29,26 +31,22 @@ const PlanDetails = () => {
     },
     {
       key: '예상비용',
-      value: `0원`,
+      value: `${planData.days
+        .reduce((acc, cur) => acc + cur.cost, 0)
+        .toLocaleString()} 원`,
     },
   ];
+
   return (
     <div className="flex justify-between w-full">
       <div className="flex-col relative space-y-[2.8rem]">
         <div className="flex-col relative space-y-[0.4rem]">
           {/* 제목라인 */}
-          <div className="flex">
-            <span className="leading-[4.8rem] text-[3.2rem] font-bold">
-              {title || '제목 없음'}
-            </span>
-            <div className="text-var-enable-text py-[1.1rem] pl-[1.2rem] cursor-pointer leading-[2.6rem] text-[2rem]">
-              편집
-            </div>
-            <div className="flex gap-[1.6rem] py-[1.1rem] pl-[6.8rem] cursor-pointer leading-[2.6rem] text-[2rem]">
+          <PlanDetailsTitleChange />
+          {/* <div className="flex gap-[1.6rem] py-[1.1rem] pl-[6.8rem] cursor-pointer leading-[2.6rem] text-[2rem]">
               <div>공개</div>
               <div>비공개</div>
-            </div>
-          </div>
+            </div> */}
           {/* 부제목라인 */}
           <span className="leading-[2.6rem] text-[2rem] text-var-enable-text">
             {subtitle || '--'}

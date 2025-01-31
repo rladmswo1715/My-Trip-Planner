@@ -1,10 +1,15 @@
+type RegionType = {
+  parent: string;
+  child: string;
+};
+
 type PlanDetailType = {
   order: number;
   place: string;
   streetAddress: string;
   latitude: number;
   longitude: number;
-  categoryName: string;
+  planCategoryNameId: number;
 };
 
 type PlanDayType = {
@@ -16,10 +21,11 @@ type PlanDayType = {
 
 type PlanDataType = {
   title: string;
+  transportation: 'CAR' | 'PUBLIC';
   subtitle: string;
   startDate: string;
   endDate: string;
-  category: string[];
+  category: RegionType[];
   people: number;
   days: PlanDayType[];
 };

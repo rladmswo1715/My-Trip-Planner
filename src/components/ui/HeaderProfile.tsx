@@ -19,7 +19,7 @@ const HeaderProfile = ({ src, nickname }: HeaderProfileProps) => {
   useOutsideClick(ref, () => setIsOpen(false));
   const logOut = async () => {
     try {
-      const res = await fetch('api/token', {
+      const res = await fetch('/api/token', {
         method: 'DELETE',
       });
       if (!res.ok) {
@@ -36,7 +36,7 @@ const HeaderProfile = ({ src, nickname }: HeaderProfileProps) => {
 
   const goToMypage = () => {
     setIsOpen(false);
-    router.push('/mypage');
+    router.push('/my-mypage');
   };
   return (
     <div
