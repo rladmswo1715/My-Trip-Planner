@@ -1,11 +1,19 @@
 import Tag from '@/components/common/Tag';
+import { useFilterStore } from '@/stores/filterStores';
 import { usePlanStore } from '@/stores/planStores';
 import React from 'react';
 
-const PlanTag = () => {
-  const { selectedDetails, removeDetail } = usePlanStore(
-    (state) => state.region
-  );
+interface PlanTagProps {
+  isFilterType?: boolean;
+}
+
+const PlanTag = ({ isFilterType = false }: PlanTagProps) => {
+  const planStore = usePlanStore((state) => state.region);
+  const filterStore = useFilterStore((state) => state.region);
+
+  const { selectedDetails, removeDetail } = isFilterType
+    ? filterStore
+    : planStore;
 
   return (
     <div className="relative flex flex-wrap gap-2 p-4">

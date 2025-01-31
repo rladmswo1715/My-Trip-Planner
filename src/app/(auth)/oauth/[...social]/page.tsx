@@ -1,5 +1,6 @@
 'use client';
 
+import Loading from '@/components/common/Loading';
 import { useRouter } from 'next/navigation';
 import { use, useEffect } from 'react';
 
@@ -44,6 +45,6 @@ const Page = (props: { searchParams: SearchParams }) => {
 
     fetchAuthUser();
   }, [paramas, router]);
-  return <div>...</div>;
+  return <Loading />;
 };
 export default Page;

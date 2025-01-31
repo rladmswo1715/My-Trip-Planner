@@ -10,6 +10,7 @@ type PeopleSelectProps = {
   isEditing: boolean;
   handleOnChangePeople: (e: string) => void;
   ref: Ref<HTMLDivElement>;
+  isFilterType?: boolean;
 };
 
 const PeopleSelect = ({
@@ -20,13 +21,22 @@ const PeopleSelect = ({
   title,
   ref,
   handleOnChangePeople,
+  isFilterType = false,
 }: PeopleSelectProps) => {
+  const handleClick = () => {
+    if (isFilterType) {
+      handleOpenState(null);
+    } else {
+      handleOpenState('numberOfPeople');
+    }
+  };
+
   return (
     <div className="grow flex flex-col gap-[1.2rem]" ref={ref}>
       <span className="leading-[2.6rem] text-[2rem]">인원</span>
       <Chip
         state={state}
-        onClick={() => handleOpenState('numberOfPeople')}
+        onClick={handleClick}
         // onClick={() => setIsEditing(true)}
         Icon={<Icons.People />}
         search

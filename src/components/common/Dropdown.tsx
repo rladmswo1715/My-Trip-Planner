@@ -46,7 +46,7 @@ const Dropdown = ({ list, title, onSelect }: DropdownProps) => {
               <li
                 key={e}
                 onClick={() => handleSelect(e)}
-                className="hover:bg-var-primary-50"
+                className="hover:bg-var-primary-50 py-[2rem] pl-[2.4rem]"
               >
                 {e}
               </li>
