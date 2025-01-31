@@ -26,11 +26,11 @@ const TransportSelectStep = ({ isFilterType = false, title }: StepType) => {
             <Button
               size="md"
               className={`w-full font-medium text-[1.8rem] leading-[2.34rem] py-[1.8rem] ${
-                selectedTransport !== 'public'
+                selectedTransport !== 'PUBLIC'
                   ? 'bg-var-enable-300 text-var-enable-text'
                   : 'bg-var-primary-500'
               }`}
-              onClick={() => setTransport('public')}
+              onClick={() => setTransport('PUBLIC')}
             >
               대중교통
             </Button>
@@ -39,11 +39,11 @@ const TransportSelectStep = ({ isFilterType = false, title }: StepType) => {
             <Button
               size="md"
               className={`w-full bg-var-enable-300 font-medium text-[1.8rem] leading-[2.34rem] py-[1.8rem] ${
-                selectedTransport !== 'car'
+                selectedTransport !== 'CAR'
                   ? 'bg-var-enable-300 text-var-enable-text'
                   : 'bg-var-primary-500'
               }`}
-              onClick={() => setTransport('car')}
+              onClick={() => setTransport('CAR')}
             >
               자차
             </Button>

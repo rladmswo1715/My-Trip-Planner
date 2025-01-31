@@ -48,13 +48,14 @@ const PlanSetting = ({ onClose }: { onClose: () => void }) => {
     const title = `${day?.nights}박 ${day?.days}일 여행`;
     const days = generateDays({ startDay, endDay });
 
-    const initialPlanData = {
+    const initialPlanData: PlanDataType = {
       title,
       subtitle,
       startDate: startDay,
       endDate: endDay,
       category: region.selectedDetails,
       people: numberOfPeople,
+      transportation: transport.selectedTransport ?? 'CAR',
       days,
     };
     localStorage.setItem(

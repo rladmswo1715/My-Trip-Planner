@@ -8,6 +8,7 @@ import { ADD_PLAN_TITLE } from '@/types/enum';
 import Button from '@/components/common/Button';
 import { usePlanContext } from '@/providers/contexts/PlanContext';
 import Tag from '@/components/common/Tag';
+import { getCategoryId } from '@/utils/placeFormat';
 
 const RegionComponent = ({ day }: { day: number }) => {
   const [selectItems, setSelectItems] = useState<KeyWordDocument[] | []>([]);
@@ -41,7 +42,7 @@ const RegionComponent = ({ day }: { day: number }) => {
               streetAddress: item.address_name,
               latitude: parseFloat(item.y),
               longitude: parseFloat(item.x),
-              categoryName: item.category_group_code,
+              planCategoryNameId: getCategoryId(item.category_group_code) ?? 1,
             })),
           ],
         };
