@@ -1,15 +1,16 @@
-import { NextRequest } from 'next/server';
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  // const cookies = req
-  // const cookieStore = await cookies();
-  // // if (
-  // //   request.nextUrl.pathname.startsWith('/oauth') &&
-  // //   !!cookieStore.get('accessToken')
-  // // ) {
-  // //   return NextResponse.redirect(new URL('/', request.url));
-  // // }
+
+  const cookieStore = await cookies();
+  if (
+    request.nextUrl.pathname.startsWith('/login') &&
+    !!cookieStore.get('accessToken')
+  ) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
   if (pathname === '/plan/create') {
     // if (searchParams.get('setup') === 'true') {
     //   const url = request.nextUrl.clone();

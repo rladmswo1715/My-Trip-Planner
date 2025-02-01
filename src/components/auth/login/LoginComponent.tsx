@@ -3,10 +3,13 @@ import React from 'react';
 import loginImg from '@/assets/img/login-img.png';
 import SocialLogin from './SocialLogin';
 
+import BackButton from './BackButton';
+
 const LoginComponent = () => {
   return (
     <section className="relative w-full h-full flex flex-col justify-between">
       {/* 이미지 */}
+      <BackButton />
       <div className="w-full h-[23rem] overflow-hidden rounded-[2rem]">
         <Image src={loginImg} alt="login" className="object-cover" />
       </div>

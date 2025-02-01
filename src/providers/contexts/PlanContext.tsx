@@ -33,7 +33,9 @@ export const PlanProvider: React.FC<{
   children: React.ReactNode;
   initialData?: PlanDataType;
 }> = ({ children, initialData }) => {
-  const [planData, setPlanData] = useState<PlanDataType>(initialDatas);
+  const [planData, setPlanData] = useState<PlanDataType>(
+    initialDatas as PlanDataType
+  );
   const [image, setImage] = useState<File | null>(null);
   const { setIsEditing } = useExitPrompt();
   const router = useRouter();

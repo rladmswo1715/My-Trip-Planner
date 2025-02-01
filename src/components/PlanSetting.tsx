@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 import { calculateTripDuration, generateDays } from '@/utils/dateUtils';
 import { STEP_TITLE } from '@/types/enum';
+import BackButton from './auth/login/BackButton';
 
 const PlanSetting = ({ onClose }: { onClose: () => void }) => {
   const {
@@ -93,8 +94,13 @@ const PlanSetting = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <ProgressBar step={step} />
-      <section className="grow">{renderStep().render}</section>
+      <div className="flex flex-col gap-[2.8rem]">
+        <BackButton onClose={onClose} />
+        <ProgressBar step={step} />
+      </div>
+      <section className="flex flex-col grow overflow-y-scroll">
+        {renderStep().render}
+      </section>
       {step === 1 && (
         <div className="relative">
           <div className="absolute bottom-0 w-full bg-opacity-5 backdrop-blur-sm">
@@ -102,6 +108,7 @@ const PlanSetting = ({ onClose }: { onClose: () => void }) => {
           </div>
         </div>
       )}
+
       <div className="flex w-full gap-[2rem]">
         {step === 1 ? (
           <Button

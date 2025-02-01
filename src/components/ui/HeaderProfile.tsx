@@ -1,6 +1,6 @@
 'use client';
 import ProfileImage from './ProfileImage';
-import { useRef, useState } from 'react';
+import { MouseEventHandler, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useOutsideClick from '@/lib/hooks/useOutsideClick';
 import { useQueryClient } from '@tanstack/react-query';
@@ -34,7 +34,9 @@ const HeaderProfile = ({ src, nickname }: HeaderProfileProps) => {
     router.push('/');
   };
 
-  const goToMypage = () => {
+  const goToMypage: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsOpen(false);
     router.push('/my/my-planners');
   };
