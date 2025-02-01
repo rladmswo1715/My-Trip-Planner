@@ -75,3 +75,13 @@ export const getDaysFromDateFilter = (
   const match = selected.match(/\d+일/);
   return match ? match[0].replace('일', '') : null;
 };
+
+// string으로 받은 값 포맷팅
+export const formatFromString = (param: string): string => {
+  const date = new Date(param);
+
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${month}월 ${day}일`;
+};

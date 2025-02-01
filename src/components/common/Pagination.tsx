@@ -3,14 +3,33 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 interface PaginationProps {
-  pageType: 'my' | 'dibs';
+  pageType: 'my' | 'dibs' | 'plan-comment';
   currentPage: number;
   totalPages: number;
   onPageChange?: (page: number) => void;
+  planId?: number;
 }
 
-const Pagination = ({ pageType, currentPage, totalPages }: PaginationProps) => {
-  const urlPath = pageType === 'my' ? '/my/my-planners' : '/my/dibs-planners';
+const Pagination = ({
+  pageType,
+  currentPage,
+  totalPages,
+  planId,
+}: PaginationProps) => {
+  let urlPath = '';
+  switch (pageType) {
+    case 'my':
+      urlPath = '/my/my-planners';
+      break;
+    case 'dibs':
+      urlPath = '/my/dibs-planners';
+      break;
+    case 'plan-comment':
+      urlPath = `/plan-n/${planId}`;
+      break;
+    default:
+      throw new Error(`Unsupported pageType: ${pageType}`);
+  }
   const router = useRouter();
   const maxPage = 5;
 
