@@ -3,25 +3,22 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
   const cookieStore = await cookies();
-  if (
-    request.nextUrl.pathname.startsWith('/login') &&
-    !!cookieStore.get('accessToken')
-  ) {
+  const isLoggedIn = !!cookieStore.get('accessToken');
+  if (pathname.startsWith('/login') && !!isLoggedIn) {
     return NextResponse.redirect(new URL('/', request.url));
   }
-  if (pathname === '/plan/create') {
-    // if (searchParams.get('setup') === 'true') {
-    //   const url = request.nextUrl.clone();
-    //   url.searchParams.delete('setup');
-    //   console.log(url);
-    //   return NextResponse.rewrite(url);
-    // }
-    // return NextResponse.redirect(new URL('/', request.url));
+  if (
+    (pathname.startsWith('/my') || pathname.match(/^\/plan\/[^/]+\/create$/)) &&
+    !isLoggedIn
+  ) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
+
+  return NextResponse.next();
 }
 
-// export const config = {
-//   matcher: ['/'], // 특정 경로에만 적용
-// };
+// ✅ 특정 경로에서만 미들웨어 실행 (불필요한 요청 차단)
+export const config = {
+  matcher: ['/login', '/my/:path*', '/plan/:path*/create'],
+};
