@@ -1,8 +1,9 @@
 import { patchToggleStatus } from '@/apis/plan';
 import { EStatus } from '@/types/enum';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import cs from 'classnames';
 import Cookies from 'js-cookie';
+import toast from 'react-hot-toast';
 
 type TStatus = 'PUBLIC' | 'PRIVATE';
 
@@ -13,13 +14,15 @@ interface VisibilityProps {
 
 const Visibility = ({ planId, status }: VisibilityProps) => {
   const accessToken = Cookies.get('accessToken') as string;
+  const queryClient = useQueryClient();
 
   const toggleStatusMutation = useMutation({
     mutationFn: (newStatus: TStatus) =>
       patchToggleStatus({ planId, status: newStatus }, accessToken),
-    onSuccess: () => {
-      // 성공 시 처리하기
-      console.log('성공');
+    onSuccess: (_, variables) => {
+      const statusText = variables === 'PUBLIC' ? '공개' : '비공개';
+      toast.success(`게시글이 ${statusText} 상태로 되었습니다.`);
+      queryClient.invalidateQueries({ queryKey: ['plan', planId, 'info'] });
     },
     onError: (error) => {
       console.log(error.message);
