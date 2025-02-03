@@ -1,7 +1,7 @@
 import { StaticImageData } from 'next/image';
 
 export type TMainCardList = {
-  planId?: number;
+  planId: number;
   title: string;
   placeCategory: string[];
   startDate: Date;

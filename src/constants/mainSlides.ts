@@ -1,6 +1,6 @@
 interface SlideInfo {
   title: string;
-  key: 'mostViewPlans' | 'mostRecentPlans' | 'HongdaeHotPlans';
+  key: 'mostViewPlans' | 'mostRecentPlans' | 'hotPlacePlans';
 }
 
 export const SLIDES_INFO: SlideInfo[] = [
@@ -10,7 +10,7 @@ export const SLIDES_INFO: SlideInfo[] = [
   },
   { title: '최근 일정', key: 'mostRecentPlans' },
   {
-    title: '홍대/합정/상수 인기 일정',
-    key: 'HongdaeHotPlans',
+    title: '강남 인기 일정',
+    key: 'hotPlacePlans',
   },
 ];

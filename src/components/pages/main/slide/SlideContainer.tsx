@@ -53,7 +53,7 @@ const SlideContainer = ({ children, slideItems }: SlideContainerProps) => {
               navigation
             >
               {slideItems.map((item) => (
-                <SwiperSlide key={item.title}>
+                <SwiperSlide key={item.planId}>
                   <PlannerCard cardType="main" cardInfo={item} />
                 </SwiperSlide>
               ))}
