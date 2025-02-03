@@ -1,29 +1,70 @@
 'use client';
 
-import KakaoMap from '@/components/maps/KakaoMap';
+import { getPlanSchedules } from '@/apis/plan';
+import DetailedViewKakaoMap from '@/components/maps/DetailedViewKakaoMap';
 import ScheduleCard from '@/components/ui/schedule/ScheduleCard';
-import { useState } from 'react';
+import { useQueries } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 
-const planData = { days: [1, 2, 3, 4] };
+interface PlanDayScheduleSectionProps {
+  planId: number;
+  accessToken: string;
+  days: number[];
+}
 
-const DATA = {
-  day: 4,
-  cost: 20000,
-  date: '2025-01-26',
-  detail: [
-    {
-      order: 4,
-      place: '제주',
-      streetAddress: '제주도 주소',
-      latitude: 2,
-      longitude: 4,
-      categoryName: '카테고리',
-    },
-  ],
-};
+const PlanDayScheduleSection = ({
+  planId,
+  accessToken,
+  days,
+}: PlanDayScheduleSectionProps) => {
+  const [dayTab, setDayTab] = useState(1);
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
-const PlanDayScheduleSection = () => {
-  const [dayTab] = useState(1);
+  const queries = useQueries({
+    queries: days.map((day) => ({
+      queryKey: ['plan', planId, 'schedule', day],
+      queryFn: () => getPlanSchedules(planId, accessToken, day),
+    })),
+  });
+
+  const tabHandler = (day: number) => {
+    document
+      .getElementById(`Day${day}`)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // 스크롤 영역으로 이동 중 옵저버 영역에 들어갔다 나가면서 지도가 여러번 바뀌는 현상때문에 딜레이 적용
+    setTimeout(() => {
+      setDayTab(day);
+    }, 700);
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const index = sectionRefs.current.indexOf(
+              entry.target as HTMLElement
+            );
+            if (index !== -1) {
+              setDayTab(days[index]);
+            }
+          }
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.7,
+      }
+    );
+
+    sectionRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [days]);
 
   return (
     <section className="pt-[4rem] mt-[4rem] border-t border-[#D9D9D9]">
@@ -33,15 +74,15 @@ const PlanDayScheduleSection = () => {
       <div className="flex flex-col gap-[6rem]">
         <div className="flex mt-[2.4rem] sticky top-0 bg-background z-40">
           <div className="flex h-full border-b gap-[4rem]">
-            {planData.days.map((e) => (
+            {days.map((day) => (
               <button
-                key={e}
-                //onClick={() => tabHandler(e.day)}
+                key={day}
+                onClick={() => tabHandler(day)}
                 className={`${
-                  dayTab === e ? 'text-var-primary-500' : 'text-var-enable'
+                  dayTab === day ? 'text-var-primary-500' : 'text-var-enable'
                 } text-[2rem] leading-[3rem] flex justify-center items-center w-[6rem]`}
               >
-                {`Day${e}`}
+                {`Day${day}`}
               </button>
             ))}
             <div
@@ -55,19 +96,30 @@ const PlanDayScheduleSection = () => {
 
         <div className="flex justify-between">
           <div>
-            {Array.from({ length: 4 }, (_, a) => (
-              <ScheduleCard
-                key={a}
-                day={a + 1}
-                people={4}
-                scheduleData={DATA}
-                date={new Date()}
-                isDetailView
-              />
+            {queries.map((query, index) => (
+              <div
+                ref={(el) => {
+                  if (el) sectionRefs.current[index] = el;
+                }}
+                key={index}
+                className="mb-[4rem]"
+              >
+                <ScheduleCard
+                  key={index}
+                  day={index + 1}
+                  people={4}
+                  scheduleData={query.data}
+                  date={new Date()}
+                  isDetailView
+                />
+              </div>
             ))}
           </div>
           <div className="sticky top-1/3 h-full w-[70rem] z-50 rounded-[1.2rem] overflow-hidden">
-            <KakaoMap detail={[]} day={dayTab - 1} />
+            <DetailedViewKakaoMap
+              detail={queries[dayTab - 1].data?.detail || []}
+              day={dayTab}
+            />
           </div>
         </div>
       </div>

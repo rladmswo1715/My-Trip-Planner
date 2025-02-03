@@ -2,12 +2,16 @@ import DetailedSchedule from './DetailedSchedule';
 import { formatDate } from '@/utils/dateUtils';
 import { personalCostCalc } from '@/utils/costUtils';
 import ViewDetailedSchedule from './ViewDetailedSchedule';
+import {
+  TPlanScheduleItem,
+  TPlanSchedules,
+} from '@/types/responseData/detailedPlan';
 
 interface ScheduleCardProps {
   day: number;
   people: number;
   date: Date;
-  scheduleData?: PlanDayType;
+  scheduleData?: PlanDayType | TPlanSchedules;
   isDetailView?: boolean;
 }
 
@@ -42,11 +46,16 @@ const ScheduleCard = ({
       {scheduleData?.detail && scheduleData?.detail.length > 0 ? (
         isDetailView ? (
           <div className="mt-[3.6rem] min-h-[35.2rem]">
-            <ViewDetailedSchedule />
+            <ViewDetailedSchedule
+              placesData={scheduleData.detail as TPlanScheduleItem[]}
+            />
           </div>
         ) : (
           <div className="relative flex justify-between gap-[8rem] mt-[3.6rem] min-h-[35.2rem]">
-            <DetailedSchedule placesData={scheduleData.detail} day={day} />
+            <DetailedSchedule
+              placesData={scheduleData.detail as PlanDetailType[]}
+              day={day}
+            />
           </div>
         )
       ) : (

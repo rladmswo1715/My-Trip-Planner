@@ -39,6 +39,7 @@ const CommentsSection = ({
   );
 
   useEffect(() => {
+    if (window.location.hash) return;
     // 댓글 페이지이동 시 댓글 섹션으로 이동
     if (data && searchParams.get('currentPage')) {
       const commentSection = document.getElementById('comments-section');

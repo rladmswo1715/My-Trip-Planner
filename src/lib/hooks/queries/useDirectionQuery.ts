@@ -1,7 +1,8 @@
+import { TPlanScheduleItem } from '@/types/responseData/detailedPlan';
 import { QueryFunction } from '@tanstack/react-query';
 
 export const fetchRouteData = async (
-  details: PlanDetailType[]
+  details: PlanDetailType[] | TPlanScheduleItem[]
 ): Promise<DirectionsResponse> => {
   if (!details || details.length < 2) {
     throw new Error('출발지와 목적지는 최소 2개 이상의 위치가 필요합니다.');
@@ -34,11 +35,11 @@ export const fetchRouteData = async (
 };
 
 export const useDirections = (
-  details: PlanDetailType[],
+  details: PlanDetailType[] | TPlanScheduleItem[],
   day: number,
   enabled: boolean = true
 ) => {
-  const queryKey: [string, number, PlanDetailType] = [
+  const queryKey: [string, number, PlanDetailType | TPlanScheduleItem] = [
     'directions',
     day,
     details[details.length - 1],

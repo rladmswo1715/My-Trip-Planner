@@ -1,4 +1,8 @@
-import { TPlanComments, TPlanInfo } from '@/types/responseData/detailedPlan';
+import {
+  TPlanComments,
+  TPlanInfo,
+  TPlanSchedules,
+} from '@/types/responseData/detailedPlan';
 
 export const getPlanInfo = async (
   planId: number,
@@ -61,15 +65,44 @@ export const patchToggleStatus = async (
   }
 };
 
+export const getPlanSchedules = async (
+  planId: number,
+  accessToken: string,
+  day: number
+): Promise<TPlanSchedules> => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/plans/${planId}/route?day=${day}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      throw {
+        message: errorData.message || '플랜 스케쥴 불러오기 실패',
+      };
+    }
+
+    const { data } = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const getPlanComments = async (
   planId: number,
   accessToken: string,
   currentPage: number
 ): Promise<TPlanComments> => {
   try {
-    console.log(
-      `${process.env.NEXT_PUBLIC_SERVER_IP}/plans/${planId}/comments?page=${currentPage}&size=4`
-    );
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_IP}/plans/${planId}/comments?page=${
         currentPage - 1
