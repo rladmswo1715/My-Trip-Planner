@@ -15,11 +15,12 @@ const RegionSelectStep = ({ isFilterType = false, title }: StepType) => {
     'renderStep'
   );
 
-  const onChangeTabState = () => {
-    if (activeTab === 'renderStep') {
-      return setActiveTab('searchTab');
+  const onChangeTabState = (NewTab: 'renderStep' | 'searchTab') => {
+    if (activeTab !== NewTab) {
+      return setActiveTab(NewTab);
     }
-    return setActiveTab('renderStep');
+
+    return;
   };
   return (
     <div className="flex flex-col h-full justify-between gap-[2rem] relative">
@@ -32,7 +33,11 @@ const RegionSelectStep = ({ isFilterType = false, title }: StepType) => {
           <div className="relative h-[3.6rem] w-[24rem]">
             <div className="flex mt-[2.8rem] h-[3rem] justify-between">
               <button
-                onClick={isFilterType ? () => onChangeTabState() : undefined}
+                onClick={
+                  isFilterType
+                    ? () => onChangeTabState('renderStep')
+                    : () => onChangeTabState('renderStep')
+                }
                 className={`${
                   activeTab === 'renderStep'
                     ? 'text-var-primary-500'
@@ -43,7 +48,7 @@ const RegionSelectStep = ({ isFilterType = false, title }: StepType) => {
               </button>
               {isFilterType || (
                 <button
-                  onClick={() => onChangeTabState()}
+                  onClick={() => onChangeTabState('searchTab')}
                   className={`${
                     activeTab === 'searchTab'
                       ? 'text-var-primary-500'
