@@ -14,7 +14,7 @@ const NavigationList = ({ items, lastPathSegment }: NavigationListProps) => {
       </h3>
       <div className="flex flex-col gap-[1.6rem] text-[2rem] text-black/50 font-semibold leading-[3rem]">
         {items.listItems.map((item) => {
-          return item.urlPath === 'inquiry' ? (
+          return item.urlPath === 'storage' ? (
             <span key={item.urlPath} className="cursor-not-allowed">
               {item.title}
             </span>
