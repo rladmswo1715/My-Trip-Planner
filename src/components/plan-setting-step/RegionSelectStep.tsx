@@ -4,13 +4,19 @@ import RegionSelector from './plan-setting-step-tab/plan-setting-tab-select/Regi
 import DetailedSelector from './plan-setting-step-tab/plan-setting-tab-select/DetailedSelector';
 import DetailSearchLocation from './plan-setting-step-tab/plan-setting-tab-search/DetailSearchLocation';
 import cs from 'classnames';
+import BackButton from '../auth/login/BackButton';
 
 type StepType = {
   isFilterType?: boolean;
   title: string;
+  onClose?: () => void;
 };
 
-const RegionSelectStep = ({ isFilterType = false, title }: StepType) => {
+const RegionSelectStep = ({
+  isFilterType = false,
+  title,
+  onClose,
+}: StepType) => {
   const [activeTab, setActiveTab] = useState<'renderStep' | 'searchTab'>(
     'renderStep'
   );
@@ -27,9 +33,12 @@ const RegionSelectStep = ({ isFilterType = false, title }: StepType) => {
       <div>
         {/* 제목탭 */}
         <div className={cs({ 'mt-[4rem]': !isFilterType })}>
-          <span className="leading-[4.2rem] text-[2.8rem] font-bold">
-            {title}
-          </span>
+          <div className="flex justify-between items-center">
+            <span className="leading-[4.2rem] text-[2.8rem] font-bold">
+              {title}
+            </span>
+            {isFilterType && <BackButton onClose={onClose} />}
+          </div>
           <div className="relative h-[3.6rem] w-[24rem]">
             <div className="flex mt-[2.8rem] h-[3rem] justify-between">
               <button

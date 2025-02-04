@@ -3,13 +3,19 @@ import Button from '../common/Button';
 import { usePlanStore } from '@/stores/planStores';
 import { useFilterStore } from '@/stores/filterStores';
 import cs from 'classnames';
+import BackButton from '../auth/login/BackButton';
 
 type StepType = {
   title: string;
   isFilterType?: boolean;
+  onClose?: () => void;
 };
 
-const TransportSelectStep = ({ isFilterType = false, title }: StepType) => {
+const TransportSelectStep = ({
+  isFilterType = false,
+  title,
+  onClose,
+}: StepType) => {
   const planStore = usePlanStore((state) => state.transport);
   const filterStore = useFilterStore((state) => state.transport);
 
@@ -19,7 +25,12 @@ const TransportSelectStep = ({ isFilterType = false, title }: StepType) => {
 
   return (
     <div className={cs({ 'mt-[4rem]': !isFilterType })}>
-      <span className="leading-[4.2rem] text-[2.8rem] font-bold">{title}</span>
+      <div className="flex justify-between items-center">
+        <span className="leading-[4.2rem] text-[2.8rem] font-bold">
+          {title}
+        </span>
+        {isFilterType && <BackButton onClose={onClose} />}
+      </div>
       <div className="w-full mt-[2.8rem]">
         <div className="flex justify-between gap-[2rem]">
           <div className="grow w-1/2">

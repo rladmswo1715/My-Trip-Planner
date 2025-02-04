@@ -23,14 +23,14 @@ type FilterStore = {
     setNumberOfPeople: (count: number) => void;
   };
   transport: {
-    selectedTransport: 'public' | 'car' | null;
-    setTransport: (transport: 'public' | 'car') => void;
+    selectedTransport: 'PUBLIC' | 'CAR' | null;
+    setTransport: (transport: 'PUBLIC' | 'CAR') => void;
   };
   confirmedFilter: {
     selectedDetails: RegionType[];
     selectedDate: string | null;
     selectedPeople: number;
-    selectedTransport: 'public' | 'car' | null;
+    selectedTransport: 'PUBLIC' | 'CAR' | null;
   };
   saveFilter: (filterCategory: string) => void;
   resetCategory: (filterCategory: string) => void;
