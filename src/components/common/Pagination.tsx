@@ -42,6 +42,7 @@ const Pagination = ({
   );
 
   const handlePageChange = (page: number) => {
+    if (page === currentPage) return;
     router.push(`${urlPath}?currentPage=${page}`);
   };
 
