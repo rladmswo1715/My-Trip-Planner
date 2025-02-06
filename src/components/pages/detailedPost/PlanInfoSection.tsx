@@ -2,8 +2,6 @@ import ProfileImage from '@/components/ui/ProfileImage';
 import Image from 'next/image';
 import { ICONS } from '@/constants/importImages';
 import testImg from '@/assets/img/test-img.png';
-import { useQuery } from '@tanstack/react-query';
-import { getPlanInfo } from '@/apis/plan';
 import {
   calculateTripDuration,
   formatDate,
@@ -12,74 +10,64 @@ import {
 import { personalCostCalc } from '@/utils/costUtils';
 import Visibility from './Visibility';
 import { ETransportation } from '@/types/enum';
+import { TPlanInfo } from '@/types/responseData/detailedPlan';
 
 interface PlanInfoSectionProps {
+  infoData: TPlanInfo;
   planId: number;
   accessToken: string;
   socialId: string;
 }
 
 const PlanInfoSection = ({
+  infoData: data,
   planId,
-  accessToken,
   socialId,
 }: PlanInfoSectionProps) => {
-  const { data } = useQuery({
-    queryKey: ['plan', planId, 'info'],
-    queryFn: () => getPlanInfo(planId, accessToken),
+  const day = calculateTripDuration({
+    endDate: data.endDate,
+    startDate: data.startDate,
   });
 
-  const day =
-    data &&
-    calculateTripDuration({
-      endDate: data.endDate,
-      startDate: data.startDate,
-    });
-
-  const formattedPlaceCategory = data?.placeCategory.join(' - ');
-  const formattedDuration =
-    data &&
-    `${formatFromString(data.startDate)} ~ ${formatFromString(
-      data.endDate
-    )} · ${day?.nights}박 ${day?.days}일`;
+  const formattedPlaceCategory = data.placeCategory.join(' - ');
+  const formattedDuration = `${formatFromString(
+    data.startDate
+  )} ~ ${formatFromString(data.endDate)} · ${day?.nights}박 ${day?.days}일`;
 
   const renderCounterOptions = [
     {
       key: 'view',
       image: { src: ICONS.iconEye.src, alt: ICONS.iconEye.alt },
-      count: data?.viewCount,
+      count: data.viewCount,
     },
     {
       key: 'like',
       image: { src: ICONS.iconLike.src, alt: ICONS.iconLike.alt },
-      count: data?.like,
+      count: data.like,
     },
   ];
   const renderInfoOptions = [
     {
       key: '기간',
-      value: data ? formattedDuration : '',
+      value: formattedDuration,
     },
     {
       key: '인원',
-      value: data?.people ? `${data.people}명` : '',
+      value: `${data.people}명`,
     },
     {
       key: '교통수단',
-      value: data
-        ? data.transportation === 'CAR'
+      value:
+        data.transportation === 'CAR'
           ? ETransportation.CAR
-          : ETransportation.PUBLIC
-        : '',
+          : ETransportation.PUBLIC,
     },
     {
       key: '예상비용',
-      value: data
-        ? `${data.totalCost.toLocaleString()}원 (1인${personalCostCalc(
-            data.people,
-            data.totalCost
-          )}원)`
-        : '',
+      value: `${data.totalCost.toLocaleString()}원 (1인${personalCostCalc(
+        data.people,
+        data.totalCost
+      )}원)`,
     },
   ];
 
@@ -89,11 +77,11 @@ const PlanInfoSection = ({
         <div className="flex justify-between items-center gap-[6.8rem]">
           <div className="flex items-center gap-[1.2rem]">
             <h2 className="text-[3.2rem] font-bold leading-[4.8rem]">
-              {data?.title}
+              {data.title}
             </h2>
             {/* <button className="text-[#7E7E7E]">편집</button> */}
           </div>
-          {data?.status && socialId === data?.socialId && (
+          {data.status && socialId === data.socialId && (
             <Visibility planId={planId} status={data.status} />
           )}
         </div>
@@ -104,29 +92,38 @@ const PlanInfoSection = ({
         <div className="flex flex-col gap-[2.4rem]">
           <div className="flex flex-col gap-[1.2rem]">
             <div className="flex items-center gap-[1.2rem] text-[2rem] leading-[2.5rem]">
-              <ProfileImage imageUrl={data?.profileImage || ''} size="m" />
-              <span className="font-medium">{data?.author}</span>
+              <ProfileImage imageUrl={data.profileImage || ''} size="m" />
+              <span className="font-medium">{data.author}</span>
               <span className="text-black/60">
-                {data?.createdAt && formatDate('comment', data.createdAt)}
+                {data.createdAt && formatDate('comment', data.createdAt)}
               </span>
             </div>
             <div className="flex items-center gap-[2rem] text-[1.6rem] leading-[1.909]">
-              {renderCounterOptions.map((option) => {
-                return (
-                  <div
-                    key={option.key}
-                    className="flex items-center gap-[0.8rem]"
-                  >
-                    <Image
-                      src={option.image.src}
-                      alt={option.image.alt}
-                      width={24}
-                      height={24}
-                    />
-                    <span>{option.count}</span>
-                  </div>
-                );
-              })}
+              {renderCounterOptions.map(
+                (option: {
+                  key: string;
+                  image: {
+                    src: string;
+                    alt: string;
+                  };
+                  count: number;
+                }) => {
+                  return (
+                    <div
+                      key={option.key}
+                      className="flex items-center gap-[0.8rem]"
+                    >
+                      <Image
+                        src={option.image.src}
+                        alt={option.image.alt}
+                        width={24}
+                        height={24}
+                      />
+                      <span>{option.count}</span>
+                    </div>
+                  );
+                }
+              )}
             </div>
           </div>
 

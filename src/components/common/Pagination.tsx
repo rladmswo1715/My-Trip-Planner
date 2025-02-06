@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 interface PaginationProps {
-  pageType: 'my' | 'dibs' | 'plan-comment';
+  pageType: 'my' | 'dibs' | 'my-comment' | 'plan-comment';
   currentPage: number;
   totalPages: number;
   onPageChange?: (page: number) => void;
@@ -24,6 +24,9 @@ const Pagination = ({
     case 'dibs':
       urlPath = '/my/dibs-planners';
       break;
+    case 'my-comment':
+      urlPath = '/my/my-comments';
+      break;
     case 'plan-comment':
       urlPath = `/plan-n/${planId}`;
       break;
@@ -42,6 +45,7 @@ const Pagination = ({
   );
 
   const handlePageChange = (page: number) => {
+    if (page === currentPage) return;
     router.push(`${urlPath}?currentPage=${page}`);
   };
 

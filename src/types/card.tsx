@@ -1,7 +1,7 @@
 import { StaticImageData } from 'next/image';
 
 export type TMainCardList = {
-  planId?: number;
+  planId: number;
   title: string;
   placeCategory: string[];
   startDate: Date;
@@ -16,7 +16,6 @@ export type TMypageCardList = {
   planId: number;
   categories: string[];
   title: string;
-  created_at: Date;
   thumbnail: string | StaticImageData;
   bookmarkId?: number;
   status?: 'PRIVATE' | 'PUBLIC';

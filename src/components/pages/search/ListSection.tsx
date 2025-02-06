@@ -2,6 +2,7 @@
 
 import { getSearchList } from '@/apis/search';
 import SortFilterDropdown from '@/components/common/SortFilterDropdown';
+import Spinner from '@/components/common/Spinner';
 import InnerLayout from '@/components/layout/InnerLayout';
 import PlannerCard from '@/components/ui/card/PlannerCard';
 import { TSearchList } from '@/types/responseData/search';
@@ -29,9 +30,9 @@ const SearchListSection = () => {
   const [sort, setSort] = useState('최신순');
   const params = useSearchParams();
   const fetchSearchList = ({
-    pageParam = { lastId: null, lastValue: null },
+    pageParam = { lastId: 0, lastValue: null },
   }: {
-    pageParam?: { lastId: number | null; lastValue: string | null };
+    pageParam?: { lastId: number; lastValue: string | null };
   }) => {
     const queryParams = {
       day: params.get('day'),
@@ -45,17 +46,17 @@ const SearchListSection = () => {
     return getSearchList(queryParams);
   };
 
-  const { data, hasNextPage, isFetching, fetchNextPage, refetch } =
+  const { data, hasNextPage, isLoading, isFetching, fetchNextPage, refetch } =
     useInfiniteQuery<
       TSearchList,
       Error,
       InfiniteData<TSearchList>,
       [_1: string, _2: string],
-      { lastId: number | null; lastValue: string | null }
+      { lastId: number; lastValue: string | null }
     >({
       queryKey: ['search', params.toString()],
       queryFn: fetchSearchList,
-      initialPageParam: { lastId: null, lastValue: null },
+      initialPageParam: { lastId: 0, lastValue: null },
       getNextPageParam: (lastPage) =>
         lastPage.hasNext
           ? { lastId: lastPage.nextId, lastValue: lastPage.nextValue }
@@ -94,6 +95,8 @@ const SearchListSection = () => {
     </div>
   );
 
+  if (isLoading) return <Spinner />;
+
   return (
     <InnerLayout>
       {listFlatMapList.length > 0 ? (
@@ -103,13 +106,12 @@ const SearchListSection = () => {
               <p className="text-[2rem] text-black font-semibold leading-[3rem]">
                 총{' '}
                 <span className="text-var-primary-500">
-                  {data?.pages[0].total}
+                  {data?.pages[0].totalCount}
                 </span>
                 개의 일정을 발견했어요
               </p>
               <SortFilterDropdown text={sort} onSelect={setSort} />
             </div>
-            {/* 검색 결과 리스트에 장소명 백엔드 api 연결하고 한번 더 확인하기 */}
             <div className="grid grid-cols-4 grid-rows-4 gap-y-[2.4rem] gap-x-[2rem]">
               {listFlatMapList.map((item) => {
                 return (

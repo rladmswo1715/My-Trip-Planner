@@ -14,11 +14,11 @@ const PlannerCard = <T extends 'main' | 'mypage'>({
   cardInfo,
 }: PlannerCardProps<T>) => {
   const isMainType = cardType === 'main';
-  const { thumbnail } = cardInfo;
+  const { thumbnail, planId } = cardInfo;
 
   return (
     <Link
-      href="/"
+      href={`/plan-n/${planId}`}
       className={`relative block w-full rounded-[0.6rem] overflow-hidden ${
         isMainType ? 'max-w-[30.5rem]' : 'max-w-[26.3rem]'
       }`}

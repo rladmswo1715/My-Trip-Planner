@@ -1,7 +1,5 @@
-import { BASE_URL } from '@/constants/urls';
 import { TSearchList } from '@/types/responseData/search';
 
-type getSearchListResponse = TSearchList;
 interface getSearchListProps {
   day?: string | null;
   transportCategoryName?: string | null;
@@ -14,7 +12,7 @@ interface getSearchListProps {
 
 export const getSearchList = async (
   queryParams: getSearchListProps
-): Promise<getSearchListResponse> => {
+): Promise<TSearchList> => {
   let queryString = '';
 
   (Object.keys(queryParams) as (keyof getSearchListProps)[]).forEach((key) => {
@@ -39,9 +37,9 @@ export const getSearchList = async (
 
   try {
     const response = await fetch(
-      `${BASE_URL}/plans/search?size=16&direction=DESC${
-        queryString && '&' + queryString
-      }`,
+      `${
+        process.env.NEXT_PUBLIC_SERVER_IP
+      }/plans/search?size=16&direction=DESC${queryString && '&' + queryString}`,
       {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -53,7 +51,7 @@ export const getSearchList = async (
         message: errorData.message || '검색결과 불러오기 실패',
       };
     }
-    const data = await response.json();
+    const { data } = await response.json();
     return data;
   } catch (error) {
     console.error(error);

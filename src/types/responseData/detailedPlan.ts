@@ -3,12 +3,14 @@ export type TPlanInfo = {
   placeCategory: string[];
   author: string;
   profileImage: string;
+  thumbnail: string;
   createdAt: Date;
   startDate: string;
   endDate: string;
   status: 'PUBLIC' | 'PRIVATE';
   viewCount: number;
   like: number;
+  likeId: number | null;
   people: number;
   transportation: 'CAR' | 'PUBLIC';
   totalCost: number;
@@ -50,4 +52,20 @@ export type TPlanComments = {
   first: boolean;
   numberOfElements: number;
   empty: boolean;
+};
+
+export type TPlanScheduleItem = {
+  order: number;
+  placeName: string;
+  streetAddress: string;
+  code: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type TPlanSchedules = {
+  date: Date;
+  cost: number;
+  day: number;
+  detail: TPlanScheduleItem[];
 };

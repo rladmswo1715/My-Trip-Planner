@@ -7,10 +7,17 @@ export const NAV_OPTIONS: TNAV_OPTIONS[] = [
       {
         title: '내 여행 일정',
         urlPath: 'my-planners',
+        order: 1,
       },
       {
         title: '찜한 일정',
         urlPath: 'dibs-planners',
+        order: 2,
+      },
+      {
+        title: '임시 저장',
+        urlPath: 'storage',
+        order: 4,
       },
     ],
   },
@@ -20,16 +27,17 @@ export const NAV_OPTIONS: TNAV_OPTIONS[] = [
       {
         title: '내가 쓴 댓글',
         urlPath: 'my-comments',
+        order: 3,
       },
     ],
   },
-  {
-    category: '기타',
-    listItems: [
-      {
-        title: '문의사항',
-        urlPath: 'inquiry',
-      },
-    ],
-  },
+  // {
+  //   category: '기타',
+  //   listItems: [
+  //     {
+  //       title: '문의사항',
+  //       urlPath: 'inquiry',
+  //     },
+  //   ],
+  // },
 ];

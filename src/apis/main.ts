@@ -1,15 +1,14 @@
-import { BASE_URL } from '@/constants/urls';
 import { TMainCardList } from '@/types/card';
 
 interface getMainSlidesResponse {
   mostViewPlans: TMainCardList[];
   mostRecentPlans: TMainCardList[];
-  HongdaeHotPlans: TMainCardList[];
+  hotPlacePlans: TMainCardList[];
 }
 
 export const getMainSlides = async (): Promise<getMainSlidesResponse> => {
   try {
-    const response = await fetch(`${BASE_URL}/home`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_IP}/home`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -21,7 +20,7 @@ export const getMainSlides = async (): Promise<getMainSlidesResponse> => {
       };
     }
 
-    const data = await response.json();
+    const { data } = await response.json();
     return data;
   } catch (error) {
     console.error(error);

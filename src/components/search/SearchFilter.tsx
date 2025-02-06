@@ -18,18 +18,30 @@ const SearchFilter = ({ filterCategory, onClose }: SearchFilterProps) => {
     switch (filterCategory) {
       case 'region':
         return {
-          render: <RegionSelectStep isFilterType title={STEP_TITLE.REGION} />,
+          render: (
+            <RegionSelectStep
+              isFilterType
+              title={STEP_TITLE.REGION}
+              onClose={onClose}
+            />
+          ),
           button: true,
         };
       case 'date':
         return {
-          render: <DateFilterContent title={STEP_TITLE.DATE} />,
+          render: (
+            <DateFilterContent title={STEP_TITLE.DATE} onClose={onClose} />
+          ),
           button: true,
         };
       case 'transport':
         return {
           render: (
-            <TransportSelectStep isFilterType title={STEP_TITLE.TRANSPORT} />
+            <TransportSelectStep
+              isFilterType
+              title={STEP_TITLE.TRANSPORT}
+              onClose={onClose}
+            />
           ),
           button: true,
         };
