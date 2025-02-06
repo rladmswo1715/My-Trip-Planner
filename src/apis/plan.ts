@@ -193,3 +193,55 @@ export const deleteComment = async (id: number, accessToken: string) => {
     console.error(error);
   }
 };
+
+export const postLike = async (planId: number, accessToken: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/plans/${planId}/like`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      throw {
+        message: errorData.message || '좋아요 실패',
+        details: errorData.details,
+      };
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteLike = async (likeId: number, accessToken: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/plans/like/${likeId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      throw {
+        message: errorData.message || '좋아요 취소 실패',
+        details: errorData.details,
+      };
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

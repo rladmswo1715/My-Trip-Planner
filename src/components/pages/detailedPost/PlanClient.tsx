@@ -53,7 +53,11 @@ const PlanClient = ({ planId }: PlanClientProps) => {
         accessToken={accessToken}
         days={dayArray as number[]}
       />
-      <UserActionSection planId={planId} />
+      <UserActionSection
+        accessToken={accessToken}
+        planId={planId}
+        likeId={data.likeId}
+      />
       <CommentsSection {...commonProps} />
     </>
   );

@@ -10,6 +10,7 @@ export type TPlanInfo = {
   status: 'PUBLIC' | 'PRIVATE';
   viewCount: number;
   like: number;
+  likeId: number | null;
   people: number;
   transportation: 'CAR' | 'PUBLIC';
   totalCost: number;
