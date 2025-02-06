@@ -20,7 +20,12 @@ const AuthProfile = () => {
     console.log(error);
     return LoginButtonLender;
   }
-  return <HeaderProfile nickname={data?.data?.nickname} src="" />;
+  return (
+    <HeaderProfile
+      nickname={data?.data?.nickname}
+      src={data?.data.image || ''}
+    />
+  );
 };
 
 export default AuthProfile;
