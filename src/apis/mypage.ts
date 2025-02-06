@@ -1,17 +1,18 @@
-import { BASE_URL } from '@/constants/urls';
 import { TMyComments, TMyPlanners } from '@/types/responseData/mypage';
 
-// 백엔드 에러 명세서 알려주면 에러처리 수정하기
-
 export const getMyPlanners = async (
-  currentPage: number
+  currentPage: number,
+  accessToken: string
 ): Promise<TMyPlanners> => {
   try {
     const response = await fetch(
-      `${BASE_URL}/users/myplan?currentPage=${currentPage}&pageSize=6`,
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/users/myplan?page=${currentPage}&size=6`,
       {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
     );
     if (!response.ok) {
@@ -22,7 +23,7 @@ export const getMyPlanners = async (
       };
     }
 
-    const data = await response.json();
+    const { data } = await response.json();
     return data;
   } catch (error) {
     console.error(error);
@@ -31,14 +32,18 @@ export const getMyPlanners = async (
 };
 
 export const getDibsPlanners = async (
-  currentPage: number
+  currentPage: number,
+  accessToken: string
 ): Promise<TMyPlanners> => {
   try {
     const response = await fetch(
-      `${BASE_URL}/users/bookmarks?currentPage=${currentPage}&pageSize=6`,
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/users/bookmarks?page=${currentPage}&size=6`,
       {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
     );
     if (!response.ok) {
@@ -58,14 +63,18 @@ export const getDibsPlanners = async (
 };
 
 export const getMyComments = async (
-  currentPage: number
+  currentPage: number,
+  accessToken: string
 ): Promise<TMyComments> => {
   try {
     const response = await fetch(
-      `${BASE_URL}/users/comments?currentPage=${currentPage}&pageSize=3`,
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/users/comments?page=${currentPage}&size=10`,
       {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
     );
     if (!response.ok) {
@@ -76,7 +85,7 @@ export const getMyComments = async (
       };
     }
 
-    const data = await response.json();
+    const { data } = await response.json();
     return data;
   } catch (error) {
     console.error(error);

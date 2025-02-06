@@ -7,13 +7,13 @@ interface CommentCardProps {
 }
 
 const CommentCard = ({ itemData }: CommentCardProps) => {
-  const { category, content, title, created_at } = itemData;
+  const { planId, categories, comment, title, createdAt } = itemData;
 
-  const formattedPlaceCategory = category.join('-');
+  const formattedPlaceCategory = categories.join('-');
 
   return (
     <Link
-      href="/"
+      href={`/plan-n/${planId}`}
       className="flex flex-col gap-[1.2rem] w-full border border-black/30 rounded-lg px-[2rem] py-[2.25rem] text-[1.4rem] text-black leading-[1.82rem] hover:border-black"
     >
       <div className="flex items-center gap-[1.6rem]">
@@ -21,9 +21,9 @@ const CommentCard = ({ itemData }: CommentCardProps) => {
         <p className="text-black/30">{formattedPlaceCategory}</p>
       </div>
       <div className="flex flex-col gap-[0.8rem]">
-        <p className="text-[1.6rem] leading-[2.08rem]">{content}</p>
+        <p className="text-[1.6rem] leading-[2.08rem]">{comment}</p>
         <span className="text-black/30">
-          {formatDate('comment', new Date(created_at))}
+          {formatDate('comment', new Date(createdAt))}
         </span>
       </div>
     </Link>

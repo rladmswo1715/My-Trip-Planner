@@ -16,7 +16,6 @@ export type TMypageCardList = {
   planId: number;
   categories: string[];
   title: string;
-  created_at: Date;
   thumbnail: string | StaticImageData;
   bookmarkId?: number;
   status?: 'PRIVATE' | 'PUBLIC';
