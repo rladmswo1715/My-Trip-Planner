@@ -5,5 +5,5 @@ export type TSearchList = {
   hasNext: boolean;
   nextValue: string;
   nextId: number;
-  total: number;
+  totalCount: number;
 };
