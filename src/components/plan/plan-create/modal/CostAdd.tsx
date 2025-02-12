@@ -88,6 +88,8 @@ const CostComponent = ({
         d.day === day ? { ...d, cost: rawCostValue } : d
       ),
     }));
+
+    onClose();
   };
 
   const handleOpen = () => {

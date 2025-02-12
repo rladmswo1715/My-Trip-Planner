@@ -1,17 +1,15 @@
 import React, { useRef, useState } from 'react';
 import useOutsideClick from '@/lib/hooks/useOutsideClick';
 import Chip from '../../../common/Chip';
-// import SearchItems from './SearchItems';
 import Icons from '@/components/common/Icons';
 
-// 제너릭 Props
 type SearchProps<T> = {
   onSelect: (item: T) => void;
   onSearchChange: (term: string) => void;
   searchTerm: string;
   title: string;
-  list: T[]; // 제너릭 타입의 리스트
-  renderItem: (item: T, handleSelect: (item: T) => void) => React.ReactNode; // 리스트 항목 렌더링 함수
+  list: T[];
+  renderItem: (item: T, handleSelect: (item: T) => void) => React.ReactNode;
 };
 
 const Search = <T,>({

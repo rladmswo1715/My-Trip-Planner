@@ -17,6 +17,21 @@ export const formatAddressName = (items: PlaceDocument) => {
   } `;
 };
 
+export const formatAddressStore = (items: PlaceDocument): RegionType => {
+  const {
+    region_1depth_name,
+    region_2depth_name,
+    region_3depth_h_name,
+    region_3depth_name,
+  } = items.address;
+
+  return {
+    parent: region_1depth_name,
+    child: region_2depth_name,
+    grandChild: region_3depth_name ? region_3depth_name : region_3depth_h_name,
+  };
+};
+
 export const CategoryMap: Record<string, { id: number; name: string }> = {
   MT1: { id: 1, name: '대형마트' },
   CS2: { id: 2, name: '편의점' },

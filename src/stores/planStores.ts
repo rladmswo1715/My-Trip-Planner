@@ -13,6 +13,7 @@ type PlanStore = {
     removeDetail: (detail: RegionType) => void;
     clearDetails: () => void;
     setSelectDetails: (detail: string) => void;
+    setSearchDetails: (detail: RegionType) => void;
   };
   date: {
     startDay: string | null;
@@ -61,6 +62,20 @@ export const usePlanStore = create<PlanStore>((set) => ({
           ],
         },
       })),
+    setSearchDetails: (detail) =>
+      set((state) => ({
+        region: {
+          ...state.region,
+          selectedDetails: [
+            ...state.region.selectedDetails,
+            {
+              child: detail.child,
+              parent: detail.parent,
+              grandChild: detail.grandChild,
+            },
+          ],
+        },
+      })),
     toggleDetail: (detail) =>
       set((state) => {
         const existingIndex = state.region.selectedDetails.findIndex(
@@ -86,15 +101,21 @@ export const usePlanStore = create<PlanStore>((set) => ({
           },
         };
       }),
-    removeDetail: ({ parent, child }: RegionType) =>
+    removeDetail: ({ parent, child, grandChild }: RegionType) =>
       set((state) => ({
         region: {
           ...state.region,
-          selectedDetails: state.region.selectedDetails.filter(
-            (item) => !(item.parent === parent && item.child === child)
-          ),
+          selectedDetails: state.region.selectedDetails.filter((item) => {
+            return !(
+              item.parent === parent &&
+              item.child === child &&
+              (item.grandChild === grandChild ||
+                (!item.grandChild && !grandChild))
+            );
+          }),
         },
       })),
+
     clearDetails: () =>
       set((state) => ({
         region: {
@@ -153,6 +174,7 @@ export const usePlanStore = create<PlanStore>((set) => ({
         removeDetail: state.region.removeDetail,
         clearDetails: state.region.clearDetails,
         setSelectDetails: state.region.setSelectDetails,
+        setSearchDetails: state.region.setSearchDetails,
       },
       date: {
         startDay: null,

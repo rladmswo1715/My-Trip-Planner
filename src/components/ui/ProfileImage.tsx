@@ -13,15 +13,20 @@ interface ProfileImageProps {
 }
 
 const ProfileImage = ({ imageUrl, size, priority }: ProfileImageProps) => {
+  const sizeClassName = {
+    m: `w-[4.8rem] h-[4.8rem]`,
+    l: `w-[8rem] h-[8rem]`,
+  };
   return (
-    <Image
-      src={imageUrl ? imageUrl : IMAGES.defaultProfile.src}
-      width={PROFILE_SIZE[size]}
-      height={PROFILE_SIZE[size]}
-      alt="프로필이미지"
-      className="shrink-0 object-cover shadow-md rounded-full"
-      priority={priority}
-    />
+    <div className={`${sizeClassName[size]} relative`}>
+      <Image
+        src={imageUrl ? imageUrl : IMAGES.defaultProfile.src}
+        fill
+        alt="프로필이미지"
+        className="shrink-0 object-cover shadow-md rounded-full absolute"
+        priority={priority}
+      />
+    </div>
   );
 };
 

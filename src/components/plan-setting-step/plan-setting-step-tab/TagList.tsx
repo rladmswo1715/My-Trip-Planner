@@ -17,14 +17,16 @@ const PlanTag = ({ isFilterType = false }: PlanTagProps) => {
 
   return (
     <div className="relative flex flex-wrap gap-2 p-4">
-      {selectedDetails.map(({ parent, child }) => (
+      {selectedDetails.map(({ parent, child, grandChild }) => (
         <Tag
-          key={`${parent}-${child}`}
+          key={`${parent}-${child}${grandChild && grandChild}`}
           close
           color="blueWhite"
-          onClick={() => removeDetail({ parent, child })}
+          onClick={() => removeDetail({ parent, child, grandChild })}
         >
-          {parent + ' > ' + child}
+          {grandChild
+            ? parent + ' > ' + child + ' > ' + grandChild
+            : parent + ' > ' + child}
         </Tag>
       ))}
     </div>
