@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
     ],
     unoptimized: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/proxy/:path*',
+        destination: 'http://3.38.57.113/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
