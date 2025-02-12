@@ -7,18 +7,20 @@ const StaticModal = ({ children }: { children: ReactNode }) => {
   const scrollY = useRef(0);
 
   useEffect(() => {
-    const originalOverflow = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = 'hidden'; // 뒷페이지 스크롤 락
-    scrollY.current = window.scrollY;
+    if (typeof document !== undefined) {
+      const originalOverflow = window.getComputedStyle(document.body).overflow;
+      document.body.style.overflow = 'hidden'; // 뒷페이지 스크롤 락
+      scrollY.current = window.scrollY;
 
-    const previouslyFocusedElement = document.activeElement as HTMLElement;
-    ref.current?.focus();
+      const previouslyFocusedElement = document.activeElement as HTMLElement;
+      ref.current?.focus();
 
-    return () => {
-      document.body.style.overflow = originalOverflow; // 스크롤 원상복구
-      window.scrollTo(0, scrollY.current);
-      previouslyFocusedElement?.focus();
-    };
+      return () => {
+        document.body.style.overflow = originalOverflow; // 스크롤 원상복구
+        window.scrollTo(0, scrollY.current);
+        previouslyFocusedElement?.focus();
+      };
+    }
   }, []);
   const modalContent = (
     <section className="modal-background ">

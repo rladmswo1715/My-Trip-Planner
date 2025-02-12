@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { IMAGES } from '@/constants/importImages';
 
-const PROFILE_SIZE = {
-  m: 48,
-  l: 80,
-};
+// const PROFILE_SIZE = {
+//   m: 48,
+//   l: 80,
+// };
 
 interface ProfileImageProps {
   imageUrl: string | null;
