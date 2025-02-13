@@ -11,6 +11,7 @@ export type TPlanInfo = {
   viewCount: number;
   like: number;
   likeId: number | null;
+  bookmarkId: number | null;
   people: number;
   transportation: 'CAR' | 'PUBLIC';
   totalCost: number;

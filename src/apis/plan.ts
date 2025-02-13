@@ -166,6 +166,43 @@ export const postAddComment = async (
   }
 };
 
+export const patchComment = async (
+  commentData: {
+    commentId: number;
+    content: string;
+  },
+  accessToken: string
+) => {
+  try {
+    const { commentId, ...dataToPatch } = commentData;
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/plans/comments/${commentId}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(dataToPatch),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      throw {
+        message: errorData.message || '댓글 수정 실패',
+        details: errorData.details,
+      };
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const deleteComment = async (id: number, accessToken: string) => {
   try {
     const response = await fetch(
@@ -237,6 +274,58 @@ export const deleteLike = async (likeId: number, accessToken: string) => {
 
       throw {
         message: errorData.message || '좋아요 취소 실패',
+        details: errorData.details,
+      };
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const postDibs = async (planId: number, accessToken: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/plans/${planId}/bookmarks`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      throw {
+        message: errorData.message || '찜하기 실패',
+        details: errorData.details,
+      };
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteDibs = async (bookmarkId: number, accessToken: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/plans/bookmarks/${bookmarkId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      throw {
+        message: errorData.message || '찜하기 취소 실패',
         details: errorData.details,
       };
     }

@@ -57,6 +57,7 @@ const PlanClient = ({ planId }: PlanClientProps) => {
         accessToken={accessToken}
         planId={planId}
         likeId={data.likeId}
+        bookmarkId={data.bookmarkId}
       />
       <CommentsSection {...commonProps} />
     </>
