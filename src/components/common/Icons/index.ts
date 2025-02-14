@@ -8,6 +8,7 @@ import { default as Map } from './Map';
 import { default as Traffic } from './Traffic';
 import { default as Restaurant } from './Restaurant';
 import { default as Defalut } from './Defalut';
+import { default as Setting } from './Setting';
 
 export const Icons = {
   DownTriangle,
@@ -20,6 +21,7 @@ export const Icons = {
   Traffic,
   Restaurant,
   Defalut,
+  Setting,
 };
 
 export default Icons;

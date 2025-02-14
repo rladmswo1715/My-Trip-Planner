@@ -20,11 +20,14 @@ const fetchPlaces = async ({
       },
     }
   );
-  // console.log('query길이 : ' + query.length, '동작중');
+  console.log('query길이 : ' + query.length, '동작중');
   if (!response.ok) {
     throw new Error('실패');
   }
+
   const data = await response.json();
+
+  console.log(data);
   return data;
 };
 

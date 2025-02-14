@@ -7,6 +7,7 @@ import thumnail from '@/assets/img/def-thumnail.png';
 import useImagePreview from '@/lib/hooks/useFileUpload';
 import Icons from '@/components/common/Icons';
 import PlanDetailsTitleChange from './PlanDetailsTitleChange';
+import PlanScheduleUpdate from './PlanScheduleUpdate';
 const PlanDetails = () => {
   const { planData, image } = usePlanContext();
   const { startDate, endDate, people, subtitle } = planData;
@@ -53,11 +54,14 @@ const PlanDetails = () => {
           </span>
         </div>
         {/* 여행정보라인 */}
-        <div className="flex-col space-y-[2rem]">
+        <div className="flex-col space-y-[2rem] min-w-[45rem]">
           {/* 여행정보 */}
-          <span className="flex text-[2.4rem] leading-[3.6rem] font-semibold">
-            여행정보
-          </span>
+          <div className="flex justify-between w-full">
+            <span className="flex text-[2.4rem] leading-[3.6rem] font-semibold">
+              여행정보
+            </span>
+            <PlanScheduleUpdate planData={planData} />
+          </div>
 
           <div className="flex flex-col gap-[1.2rem]">
             {/* 기간  */}

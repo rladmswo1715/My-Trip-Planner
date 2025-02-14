@@ -14,7 +14,27 @@ import { calculateTripDuration, generateDays } from '@/utils/dateUtils';
 import { STEP_TITLE } from '@/types/enum';
 import BackButton from './auth/login/BackButton';
 
-const PlanSetting = ({ onClose }: { onClose: () => void }) => {
+type BaseProps = {
+  onClose: () => void;
+};
+
+type UpdateProps = {
+  update: true;
+  initialData: PlanDataType;
+};
+
+type CreateProps = {
+  update?: false;
+  initialData?: never;
+};
+
+type PlanSettingProps = BaseProps & (UpdateProps | CreateProps);
+
+const PlanSetting = ({
+  onClose,
+  update = false,
+  initialData,
+}: PlanSettingProps) => {
   const {
     step,
     nextStep,
@@ -30,6 +50,20 @@ const PlanSetting = ({ onClose }: { onClose: () => void }) => {
   const router = useRouter();
 
   useEffect(() => {
+    if (update && initialData) {
+      if (initialData.category.length > 0) {
+        region.setRegion(initialData.category[0].parent);
+        initialData.category.forEach((item) => {
+          region.setSearchDetails(item);
+        });
+      }
+
+      date.setStartDay(initialData.startDate);
+      date.setEndDay(initialData.endDate);
+      date.setNumberOfPeople(initialData.people);
+
+      transport.setTransport(initialData.transportation);
+    }
     return () => {
       resetAll();
       resetStep();
@@ -38,9 +72,10 @@ const PlanSetting = ({ onClose }: { onClose: () => void }) => {
 
   const lastBtnSetting = () => {
     if (!startDay || !endDay) return;
+
     const planId = uuidv4();
     const subtitle = region.selectedDetails
-      .map((item) => item.child)
+      .map((item) => (item.grandChild ? item.grandChild : item.child))
       .join(' - ');
     const day = calculateTripDuration({
       endDate: endDay!,
@@ -48,17 +83,32 @@ const PlanSetting = ({ onClose }: { onClose: () => void }) => {
     });
     const title = `${day?.nights}박 ${day?.days}일 여행`;
     const days = generateDays({ startDay, endDay });
+    const initialPlanData: PlanDataType =
+      update && initialData
+        ? {
+            ...initialData,
+            startDate: startDay,
+            endDate: endDay,
+            category: region.selectedDetails,
+            people: numberOfPeople,
+            transportation: transport.selectedTransport ?? 'CAR',
+          }
+        : {
+            title,
+            subtitle,
+            startDate: startDay,
+            endDate: endDay,
+            category: region.selectedDetails,
+            people: numberOfPeople,
+            transportation: transport.selectedTransport ?? 'CAR',
+            days,
+          };
 
-    const initialPlanData: PlanDataType = {
-      title,
-      subtitle,
-      startDate: startDay,
-      endDate: endDay,
-      category: region.selectedDetails,
-      people: numberOfPeople,
-      transportation: transport.selectedTransport ?? 'CAR',
-      days,
-    };
+    localStorage.setItem(
+      'planData',
+      JSON.stringify({ ...initialPlanData, planId }) //
+    );
+
     localStorage.setItem(
       'planData',
       JSON.stringify({ ...initialPlanData, planId })

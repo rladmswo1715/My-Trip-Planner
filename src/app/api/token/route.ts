@@ -68,7 +68,24 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE() {
   const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value;
+  const refreshToken = cookieStore.get('refreshToken')?.value;
   try {
+    const backendResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_IP}/users/logout`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Authorization_refresh: `Bearer ${refreshToken}`,
+        },
+      }
+    );
+
+    if (!backendResponse.ok) {
+      console.warn('백엔드 로그아웃 실패 (프론트 쿠키만 삭제)');
+      return NextResponse.json('로그아웃실패', { status: 410 });
+    }
     cookieStore.set('accessToken', '', {
       httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
@@ -94,17 +111,6 @@ export async function DELETE() {
 
     console.log('✅ 로그아웃 성공: 모든 토큰 삭제');
 
-    // const backendResponse = await fetch(
-    //   `${process.env.NEXT_PUBLIC_SERVER_IP}/users/signout`,
-    //   {
-    //     method: 'POST',
-    //     credentials: 'include',
-    //   }
-    // );
-
-    // if (!backendResponse.ok) {
-    //   console.warn('백엔드 로그아웃 실패 (프론트 쿠키만 삭제)');
-    // }
     return NextResponse.json('로그아웃성공', { status: 200 });
   } catch {
     return NextResponse.json({ error: '로그아웃실패' }, { status: 500 });

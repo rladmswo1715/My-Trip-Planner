@@ -1,6 +1,7 @@
 type RegionType = {
   parent: string;
   child: string;
+  grandChild?: string;
 };
 
 type PlanDetailType = {
