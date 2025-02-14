@@ -16,10 +16,10 @@ const Page = (props: { searchParams: SearchParams }) => {
         console.error('소셜 ID가 없음.');
         return;
       }
-      const res: Response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_IP}/token/issue/${socialId}`,
-        { credentials: 'include', method: 'GET' }
-      );
+      const res: Response = await fetch(`/api/proxy/token/issue/${socialId}`, {
+        credentials: 'include',
+        method: 'GET',
+      });
       if (!res.ok) {
         throw Error('로그인고장');
       }

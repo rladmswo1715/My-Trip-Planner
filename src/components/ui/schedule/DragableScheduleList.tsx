@@ -18,6 +18,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { usePlanContext } from '@/providers/contexts/PlanContext';
 import Icons from '@/components/common/Icons';
+import { getCategoryCodeById } from '@/utils/placeFormat';
 
 export const SortableItem = ({
   id,
@@ -111,7 +112,10 @@ const PlacesList = ({
           <SortableItem key={item.order} id={item.order}>
             <div className=" p-[1.2rem] hover:bg-var-primary-50 transition-all group cursor-default">
               <div className="relative flex gap-[2.4rem] items-start ">
-                {switchCategoryIcon(item.categoryName)}
+                {switchCategoryIcon(
+                  getCategoryCodeById(item.planCategoryNameId) ?? ''
+                )}
+
                 <div className="flex flex-col gap-[0.4rem]">
                   <h3 className="text-[2rem] text-black font-semibold leading-[3rem]">
                     {item.place}

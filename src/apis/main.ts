@@ -8,7 +8,7 @@ interface getMainSlidesResponse {
 
 export const getMainSlides = async (): Promise<getMainSlidesResponse> => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_IP}/home`, {
+    const response = await fetch(`api/proxy/home`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
