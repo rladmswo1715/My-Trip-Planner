@@ -69,10 +69,10 @@ const SearchFilterContainer = () => {
     let renderText: string;
 
     switch (transport) {
-      case 'car':
+      case 'CAR':
         renderText = '자차';
         break;
-      case 'public':
+      case 'PUBLIC':
         renderText = '대중교통';
         break;
       default:
