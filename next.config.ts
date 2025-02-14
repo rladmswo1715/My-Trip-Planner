@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+const SERVER_IP = process.env.NEXT_PUBLIC_SERVER_IP || '';
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -16,10 +18,12 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/proxy/:path*',
-        destination: 'http://3.38.57.113/:path*',
+        destination: `${SERVER_IP}/:path*`,
       },
     ];
   },
 };
+{
+}
 
 export default nextConfig;

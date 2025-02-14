@@ -69,6 +69,7 @@ export async function POST(req: NextRequest) {
 export async function DELETE() {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
+  const refreshToken = cookieStore.get('refreshToken')?.value;
   try {
     const backendResponse = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_IP}/users/logout`,
@@ -76,6 +77,7 @@ export async function DELETE() {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          Authorization_refresh: `Bearer ${refreshToken}`,
         },
       }
     );
