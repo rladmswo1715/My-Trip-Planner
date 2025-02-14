@@ -16,7 +16,7 @@ const Page = (props: { searchParams: SearchParams }) => {
         console.error('소셜 ID가 없음.');
         return;
       }
-      const res: Response = await fetch(`api/proxy/token/issue/${socialId}`, {
+      const res: Response = await fetch(`/api/proxy/token/issue/${socialId}`, {
         credentials: 'include',
         method: 'GET',
       });
