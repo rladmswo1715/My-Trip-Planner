@@ -114,7 +114,7 @@ const CommentCard = ({ itemData, ...combinedProps }: CommentCardProps) => {
       ) : (
         <div key={itemData.commentId}>
           <div className="flex items-center gap-[1.2rem]">
-            <ProfileImage imageUrl="" size="m" />
+            <ProfileImage imageUrl={itemData.profileImage || ''} size="m" />
             <div className="flex justify-between items-center w-full">
               <p className="flex items-center text-[2rem] leading-[2.5rem] gap-[1.2rem]">
                 <span className="text-black font-medium">

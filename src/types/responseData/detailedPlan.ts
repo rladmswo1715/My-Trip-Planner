@@ -21,6 +21,7 @@ export type TPlanInfo = {
 export type TPlanCommmentItem = {
   socialId: string;
   commentId: number;
+  profileImage: string;
   nickname: string;
   createdAt: Date;
   content: string;
