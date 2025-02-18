@@ -12,8 +12,10 @@ import Dibs from '@/components/common/Icons/Dibs';
 interface UserActionSectionProps {
   accessToken: string;
   planId: number;
+  socialId: string;
   likeId: number | null;
   bookmarkId: number | null;
+  writerId: string;
 }
 
 const shareButtonClickHandler = () => {
@@ -34,6 +36,8 @@ const UserActionSection = ({
   planId,
   likeId: initialLikeId,
   bookmarkId: initialBookmarkId,
+  socialId,
+  writerId,
 }: UserActionSectionProps) => {
   const queryClient = useQueryClient();
   const [likeId, setLikeId] = useState<number | null>(initialLikeId);
@@ -139,24 +143,28 @@ const UserActionSection = ({
       icon: <Like isLiked={!!likeId} />,
       clickHandler: likeButtonClickHandler,
       isLiked: !!likeId,
+      isRender: true,
     },
     {
       key: '공유하기',
       image: { src: ICONS.iconShare.src, alt: ICONS.iconShare.alt },
       clickHandler: shareButtonClickHandler,
       isLiked: false,
+      isRender: true,
     },
     {
       key: '내 일정에 복사하기',
       image: { src: ICONS.iconCopy.src, alt: ICONS.iconCopy.alt },
       clickHandler: () => console.log('..'),
       isLiked: false,
+      isRender: true,
     },
     {
       key: '찜하기',
       icon: <Dibs isLiked={!!bookmarkId} />,
       clickHandler: dibsButtonClickHandler,
       isLiked: !!bookmarkId,
+      isRender: socialId !== writerId,
     },
   ];
 
@@ -164,28 +172,30 @@ const UserActionSection = ({
     <section className="flex items-center mt-[6rem] pb-[4rem] border-b border-[#D9D9D9] gap-[3.6rem]">
       {renderActionOptions.map((option) => {
         return (
-          <button
-            type="button"
-            key={option.key}
-            className={cs('flex items-center gap-[1.6rem]', {
-              'text-var-primary-500': option.isLiked,
-            })}
-            onClick={option.clickHandler}
-          >
-            {option.icon ? (
-              option.icon
-            ) : (
-              <Image
-                src={option.image.src}
-                alt={option.image.alt}
-                width={36}
-                height={36}
-              />
-            )}
-            <span className="text-[2rem] font-semibold leading-[2.387rem]">
-              {option.key}
-            </span>
-          </button>
+          option.isRender && (
+            <button
+              type="button"
+              key={option.key}
+              className={cs('flex items-center gap-[1.6rem]', {
+                'text-var-primary-500': option.isLiked,
+              })}
+              onClick={option.clickHandler}
+            >
+              {option.icon ? (
+                option.icon
+              ) : (
+                <Image
+                  src={option.image.src}
+                  alt={option.image.alt}
+                  width={36}
+                  height={36}
+                />
+              )}
+              <span className="text-[2rem] font-semibold leading-[2.387rem]">
+                {option.key}
+              </span>
+            </button>
+          )
         );
       })}
     </section>

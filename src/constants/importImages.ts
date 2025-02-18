@@ -21,6 +21,7 @@ import IconPlus from '@/assets/icon/ic_plus.svg';
 import IconEdit from '@/assets/icon/ic_edit.svg';
 import IconDelete from '@/assets/icon/ic_delete.svg';
 import IconEye from '@/assets/icon/ic_eye.svg';
+import IconLock from '@/assets/icon/ic_lock.svg';
 // import IconClose from '@/assets/icon/close.svg';
 
 type ImageType = {
@@ -50,7 +51,8 @@ type Icons =
   | 'iconPlus'
   | 'iconEdit'
   | 'iconDelete'
-  | 'iconEye';
+  | 'iconEye'
+  | 'iconLock';
 // | 'iconClose';
 
 type Images = 'defaultProfile';
@@ -157,5 +159,9 @@ export const ICONS: ExportAssetsType<Icons> = {
   iconEye: {
     src: IconEye,
     alt: '조회수 아이콘',
+  },
+  iconLock: {
+    src: IconLock,
+    alt: '잠금 아이콘',
   },
 };
