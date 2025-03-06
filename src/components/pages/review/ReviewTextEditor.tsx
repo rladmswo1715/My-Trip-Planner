@@ -1,17 +1,18 @@
-import { useState } from 'react';
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
+import { useRef, useState } from 'react';
+import QuillWrapper from './QuillWrapper';
 
 const ReviewTextEditor = () => {
+  const quillInstance = useRef(null);
   const [content, setContent] = useState('');
 
   return (
     <div className="mt-[3rem]">
-      <ReactQuill
+      <QuillWrapper
+        forwardedRef={quillInstance}
         value={content}
         onChange={setContent}
-        style={{ width: '100%', height: '450px' }}
         theme="snow"
+        style={{ width: '100%', height: '450px' }}
       />
     </div>
   );

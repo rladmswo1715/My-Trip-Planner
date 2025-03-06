@@ -1,5 +1,3 @@
-'use client';
-
 import InnerLayout from '@/components/layout/InnerLayout';
 import ReviewForm from '@/components/pages/review/ReviewForm';
 
