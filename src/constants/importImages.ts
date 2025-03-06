@@ -24,6 +24,9 @@ import IconEye from '@/assets/icon/ic_eye.svg';
 import IconLock from '@/assets/icon/ic_lock.svg';
 import IconStarOn from '@/assets/icon/ic_star-on.svg';
 import IconStarOff from '@/assets/icon/ic_star-off.svg';
+import IconLocation from '@/assets/icon/ic_location.svg';
+import IconClock from '@/assets/icon/ic_clock.svg';
+import IconPhone from '@/assets/icon/ic_phone.svg';
 // import IconClose from '@/assets/icon/close.svg';
 
 type ImageType = {
@@ -56,7 +59,10 @@ type Icons =
   | 'iconEye'
   | 'iconLock'
   | 'iconStarOn'
-  | 'iconStarOff';
+  | 'iconStarOff'
+  | 'iconLocation'
+  | 'iconClock'
+  | 'iconPhone';
 // | 'iconClose';
 
 type Images = 'defaultProfile';
@@ -175,5 +181,17 @@ export const ICONS: ExportAssetsType<Icons> = {
   iconStarOff: {
     src: IconStarOff,
     alt: '별점',
+  },
+  iconLocation: {
+    src: IconLocation,
+    alt: '위치',
+  },
+  iconClock: {
+    src: IconClock,
+    alt: '시간',
+  },
+  iconPhone: {
+    src: IconPhone,
+    alt: '전화번호',
   },
 };

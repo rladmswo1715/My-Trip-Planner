@@ -1,6 +1,6 @@
 import Modal from '@/components/common/Modal';
 import ReviewPlace from './ReviewPlace';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewRating from './ReviewRating';
 import { useReviewStore } from '@/stores/reviewStores';
 
@@ -10,12 +10,22 @@ interface ReviewModalLayoutProps {
 
 const ReviewModalLayout = ({ onClose }: ReviewModalLayoutProps) => {
   const [type, setType] = useState<'region' | 'rating'>('region');
-  const { setSelectedPlace, selectedPlace } = useReviewStore();
+  const { setSelectedPlace, selectedPlace, reset } = useReviewStore();
 
   const handleNextStep = (place: GooglePlaceAPIType) => {
     setSelectedPlace(place);
     setType('rating');
   };
+
+  const handleClose = () => {
+    reset();
+    onClose();
+  };
+
+  useEffect(() => {
+    reset();
+    setType('region');
+  }, []);
 
   const renderOptions = {
     region: {
@@ -24,7 +34,7 @@ const ReviewModalLayout = ({ onClose }: ReviewModalLayoutProps) => {
     },
     rating: {
       title: `'${selectedPlace?.structured_formatting.main_text}'은(는) 어떠셨나요?`,
-      renderContent: <ReviewRating />,
+      renderContent: <ReviewRating onClose={handleClose} />,
     },
   };
 

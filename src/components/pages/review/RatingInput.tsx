@@ -1,34 +1,8 @@
 import React, { useState } from 'react';
-import { ICONS } from '@/constants/importImages';
-import Image from 'next/image';
 import { useReviewStore } from '@/stores/reviewStores';
+import Star from './Star';
 
-const { iconStarOn, iconStarOff } = ICONS;
 const RATINGS = [1, 2, 3, 4, 5];
-
-interface StarProps {
-  selected: boolean;
-  onClick: () => void;
-  onMouseOver: () => void;
-  onMouseOut: () => void;
-}
-
-function Star({ selected, onClick, onMouseOut, onMouseOver }: StarProps) {
-  const StarAction = selected ? iconStarOn.src : iconStarOff.src;
-
-  return (
-    <Image
-      width={40}
-      height={40}
-      src={StarAction}
-      alt={iconStarOn.alt}
-      onMouseOver={onMouseOver}
-      onMouseOut={onMouseOut}
-      onClick={onClick}
-      className="cursor-pointer"
-    />
-  );
-}
 
 interface RatingInputProps {
   question: string;

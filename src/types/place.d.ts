@@ -106,6 +106,9 @@ type GooglePlaceAPIType = {
   terms: Term[]; // 장소와 관련된 키워드 (terms 배열)
   types: string[]; // 장소 유형
   korean_description?: string; // 한국어 주소
+  location?: { lat: number; lng: number } | null; // 위도, 경도
+  isOpen?: boolean | null; // 영업 정보
+  phone_number?: string | null; // 전화번호
 };
 
 type GooglePlacesAPIResponse = {

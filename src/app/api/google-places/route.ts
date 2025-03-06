@@ -2,14 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
-const fetchPlaceDetailsInKorean = async (placeId: string) => {
-  const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?place_id=${placeId}&key=${apiKey}&language=ko`;
+const fetchPlaceDetailsWithLocation = async (placeId: string) => {
+  const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${apiKey}&language=ko&fields=geometry,formatted_address,formatted_phone_number,opening_hours`;
 
-  const response = await fetch(geocodeUrl);
-  if (!response.ok) throw new Error('Failed to fetch place details in Korean');
+  const response = await fetch(detailsUrl);
+  if (!response.ok) throw new Error('장소 정보 불러오기 실패');
 
   const data = await response.json();
-  return data.results[0]?.formatted_address || 'No address available';
+  return {
+    formatted_address: data.result?.formatted_address || '주소 정보 없음',
+    location: data.result?.geometry?.location || null,
+    isOpen: data.result?.opening_hours?.open_now ?? null,
+    phone_number: data.result?.formatted_phone_number || null,
+  };
 };
 
 export async function GET(req: NextRequest) {
@@ -27,12 +32,13 @@ export async function GET(req: NextRequest) {
 
     const predictionsWithKoreanAddresses = await Promise.all(
       data.predictions.map(async (item: GooglePlaceAPIType) => {
-        const koreanDescription = await fetchPlaceDetailsInKorean(
-          item.place_id
-        );
+        const details = await fetchPlaceDetailsWithLocation(item.place_id);
         return {
           ...item,
-          korean_description: koreanDescription,
+          korean_description: details.formatted_address,
+          location: details.location,
+          isOpen: details.isOpen,
+          phone_number: details.phone_number,
         };
       })
     );
