@@ -1,9 +1,13 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import QuillWrapper from './QuillWrapper';
 
-const ReviewTextEditor = () => {
+interface ReviewTextEditorProps {
+  content: string;
+  setContent: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ReviewTextEditor = ({ content, setContent }: ReviewTextEditorProps) => {
   const quillInstance = useRef(null);
-  const [content, setContent] = useState('');
 
   return (
     <div className="mt-[3rem]">
