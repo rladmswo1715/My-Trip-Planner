@@ -169,35 +169,52 @@ const UserActionSection = ({
   ];
 
   return (
-    <section className="flex items-center mt-[6rem] pb-[4rem] border-b border-[#D9D9D9] gap-[3.6rem]">
-      {renderActionOptions.map((option) => {
-        return (
-          option.isRender && (
-            <button
-              type="button"
-              key={option.key}
-              className={cs('flex items-center gap-[1.6rem]', {
-                'text-var-primary-500': option.isLiked,
-              })}
-              onClick={option.clickHandler}
-            >
-              {option.icon ? (
-                option.icon
-              ) : (
-                <Image
-                  src={option.image.src}
-                  alt={option.image.alt}
-                  width={36}
-                  height={36}
-                />
-              )}
-              <span className="text-[2rem] font-semibold leading-[2.387rem]">
-                {option.key}
-              </span>
-            </button>
-          )
-        );
-      })}
+    <section className="flex justify-between items-center mt-[6rem] pb-[4rem] border-b border-[#D9D9D9]">
+      <div className="flex gap-[3.6rem]">
+        {renderActionOptions.map((option) => {
+          return (
+            option.isRender && (
+              <button
+                type="button"
+                key={option.key}
+                className={cs('flex items-center gap-[1.6rem]', {
+                  'text-var-primary-500': option.isLiked,
+                })}
+                onClick={option.clickHandler}
+              >
+                {option.icon ? (
+                  option.icon
+                ) : (
+                  <Image
+                    src={option.image.src}
+                    alt={option.image.alt}
+                    width={36}
+                    height={36}
+                  />
+                )}
+                <span className="text-[2rem] font-semibold leading-[2.387rem]">
+                  {option.key}
+                </span>
+              </button>
+            )
+          );
+        })}
+      </div>
+      <button
+        type="button"
+        className="flex items-center gap-[1.6rem]"
+        onClick={() => console.log('신고하기 클릭')}
+      >
+        <Image
+          src={ICONS.iconSiren.src}
+          alt={ICONS.iconSiren.alt}
+          width={36}
+          height={36}
+        />
+        <span className="text-[2rem] font-semibold leading-[2.387rem]">
+          신고하기
+        </span>
+      </button>
     </section>
   );
 };
