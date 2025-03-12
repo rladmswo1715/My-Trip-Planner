@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getReviewInfo } from '@/apis/review';
 import Spinner from '@/components/common/Spinner';
 import UserActionSection from './UserActionSection';
+import CommentsSection from '@/components/ui/comments/CommentsSection';
 
 interface ReviewClientProps {
   reviewId: number;
@@ -45,6 +46,12 @@ const ReviwClient = ({ reviewId }: ReviewClientProps) => {
           bookmarkId={data.bookmarkId}
           writerId={data.socialId}
           {...commonProps}
+        />
+        <CommentsSection
+          pageType="review"
+          postId={reviewId}
+          accessToken={accessToken}
+          socialId={socialId}
         />
       </InnerLayout>
       <OtherReviewSection />
