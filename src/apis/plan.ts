@@ -217,52 +217,6 @@ export const deleteComment = async (id: number, accessToken: string) => {
   }
 };
 
-export const postLike = async (planId: number, accessToken: string) => {
-  try {
-    const response = await fetch(`/api/proxy/plans/${planId}/like`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-
-      throw {
-        message: errorData.message || '좋아요 실패',
-        details: errorData.details,
-      };
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
-export const deleteLike = async (likeId: number, accessToken: string) => {
-  try {
-    const response = await fetch(`/api/proxy/plans/like/${likeId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-
-      throw {
-        message: errorData.message || '좋아요 취소 실패',
-        details: errorData.details,
-      };
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
 export const postDibs = async (planId: number, accessToken: string) => {
   try {
     const response = await fetch(`/api/proxy/plans/${planId}/bookmarks`, {

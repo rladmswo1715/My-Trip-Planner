@@ -1,5 +1,8 @@
 export type TDetailedReviewInfo = {
   id: number;
+  socialId: string;
+  likeId: number | null;
+  bookmarkId: number | null;
   placeId: string;
   title: string;
   nickname: string;
@@ -11,5 +14,5 @@ export type TDetailedReviewInfo = {
   visitedDay: Date;
   averageRating: number;
   createAt: Date;
-  reviewLike: number;
+  like: number;
 };
