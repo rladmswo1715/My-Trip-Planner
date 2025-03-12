@@ -171,6 +171,9 @@
   .swiper-slide {
     @apply max-w-[30.5rem];
   }
+  .quill-content p {
+    font-size: 16px;
+  }
 }
 
 .label {

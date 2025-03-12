@@ -7,6 +7,8 @@ import PlaceDetailedInfo from './PlaceDetailedInfo';
 import { useEffect, useState } from 'react';
 import { useReviewStore } from '@/stores/reviewStores';
 import Spinner from '@/components/common/Spinner';
+import { fetchWeatherData } from '@/apis/review';
+import switchDailyWeather from '@/utils/weatherFormat';
 
 interface DetailedViewSectionProps {
   postData: TDetailedReviewInfo;
@@ -21,6 +23,7 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
     isReviewCompleted,
   } = useReviewStore();
   const [isLoading, setIsLoading] = useState(false);
+  const [weatherData, setWeatherData] = useState<number | null>(null);
 
   const fetchPlaceInfo = async (placeId: string) => {
     try {
@@ -44,6 +47,22 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
     if (postData.placeId && !savedReview) {
       setRating('average', postData.averageRating);
       fetchPlaceInfo(postData.placeId);
+
+      const getWeather = async () => {
+        try {
+          const data = await fetchWeatherData(
+            postData.latitude,
+            postData.longitude,
+            String(postData.visitedDay)
+          );
+
+          setWeatherData(data.daily.weathercode[0]);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      getWeather();
     }
   }, [postData.placeId, savedReview]);
 
@@ -100,9 +119,19 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
         </div>
         <p className="mb-[3.2rem] flex items-center gap-[1.6rem]">
           <span className="text-[1.6rem] leading-[2.4rem]">방문 날짜</span>
-          <span className="text-[1.4rem] text-black/50 leading-[1.82rem]">
-            {formatDate('review', postData.visitedDay)}
-          </span>
+          <p className="flex items-center gap-[1.2rem]">
+            <span className="text-[1.4rem] text-black/50 leading-[1.82rem]">
+              {formatDate('review', postData.visitedDay)}
+            </span>
+            {weatherData && (
+              <Image
+                src={switchDailyWeather(weatherData)}
+                alt="날씨"
+                width={24}
+                height={24}
+              />
+            )}
+          </p>
         </p>
       </div>
       {isLoading ? (
@@ -115,7 +144,7 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
         )
       )}
       <div
-        className="pt-[3.2rem] border-t border-[#D9D9D9] text-[1.3rem]"
+        className="quill-content pt-[3.2rem] border-t border-[#D9D9D9] text-[1.3rem]"
         dangerouslySetInnerHTML={{ __html: postData.content }}
       />
     </section>

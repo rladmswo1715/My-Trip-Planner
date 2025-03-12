@@ -88,3 +88,20 @@ export const getReviewInfo = async (
     throw error;
   }
 };
+
+export const fetchWeatherData = async (
+  lat: number,
+  lon: number,
+  date: string
+) => {
+  try {
+    const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode&timezone=Asia/Seoul&start_date=${date}&end_date=${date}`;
+
+    const response = await fetch(weatherApiUrl);
+    if (!response.ok) throw new Error('날씨 불러오기 실패');
+    return response.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
