@@ -6,6 +6,7 @@ import PostUserAction from '@/components/ui/PostUserAction';
 import shareButtonClickHandler from '@/utils/shareUtils';
 import { TDetailedReviewInfo } from '@/types/responseData/review';
 import usePostActionLike from '@/lib/hooks/queries/mutate/usePostActionLike';
+import usePostActionDibs from '@/lib/hooks/queries/mutate/usePostActionDibs';
 
 interface UserActionSectionProps {
   accessToken: string;
@@ -25,7 +26,9 @@ const UserActionSection = ({
   writerId,
 }: UserActionSectionProps) => {
   const [likeId, setLikeId] = useState<number | null>(initialLikeId);
-  const [bookmarkId] = useState<number | null>(initialBookmarkId);
+  const [bookmarkId, setBookmarkId] = useState<number | null>(
+    initialBookmarkId
+  );
 
   const likeMutation = usePostActionLike<TDetailedReviewInfo>({
     pageType: 'review',
@@ -35,14 +38,22 @@ const UserActionSection = ({
     setLikeId,
   });
 
+  const dibsMutation = usePostActionDibs<TDetailedReviewInfo>({
+    pageType: 'review',
+    pageId: reviewId,
+    bookmarkId,
+    accessToken,
+    setBookmarkId,
+  });
+
   const likeButtonClickHandler = () => {
     const userLikeAction = likeId ? 'UNLIKE' : 'LIKE';
     likeMutation.mutate(userLikeAction);
   };
 
   const dibsButtonClickHandler = () => {
-    //const userLikeAction = bookmarkId ? 'UNDIBS' : 'DIBS';
-    //dibsMutation.mutate(userLikeAction);
+    const userDibsAction = bookmarkId ? 'UNDIBS' : 'DIBS';
+    dibsMutation.mutate(userDibsAction);
   };
 
   const renderActionOptions = [

@@ -1,13 +1,12 @@
 import { ICONS } from '@/constants/importImages';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TPlanInfo } from '@/types/responseData/detailedPlan';
-import { deleteDibs, postDibs } from '@/apis/plan';
 import { useState } from 'react';
 import Like from '@/components/common/Icons/Like';
 import Dibs from '@/components/common/Icons/Dibs';
 import PostUserAction from '@/components/ui/PostUserAction';
 import shareButtonClickHandler from '@/utils/shareUtils';
 import usePostActionLike from '@/lib/hooks/queries/mutate/usePostActionLike';
+import usePostActionDibs from '@/lib/hooks/queries/mutate/usePostActionDibs';
 
 interface UserActionSectionProps {
   accessToken: string;
@@ -26,7 +25,6 @@ const UserActionSection = ({
   socialId,
   writerId,
 }: UserActionSectionProps) => {
-  const queryClient = useQueryClient();
   const [likeId, setLikeId] = useState<number | null>(initialLikeId);
   const [bookmarkId, setBookmarkId] = useState<number | null>(
     initialBookmarkId
@@ -40,45 +38,12 @@ const UserActionSection = ({
     setLikeId,
   });
 
-  const dibsMutation = useMutation({
-    mutationFn: async (userAction: 'UNDIBS' | 'DIBS') => {
-      if (userAction === 'DIBS') {
-        await postDibs(planId, accessToken);
-      } else {
-        await deleteDibs(bookmarkId as number, accessToken);
-      }
-    },
-    onMutate: async (userAction) => {
-      await queryClient.cancelQueries({ queryKey: ['plan', planId, 'info'] });
-
-      const prevLikeStatus = queryClient.getQueryData(['plan', planId, 'info']);
-
-      queryClient.setQueryData(
-        ['plan', planId, 'info'],
-        (prevData: TPlanInfo) => {
-          return {
-            ...prevData,
-            dibsId: userAction === 'DIBS' ? -1 : null,
-          };
-        }
-      );
-
-      return { prevLikeStatus };
-    },
-    onError: (err, variables, context) => {
-      queryClient.setQueryData(
-        ['plan', planId, 'info'],
-        context?.prevLikeStatus
-      );
-    },
-    onSettled: async () => {
-      const updatedPlanInfo = await queryClient.fetchQuery<TPlanInfo>({
-        queryKey: ['plan', planId, 'info'],
-      });
-      if (updatedPlanInfo) {
-        setBookmarkId(updatedPlanInfo.bookmarkId);
-      }
-    },
+  const dibsMutation = usePostActionDibs<TPlanInfo>({
+    pageType: 'plan',
+    pageId: planId,
+    bookmarkId,
+    accessToken,
+    setBookmarkId,
   });
 
   const likeButtonClickHandler = () => {
@@ -87,8 +52,8 @@ const UserActionSection = ({
   };
 
   const dibsButtonClickHandler = () => {
-    const userLikeAction = bookmarkId ? 'UNDIBS' : 'DIBS';
-    dibsMutation.mutate(userLikeAction);
+    const userDibsAction = bookmarkId ? 'UNDIBS' : 'DIBS';
+    dibsMutation.mutate(userDibsAction);
   };
 
   const renderActionOptions = [
