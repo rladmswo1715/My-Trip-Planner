@@ -75,7 +75,7 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
     {
       key: 'like',
       image: { src: ICONS.iconLike.src, alt: ICONS.iconLike.alt },
-      count: postData.reviewLike,
+      count: postData.like,
     },
   ];
 
@@ -117,7 +117,7 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
             })}
           </div>
         </div>
-        <p className="mb-[3.2rem] flex items-center gap-[1.6rem]">
+        <div className="mb-[3.2rem] flex items-center gap-[1.6rem]">
           <span className="text-[1.6rem] leading-[2.4rem]">방문 날짜</span>
           <p className="flex items-center gap-[1.2rem]">
             <span className="text-[1.4rem] text-black/50 leading-[1.82rem]">
@@ -132,7 +132,7 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
               />
             )}
           </p>
-        </p>
+        </div>
       </div>
       {isLoading ? (
         <Spinner isPageLoading={false} />
