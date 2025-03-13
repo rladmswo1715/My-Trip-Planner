@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { useQuery } from '@tanstack/react-query';
 import { getOtherPlace } from '@/apis/review';
-import ReviewCard from './ReviewCard';
+import ReviewCard from '../../ui/card/ReviewCard';
 import cs from 'classnames';
 
 import 'swiper/css';
@@ -21,8 +21,6 @@ const OtherReviewSection = ({
     queryFn: () => getOtherPlace(placeId, accessToken),
   });
 
-  console.log('data:::', data);
-
   return (
     <section className="mb-[30rem]">
       <h2 className="text-[2.8rem] font-bold leading-[4.2rem] text-center">
@@ -38,7 +36,9 @@ const OtherReviewSection = ({
           {data.totalReviewCount <= 2 ? (
             <div className="mt-[4rem] flex gap-5">
               {data.reviewSummaries.map((item) => (
-                <ReviewCard key={item.reviewId} itemData={item} />
+                <div key={item.reviewId} className="w-[62rem]">
+                  <ReviewCard cardType="post" itemData={item} />
+                </div>
               ))}
             </div>
           ) : (
@@ -54,7 +54,7 @@ const OtherReviewSection = ({
             >
               {data.reviewSummaries.map((item) => (
                 <SwiperSlide key={item.reviewId}>
-                  <ReviewCard itemData={item} />
+                  <ReviewCard cardType="post" itemData={item} />
                 </SwiperSlide>
               ))}
             </Swiper>

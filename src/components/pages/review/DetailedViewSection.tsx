@@ -135,7 +135,9 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
         </div>
       </div>
       {isLoading ? (
-        <Spinner isPageLoading={false} />
+        <div className="min-h-[15rem]">
+          <Spinner isPageLoading={false} />
+        </div>
       ) : (
         isReviewCompleted && (
           <div className="mb-[3.2rem]">

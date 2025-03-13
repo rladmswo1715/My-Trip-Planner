@@ -1,30 +1,42 @@
 import ProfileImage from '@/components/ui/ProfileImage';
 import Image from 'next/image';
 import Link from 'next/link';
-import { TReviewSummary } from '@/types/responseData/review';
 import { formatDate } from '@/utils/dateUtils';
 import cs from 'classnames';
 
 interface ReviewCardProps {
-  itemData: TReviewSummary;
+  cardType: 'main' | 'mypage' | 'post';
+  itemData: {
+    reviewId: number;
+    title: string;
+    createdAt: Date;
+    userImageUrl?: string;
+    nickname?: string;
+    contentText: string;
+    contentImageUrl: string;
+    imageCount: number;
+  };
 }
 
-const ReviewCard = ({ itemData }: ReviewCardProps) => {
+const ReviewCard = ({ cardType, itemData }: ReviewCardProps) => {
   const hasImg = !!itemData.contentImageUrl;
+
   return (
     <Link
-      href={'/'}
-      className="p-[3.2rem] w-[62rem] flex flex-col shadow-reviewCard rounded-xl gap-[1.4rem] transition-all duration-300 hover:shadow-reviewCard hover:-translate-y-1"
+      href={`/review/${itemData.reviewId}`}
+      className="p-[3.2rem] w-[100%] flex flex-col shadow-reviewCard rounded-xl gap-[1.4rem] transition-all duration-300 hover:shadow-reviewCard hover:-translate-y-1"
     >
-      <div className="flex items-center gap-[1.2rem]">
-        <ProfileImage imageUrl={itemData.userImageUrl} size="r" />
-        <span className="text-[1.6rem] leading-[2.4rem]">
-          {itemData.nickname}
-        </span>
-        <span className="text-[1.4rem] text-black/60 leading-[1.82rem]">
-          {formatDate('comment', itemData.createdAt)}
-        </span>
-      </div>
+      {cardType !== 'mypage' && (
+        <div className="flex items-center gap-[1.2rem]">
+          <ProfileImage imageUrl={itemData.userImageUrl || ''} size="r" />
+          <span className="text-[1.6rem] leading-[2.4rem]">
+            {itemData.nickname}
+          </span>
+          <span className="text-[1.4rem] text-black/60 leading-[1.82rem]">
+            {formatDate('comment', itemData.createdAt)}
+          </span>
+        </div>
+      )}
       <div className="flex justify-between">
         <div
           className={cs('flex flex-col gap-[0.8rem]', {
