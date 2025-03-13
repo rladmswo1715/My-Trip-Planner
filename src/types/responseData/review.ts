@@ -16,3 +16,19 @@ export type TDetailedReviewInfo = {
   createAt: Date;
   like: number;
 };
+
+export type TReviewSummary = {
+  reviewId: number;
+  title: string;
+  createdAt: Date;
+  userImageUrl: string;
+  nickname: string;
+  contentText: string;
+  contentImageUrl: string;
+  imageCount: number;
+};
+
+export type TOtherReview = {
+  totalReviewCount: number;
+  reviewSummaries: TReviewSummary[];
+};

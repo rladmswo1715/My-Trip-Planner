@@ -42,7 +42,7 @@ const SlideContainer = ({ children, slideItems }: SlideContainerProps) => {
         </h3>
       </div>
 
-      <div className="relative">
+      <div className="main-page relative">
         {slideItemsLength > 0 ? (
           <>
             <Swiper

@@ -1,4 +1,4 @@
-import { TDetailedReviewInfo } from '@/types/responseData/review';
+import { TDetailedReviewInfo, TOtherReview } from '@/types/responseData/review';
 
 export const getImgUrl = async (imgFormData: FormData, accessToken: string) => {
   try {
@@ -100,6 +100,34 @@ export const fetchWeatherData = async (
     const response = await fetch(weatherApiUrl);
     if (!response.ok) throw new Error('날씨 불러오기 실패');
     return response.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getOtherPlace = async (
+  placeId: string,
+  accessToken: string
+): Promise<TOtherReview> => {
+  try {
+    const response = await fetch(`/api/proxy/review/others/${placeId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      throw {
+        message: errorData.message || '리뷰 게시글 불러오기 실패',
+      };
+    }
+
+    const { data } = await response.json();
+    return data;
   } catch (error) {
     console.error(error);
     throw error;

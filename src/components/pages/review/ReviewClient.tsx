@@ -54,7 +54,7 @@ const ReviwClient = ({ reviewId }: ReviewClientProps) => {
           socialId={socialId}
         />
       </InnerLayout>
-      <OtherReviewSection />
+      <OtherReviewSection placeId={data.placeId} accessToken={accessToken} />
     </>
   );
 };
