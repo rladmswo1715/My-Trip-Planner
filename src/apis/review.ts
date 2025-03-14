@@ -33,6 +33,8 @@ export const postAddReview = async (
     longitude: number | undefined;
     content: string;
     visitedDay: Date | null;
+    averageRating: number;
+    imageUrl: string[];
   },
   accessToken: string
 ) => {
@@ -107,11 +109,11 @@ export const fetchWeatherData = async (
 };
 
 export const getOtherPlace = async (
-  placeId: string,
+  reviewId: number,
   accessToken: string
 ): Promise<TOtherReview> => {
   try {
-    const response = await fetch(`/api/proxy/review/others/${placeId}`, {
+    const response = await fetch(`/api/proxy/review/others/${reviewId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

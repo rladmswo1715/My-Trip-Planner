@@ -8,17 +8,17 @@ import cs from 'classnames';
 import 'swiper/css';
 
 interface OtherReviewSectionProps {
-  placeId: string;
+  reviewId: number;
   accessToken: string;
 }
 
 const OtherReviewSection = ({
-  placeId,
+  reviewId,
   accessToken,
 }: OtherReviewSectionProps) => {
   const { data } = useQuery({
-    queryKey: ['place', placeId],
-    queryFn: () => getOtherPlace(placeId, accessToken),
+    queryKey: ['place', reviewId],
+    queryFn: () => getOtherPlace(reviewId, accessToken),
   });
 
   return (
