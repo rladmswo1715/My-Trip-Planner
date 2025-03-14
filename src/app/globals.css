@@ -168,8 +168,11 @@
   .main-page .swiper-wrapper {
     @apply max-w-[128rem] mx-auto;
   }
-  .main-page .swiper-slide {
+  .plan .swiper-slide {
     @apply max-w-[30.5rem];
+  }
+  .main-review .swiper {
+    @apply min-h-[24.8rem];
   }
   .review-page .swiper {
     @apply min-h-[30rem] pt-[4rem];

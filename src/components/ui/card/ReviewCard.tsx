@@ -24,19 +24,22 @@ const ReviewCard = ({ cardType, itemData }: ReviewCardProps) => {
   return (
     <Link
       href={`/review/${itemData.reviewId}`}
-      className="p-[3.2rem] w-[100%] flex flex-col shadow-reviewCard rounded-xl gap-[1.4rem] transition-all duration-300 hover:shadow-reviewCard hover:-translate-y-1"
+      className="p-[3.2rem] size-full flex flex-col shadow-reviewCard rounded-xl gap-[1.4rem] transition-all duration-300 hover:shadow-reviewCard hover:-translate-y-1"
     >
-      {cardType !== 'mypage' && (
-        <div className="flex items-center gap-[1.2rem]">
-          <ProfileImage imageUrl={itemData.userImageUrl || ''} size="r" />
-          <span className="text-[1.6rem] leading-[2.4rem]">
-            {itemData.nickname}
-          </span>
-          <span className="text-[1.4rem] text-black/60 leading-[1.82rem]">
-            {formatDate('comment', itemData.createdAt)}
-          </span>
-        </div>
-      )}
+      <div className="flex items-center gap-[1.2rem]">
+        {cardType !== 'mypage' && (
+          <>
+            <ProfileImage imageUrl={itemData.userImageUrl || ''} size="r" />
+            <span className="text-[1.6rem] leading-[2.4rem]">
+              {itemData.nickname}
+            </span>
+          </>
+        )}
+        <span className="text-[1.4rem] text-black/60 leading-[1.82rem]">
+          {formatDate('comment', itemData.createdAt)}
+        </span>
+      </div>
+
       <div className="flex justify-between">
         <div
           className={cs('flex flex-col gap-[0.8rem]', {
