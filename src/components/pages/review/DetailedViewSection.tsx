@@ -44,7 +44,11 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
   };
 
   useEffect(() => {
-    if (postData.placeId && !savedReview) {
+    if (postData.placeId) {
+      if (savedReview) {
+        setSelectedPlace(null);
+      }
+
       setRating('average', postData.averageRating);
       fetchPlaceInfo(postData.placeId);
 
@@ -64,7 +68,7 @@ const DetailedViewSection = ({ postData }: DetailedViewSectionProps) => {
 
       getWeather();
     }
-  }, [postData.placeId, savedReview]);
+  }, [postData.id, postData.placeId]);
 
   const renderCounterOptions = [
     {

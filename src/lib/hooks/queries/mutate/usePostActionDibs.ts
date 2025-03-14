@@ -76,7 +76,7 @@ const usePostActionDibs = <T extends { bookmarkId: number | null }>({
 
       const prevLikeStatus = queryClient.getQueryData<T>(queryKey);
 
-      queryClient.setQueryData(['plan', pageId, 'info'], (prevData: T) => {
+      queryClient.setQueryData(queryKey, (prevData: T) => {
         return {
           ...prevData,
           dibsId: userAction === 'DIBS' ? -1 : null,
@@ -90,7 +90,7 @@ const usePostActionDibs = <T extends { bookmarkId: number | null }>({
     },
     onSettled: async () => {
       const updatedPlanInfo = await queryClient.fetchQuery<T>({
-        queryKey: ['plan', pageId, 'info'],
+        queryKey,
       });
       if (updatedPlanInfo) {
         setBookmarkId(updatedPlanInfo.bookmarkId as number);
