@@ -59,8 +59,10 @@
   - **검색 페이지**
     - 필터 검색 추가
  
-    
-    <img src="https://github.com/user-attachments/assets/d19b5152-a97e-453c-abc0-0aeb3aeac15b" width="400" height="200"/> <br>
+
+    <!-- <img src="https://github.com/user-attachments/assets/d19b5152-a97e-453c-abc0-0aeb3aeac15b" width="400" height="200"/> -->
+    <img src="https://github.com/user-attachments/assets/c29b523d-3b27-41a3-8075-fbdec603d0ec" width="400"/>
+    <br>
     <img src="https://github.com/user-attachments/assets/6713e8a3-a7ad-4e18-b28a-69841a719a12" width="200" height="200"/>
 
 
@@ -68,26 +70,29 @@
     - 프로필 수정, 작성 게시글 조회
  
     
-    <img src="https://github.com/user-attachments/assets/644c7780-5e5a-40c6-ab93-65d62efef2c7" width="400" height="200"/> <br>
-    <img src="https://github.com/user-attachments/assets/2260f882-49a0-41c6-aa34-ec2c058674c0" width="400" height="200"/>
+    <!-- <img src="https://github.com/user-attachments/assets/644c7780-5e5a-40c6-ab93-65d62efef2c7" width="400" height="200"/> <br> -->
+    <!-- <img src="https://github.com/user-attachments/assets/2260f882-49a0-41c6-aa34-ec2c058674c0" width="400" height="200"/> -->
+    <img src="https://github.com/user-attachments/assets/0d514628-dd54-42ad-84e4-d86dfd9b8d9f" width="400"/>
 
     
   - **플랜 상세 페이지**
-    - 동선 확인
+    - Day별 동선 확인
     - 좋이요 / 찜하기 등
     - 댓글 섹션
     <br>
   
-    <img src="https://github.com/user-attachments/assets/c15fa862-f818-49c8-8566-3ebb463bb364" width="400" height="400"/>
+    <!-- <img src="https://github.com/user-attachments/assets/c15fa862-f818-49c8-8566-3ebb463bb364" width="400" height="400"/> -->
+    <img src="https://github.com/user-attachments/assets/7ca7763d-bd8a-421d-ba8b-32dd5d1104f1" width="400"/>
 
 
   - **리뷰 작성 페이지**
     - 장소 검색 / 별점 평가
  
     
-    <img src="https://github.com/user-attachments/assets/92199299-2547-44f1-97da-202b68d674fc" width="400" height="200"/> <br>
-    <img src="https://github.com/user-attachments/assets/a5f87da4-fce7-4c38-9dae-c5a31039ac21" width="200" height="200"/> 
-    <img src="https://github.com/user-attachments/assets/7877c33e-ec95-4b9d-8016-3952b59f6c60" width="200" height="200"/>
+    <!-- <img src="https://github.com/user-attachments/assets/92199299-2547-44f1-97da-202b68d674fc" width="400" height="200"/> <br> -->
+    <!-- <img src="https://github.com/user-attachments/assets/a5f87da4-fce7-4c38-9dae-c5a31039ac21" width="200" height="200"/>  -->
+    <!-- <img src="https://github.com/user-attachments/assets/7877c33e-ec95-4b9d-8016-3952b59f6c60" width="200" height="200"/> -->
+    <img src="https://github.com/user-attachments/assets/2057b577-1dd1-40f2-bfe7-62783d037e0d" width="400"/>
 
 
   - **리뷰 상세 페이지**
